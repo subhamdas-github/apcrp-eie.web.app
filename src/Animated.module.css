@@ -1,0 +1,23 @@
+input[type=text] {
+    width: 140px;
+    
+    border: none;
+    border-width: 0;
+    
+    font-size: 16px;
+    
+    padding: 9px 20px 9px 12px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    -webkit-appearance: none;
+    outline: 0;
+  }
+  
+  input[type=text]:focus {
+    width: 100%;
+    
+    border-width: 0;
+    -webkit-appearance: none;
+    outline: none!important;
+    
+  }

@@ -1,0 +1,16 @@
+.navi{
+    font-size: 18px;
+    /* color: lightgrey; */
+    
+}
+.navi :hover{
+    color: red;
+}
+
+/* .navifooter {
+    
+    color: red;
+} */
+.navifooter{
+    color: aqua;
+}
