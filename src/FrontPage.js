@@ -56,6 +56,7 @@ function FrontPage({placeName}) {
 
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -84,9 +85,9 @@ function FrontPage({placeName}) {
         const fetchData = async ()=>{
             const db = fire.firestore();
 
-            db.collection('slideshow').onSnapshot(function(data){
-                setTasksS(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
-            });
+            // db.collection('slideshow').onSnapshot(function(data){
+            //     setTasksS(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+            // });
 
             fire.firestore().collection('notice')
             .onSnapshot(function(data){
@@ -129,7 +130,7 @@ function FrontPage({placeName}) {
     }
 
     const studentoptselect = ()=>{
-        if (newfireYear==''){alert('Please select a year to search')}
+        if (newfireYear==''){alert('Please select a year to Go')}
         else{
             // setLoading(false)
         setTasks([])
@@ -505,8 +506,15 @@ function FrontPage({placeName}) {
                     <option >{spell.year_arr}</option>
                 ))}
                 </Form.Control>
-                <Button variant='danger' style={{width:80}} onClick={studentoptselect}>Search</Button>
+                <Button variant='danger' style={{width:80}} onClick={studentoptselect}>Go</Button>
                 </Form>
+                </Col></Row><br/>
+                <Row><Col>
+                <div style={{display:'flex',textAlign:'center',justifyContent:'space-between'}}>
+                    <p></p>
+                <input type='text' placeholder='🔍Search...' onChange={(e)=>setSearchTerm(e.target.value)}/>
+                <p></p>
+                </div>
                 </Col></Row>
 
             {/* <Row>
@@ -551,7 +559,15 @@ function FrontPage({placeName}) {
                 {/* <Spinner animation="border" />  */}
                     {/* {loading?( */}
                         <CardColumns>
-                        {tasks.map(spell => (
+                        {tasks.filter((val)=>{
+                            if(searchTerm==""){
+                                return val
+                            }else if(val.name.toLowerCase().includes(searchTerm.toLowerCase())){
+                                return val
+                            }else if(val.email.toLowerCase().includes(searchTerm.toLowerCase())){
+                                return val
+                            }
+                        }).map(spell => (
                         <Card border='primary'
                             className="text-center p-1"
                             style={{
