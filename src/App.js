@@ -36,99 +36,6 @@ import Googlemaps from './Googlemaps';
 import Error404 from './Error404';
 
 
-// const App=()=>{
-
-	
-	// const [user, setuser] = useState('');
-	// const [email, setEmail] = useState('');
-	// const [password,setpassword] = useState('');
-	// const [emailerror, setemailerror] = useState('');
-	// const [passworderror, setpassworderror] = useState('');
-
-	// const clearInputs = ()=>{
-	// 	setEmail('');
-	// 	setpassword('');
-	// }
-	// const clearerrors = ()=>{
-	// 	setemailerror('');
-	// 	setpassworderror('');
-	// }
-	// const handlelogin =()=>{
-	// 	clearerrors();
-	// 	fire
-	// 	.auth()
-	// 	.signInWithEmailAndPassword(email, password)
-	// 	.catch(err=>{
-	// 		switch(err.code){
-	// 			case "auth/invalid-email":
-	// 			case "auth/user-disabled":
-	// 			case "auth/user-not-found":
-	// 				setemailerror(err.message);
-	// 				break;
-	// 			case "auth/wrong-password":
-	// 				setpassworderror(err.message);
-	// 				break;
-	// 		}
-	// 	});
-	// };
-	// const handlelogout = ()=>{
-	// 	fire.auth().signOut();
-	// };
-
-	// const authListener = ()=>{
-	// 	fire.auth().onAuthStateChanged((user)=>{
-	// 		if(user){
-	// 			clearInputs();
-	// 			console.log('hello')
-	// 			setuser(user);
-	// 			console.log(user);
-	// 			<Admin/>
-	// 		}else{
-	// 			setuser("");
-	// 			<FrontPage/>
-	// 		}
-	// 	})
-	// };
-	// useEffect(()=>{
-	// 	authListener();
-	// },[]);
-
-	// return(
-	// 	<div>
-	// 		<AuthProvider>
-	// 		<Router>
-	// 			<div>
-	// 				<Route exact path="/" component={Admin}/>
-	// 				<Route exact path="/login" component={FrontPage}/>
-	// 				{/* <Route exact path="/" component={FrontPage}/> */}
-	// 			</div>
-	// 		</Router>
-	// 		</AuthProvider>
-			{/* <FrontPage/> */}
-
-			{/* {user ?(
-				<Admin />
-			):(
-			<Login
-			email={email}
-			setEmail={setEmail}
-			password={password}
-			setpassword={setpassword}
-			handlelogin={handlelogin}
-			emailerror={emailerror}
-			passworderror={passworderror}
-			/>
-			)} */}
-
-			
-
-
-{/* 			
-		</div>
-	);
-}; */}
-
-
 class App extends React.Component{
 	
 	constructor(props){
@@ -165,16 +72,8 @@ class App extends React.Component{
 		return (
 			<>
 			
-			{/* <FrontPage/> */}
-			
 			<Router>
 				<Switch>
-					{/* <Route path='/admin'>
-						<Admin/>
-					</Route> */}
-					{/* <PrivateRoute exact path='/admin'>
-						<Admin/>
-					</PrivateRoute> */}
 					<Route path='/'>
 						<FrontPage/>
 					</Route>

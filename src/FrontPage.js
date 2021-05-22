@@ -204,7 +204,8 @@ function FrontPage({placeName}) {
                     </Col>
                     <Col >
                     📮<a href="mailto:apcraypolytechnic@gmail.com" target='_blank'>apcraypolytechnic@gmail.com</a><br/>📮<a href='mailto:officeapcray@gmail.com' target='_blank'>officeapcray@gmail.com</a><br/>☎️<a href='tel:03324146241'>(033) 2414 6241</a>/Fax no. 24146164
-                    <br/><span style={{fontSize:18}}>visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><span ><sup><SiFacebook/></sup></span> facebook</a> group</span>
+                    <br/>
+                    <span style={{fontSize:18}}>visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><span style={{fontSize:20,paddingBottom:10}}><sup><SiFacebook/></sup></span> facebook</a> group</span>
                     </Col>
                 </Row>
                 </Container>
@@ -488,7 +489,7 @@ function FrontPage({placeName}) {
             <Container fluid='xl' className={containerStyle.container}>
                 <br/><br/>
                 <Alert variant="success">
-                <Alert.Heading><b>Students of Electronics and Instrumentation Engineering</b></Alert.Heading>
+                <Alert.Heading>Students of Electronics and Instrumentation Engineering</Alert.Heading>
                 <p>
                         Acharya Prafulla Chandra Roy Polytechnic introducing their Students of Department
                         of Electronics and Instrumentation Engineering (DEIE).
@@ -608,7 +609,7 @@ function FrontPage({placeName}) {
                     <h4 >Department of Electronics and Instrumentation Engineering</h4>
                     <h7 >188, Raja Subodh Chandra Mallick Road Jadavpur,Kolkata: 700032<br/> Call : <a href='tel:03324146241'>03324146241</a>
                     <br/>email: <a href="mailto:apcraypolytechnic@gmail.com" target='_blank'>apcraypolytechnic@gmail.com</a>/<br/><a href='mailto:officeapcray@gmail.com' target='_blank'>officeapcray@gmail.com</a>
-                    <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><SiFacebook/> facebook</a> community</h7>
+                    <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><sup> <SiFacebook/> </sup> facebook</a> community</h7>
                     </div>
                     </Col>
                     <Col sm>
@@ -618,18 +619,20 @@ function FrontPage({placeName}) {
                         <div style={{display:'flex'}}>
                         <div className={containerStyle.footerconcept} > 
                         <h7><Nav.Link className={navstyle.navifooter} href='/' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='block';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='none';document.getElementById('frontimage').onload=(fire.firestore().collection('slideshow').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}));}}> <span >&gt; Home</span> </Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='about-eie' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='block';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='none';document.getElementById('frontimage').onload=(fire.firestore().collection('slideshow').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}));}}> <span >&gt; About Us</span> </Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Preface</Nav.Link></h7>
+                        <h7><Nav.Link className={navstyle.navifooter} href='#about-eie' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='block';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='none';document.getElementById('frontimage').onload=(fire.firestore().collection('slideshow').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}));}}> <span >&gt; About Us</span> </Nav.Link></h7>
+                        {/* <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Preface</Nav.Link></h7> */}
                         <h7><Nav.Link className={navstyle.navifooter} href='#academics/students' onClick={()=>{setTasks([]);document.getElementById('googlemap').style.display='none';document.getElementById('btngroup').style.display = 'block';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('preface').style.display='none';fire.firestore().collection('students').onSnapshot(function(data){
         setTasksyears(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
         });}}>&gt; Students</Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Why this website?</Nav.Link></h7>
+                        <h7><Nav.Link className={navstyle.navifooter} href='#academics/teachers' onClick={()=>{setTasks([]);fire.firestore().collection('teachers').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}); document.getElementById('btngroup').style.display = 'none';document.getElementById('preface').style.display='none';document.getElementById('teachersdescrp').style.display='block';document.getElementById('googlemap').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='block';}}>&gt; Teachers</Nav.Link></h7>
+                        
                         </div>
                         <div>
-                        <h7><Nav.Link className={navstyle.navifooter} href='#academics/teachers' onClick={()=>{setTasks([]);fire.firestore().collection('teachers').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}); document.getElementById('btngroup').style.display = 'none';document.getElementById('preface').style.display='none';document.getElementById('teachersdescrp').style.display='block';document.getElementById('googlemap').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='block';}}>&gt; Teachers</Nav.Link></h7>
+                        
                         <h7><Nav.Link className={navstyle.navifooter} href='#gallery' onClick={()=>{setModalShowGallery(true)}}>&gt; Gallery</Nav.Link></h7>
                         <h7><Nav.Link className={navstyle.navifooter} href='#events-eie' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='block';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='none';document.getElementById('frontimage').onload=(fire.firestore().collection('slideshow').onSnapshot(function(data){setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));}));}}>&gt; Events</Nav.Link></h7>
                         <h7><Nav.Link className={navstyle.navifooter} href='#recruiters' onClick={() => {setModalShowRecrt(true);}}>&gt; Recruiters</Nav.Link></h7>
+                        <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Why this website?</Nav.Link></h7>
                         </div>
                         </div>
                     </Col>
@@ -652,8 +655,8 @@ function FrontPage({placeName}) {
                     
                     <h2 style={{color:'#4169E1'}} >✒️Conceptualist</h2>
                     <div className={containerStyle.footerconcept}>
-                    <p> <h4 >Alok Mondal 
-                    <img src={alok} width={19} style={{borderRadius:20}}/>
+                    <p> <h4 style={{display:'flex'}}>Alok Mondal 
+                    <img src={alok} width={28} style={{borderRadius:20}}/>
                      </h4>
                     <a href='https://www.facebook.com/alok.mondal.56481379' target='_blank' style={{color:'white'}}><FaFacebook /></a>&nbsp;<FaLinkedinIn/>&nbsp;<FaWhatsapp/>&nbsp;<MdEmail/>&nbsp;<br/> Electronics & Instrumentation Engineering<br/>
                     Acharya Prafulla Chandra Ray Polytechnic, Kolkata-700032<br/></p>
@@ -675,7 +678,7 @@ function FrontPage({placeName}) {
                 </Row>
                 
                 <p></p><br/>
-                <p style={{fontSize:13}}>©️ This Web Application don't collect any personal data from anyone. All the information given in this website are collected from source. No data is used without it's author's permission. Only the selected Admin(s) will be given access to Admin Panel every year.</p>
+                <p style={{fontSize:13}}>©️ This Web Application doesn't collect any personal data from anyone. All the information given in this website are collected from legal source. No data is used without it's owner's permission. Only the selected Admin(s) will be given access to Admin Panel every year.</p>
                 <p style={{textAlign:'center'}}><a href=''>Copyright © {getdate()}</a>. All rights reserved.</p>
             </Container>
             </Container>
