@@ -32,18 +32,11 @@ function Recruiters(props) {
                     </Modal.Title>
                 </Modal.Header>
                 
-                <Modal.Body>
+                <Modal.Body style={{height:350,overflow:'scroll'}}>
 <CardColumns >
 
 
-{/* <Card
-                        border='primary'
-                        // className="text-center p-1"
-                        style={{ maxWidth: '18rem',textAlign:'center'}}
-                        // style={{textAlign:'center'}}
-                        >
-                        <Card.Img variant="top" src={spell.url} />
-                        </Card> */}
+
                     {tasksRecrt.map(spell=>(
                         <img 
                         className="d-block w-100"

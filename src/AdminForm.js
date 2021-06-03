@@ -1,12 +1,16 @@
 import React,{useEffect,useState} from 'react'
 import fire from './config/fire';
 import storage from './config/fire';
+import LoadingOverlay from 'react-loading-overlay';
+import BounceLoader from 'react-spinners/BounceLoader'
+import FadeLoader from 'react-spinners/FadeLoader'
 import sty from './css/adminFormImg.module.css';
 import containerStyle from './AdminContainer.module.css'
 import {Modal, Button, Form, Col, Row, ProgressBar, Spinner,Toast,Tab,Tabs,Nav,Card,Alert, Container,Badge} from 'react-bootstrap';
 import { FcPhone, FcAddressBook, FcContacts, FcPlus, FcAddDatabase,FcGallery, FcGraduationCap,FcCellPhone, FcAddImage, FcApproval, FcSynchronize, FcPhotoReel, FcStackOfPhotos, FcConferenceCall} from 'react-icons/fc';
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import {TiWarning} from 'react-icons/ti';
+import PulseLoader from 'react-spinners/PulseLoader'
 import avt from './avatar.png';
 // import AdminCreateSuccessToast from './AdminCreateSuccessToast';
 
@@ -48,6 +52,9 @@ function AdminForm(props) {
     const [newEmailforV, setnewEmailforV] = React.useState('');
     const [newimUrlV, setnewImUrlV] = React.useState(null);
     
+    const [newEmailforM, setnewEmailforM] = React.useState('');
+    const [newimUrlM, setnewImUrlM] = React.useState(null);
+
     const [newYear, setnewYear] = React.useState('');
     const allInputs = {imgUrl: ''}
     const [imageAsFile, setImageAsFile] = React.useState(null)
@@ -58,6 +65,7 @@ function AdminForm(props) {
     const [newStudentYear, setNewStudentYear] = React.useState('');
     const [tab, setTab] = React.useState('');
     const [emailerror, setemailerror] = useState('');
+    const [loading, setLoading] = useState(false)
     var flag=false
     var curr_y = ''
 
@@ -120,6 +128,7 @@ function AdminForm(props) {
       else if(tab=="recruiter"){if(newEmailforR==''){document.getElementById('emailerrr').style.display='block';document.getElementById('emailR').style.borderColor='red';}else{Create()}}
       else if(tab=="notice"){if(newEmailforN==''){document.getElementById('emailerrn').style.display='block';document.getElementById('emailN').style.borderColor='red';}else{Create()}}
       else if(tab=="video"){if(newEmailforV==''){document.getElementById('emailerrv').style.display='block';document.getElementById('emailV').style.borderColor='red';}else{Create()}}
+      else if(tab=="magazine"){if(newEmailforM==''){document.getElementById('emailerrm').style.display='block';document.getElementById('emailM').style.borderColor='red';}else{Create()}}
     }
 
     function Create(){
@@ -213,6 +222,12 @@ function AdminForm(props) {
             setnewEmailforV('')
             setnewImUrlV('')
           }
+          else if(tab=="magazine"){
+            db.collection('magazines').doc(newEmailforM).set({email:newEmailforM,year:8,url:newimUrlM})
+            // document.getElementById('myimgN').src=document.getElementById('myimg')
+            setnewEmailforM('')
+            setnewImUrlM('')
+          }
 
 
           
@@ -257,6 +272,10 @@ function AdminForm(props) {
       fire.firestore().collection('students').onSnapshot(function(data){
         setTasksyears(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
       });
+    //   setTimeout(() => {
+    //     setLoading(false)
+    // }, 3000);
+    
       
     },[])
 
@@ -336,19 +355,23 @@ function AdminForm(props) {
             <Row style={{paddingTop:10}}>
               {/* <div > */}
               <Col sm={3} md={2} >
-                <div className={sty.regformborder}>
+                <div className={sty.regformborder} style={{overflowY:'scroll',height:200}}>
               {tasksyears.map(spell=>(
                 <Nav variant="pills" className="flex-column">
-                      <Nav.Item  onClick={()=>{document.getElementById('tab').style.display='block';document.getElementById('tabmsg').style.display='none'; setNewFireYear(spell.year_arr);}}>
+                      <Nav.Item  onClick={()=>{setLoading(true);setTimeout(() => {
+            setLoading(false);
+            document.getElementById('tab').style.display='block';
+        }, 1000); document.getElementById('tab').style.display='none';document.getElementById('tabmsg').style.display='none'; setNewFireYear(spell.year_arr);}}>
                         <Nav.Link eventKey={spell.year_arr}>{spell.year_arr}</Nav.Link>
                       </Nav.Item>
                 </Nav>
               ))}
+             
+              </div>
               <form>
                 <input type='number' placeholder="New Year..." value={newStudentYear} onChange={e=> setNewStudentYear(e.target.value)} style={{width:102}}></input>
               </form>
               <div ><Button style={{width:102}} variant="primary" onClick={onCreat} >Create </Button></div>
-              </div>
               </Col>
               {/* </div> */}
               <Col sm={9}>
@@ -367,7 +390,35 @@ function AdminForm(props) {
             </p>
             </Alert>
 </div>
+<div id='load' >
+{loading&&
+      <div style={{textAlign:'center', position:'absolute',
+      paddingTop:100, justifyContent:'center',width:600,display:'flex',alignItems:'center'}}> <FadeLoader /></div>
+      }
+        {/* //   overlay: (base) => ({ */}
+        {/* //     ...base,
+        //     background: 'rgba(128, 128, 128, 0.5)',
+        //     width:'530px',
+            
+        //   }),
+        //   spinner: (base) => ({ */}
+        {/* //     ...base,
+        //     width: '100px',
+        //     '& svg circle': { */}
+        {/* //       stroke: 'rgba(255, 0, 0, 0.5)'
+        //     }
+        //   })
+         
+        // }} */}
+        
+    
+</div>
 <div id="tab" style={{display:'none'}}>
+
+      
+    
+{/* <PulseLoader color='#36D7B7' loading={loading}/> */}
+<div>
   <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
     <Row className="justify-content-md-center" style={{marginBottom:10}} className={sty.boxshadow}>
       <Col xs md={6} style={{backgroundColor:'#008080',width:330}} >
@@ -416,7 +467,11 @@ function AdminForm(props) {
     </Col>
     </Row>
   </Form>
+  </div>
+ 
+
                 </div>
+                
               </Col>
             </Row>
           </Tab.Container>
@@ -656,6 +711,42 @@ function AdminForm(props) {
                   <img id="myimg" className={sty.picture}/>
                 </div>
                 <input type='text' placeholder='youtube embed url..' value={newimUrlV} onChange={(e)=>{setnewImUrlV(e.target.value)}}/>
+                {/* <br/><Button onClick={onAdd}>Add</Button> */}
+                </Form.Group>
+                <p></p>
+                </Col>
+                </Row>
+              </Form>
+          </Tab>
+
+          <Tab eventKey="magazines" title="Magazine" onClick={()=>setTab('magazine')}>
+              <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                <Form.Group>
+                  <div style={{display:'flex'}}><h2><FcConferenceCall/></h2><span style={{paddingTop:7}}><Form.Control id="emailM" placeholder="Magazine Name" type="text" value={newEmailforM} onChange={e=> {setnewEmailforM(e.target.value);document.getElementById('emailerrm').style.display='none';document.getElementById('emailM').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
+                  <p id="emailerrm" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Magazine name required!</p>
+                  <br />
+                  <div id='spinner' style={{display:'none'}}><Spinner animation="grow" variant="primary" />
+                  <Spinner animation="grow" variant="warning" />
+                  <Spinner animation="grow" variant="dark" />
+                  <Spinner animation="grow" variant="success" />
+                  <Spinner animation="grow" variant="danger" />
+                  <Spinner animation="grow" variant="info" />
+                  </div>
+                  <div style={{textAlign:'center'}}>
+                  
+                  <Button variant="warning" onClick={onCreate} style={{borderColor:'yellow'}}>Add Magazine</Button>
+                  </div>
+                </Form.Group>
+                </Col>
+                <Col md={6} className={sty.picturealign}>
+                <Form.Group >
+                <div>
+                <h1 id="fcaddimage" style={{position:'relative',top:138,cursor:'pointer'}} ><FcAddImage/></h1>
+                  <img id="myimg" className={sty.picture}/>
+                </div>
+                <input type='text' placeholder='pdf url..' value={newimUrlM} onChange={(e)=>{setnewImUrlM(e.target.value)}}/>
                 {/* <br/><Button onClick={onAdd}>Add</Button> */}
                 </Form.Group>
                 <p></p>
