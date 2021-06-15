@@ -2,8 +2,10 @@ import React from 'react'
 import { Container,Navbar,NavDropdown,Nav,Button,Modal, Form, CardColumns,Card } from 'react-bootstrap'
 import fire from './config/fire';
 import {FcMms} from 'react-icons/fc';
+import sty from './css/adminFormImg.module.css';
 import containerStyle from './AdminContainer.module.css'
 import { CenterFocusWeakTwoTone } from '@material-ui/icons';
+import WorkIcon from '@material-ui/icons/Work';
 function Recruiters(props) {
 
     const [tasksRecrt, setTasksRecrt] = React.useState([]);
@@ -25,10 +27,13 @@ function Recruiters(props) {
                 centered
                 
                 >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter" className={containerStyle.newtestfont} >
-                    <img src='https://imgk.timesnownews.com/story/NHM_recruitment_2021_9.jpg?tr=w-400,h-300,fo-auto' width={100}/> 
-                    <b style={{color:'brown',fontSize:30}}>Our Recruiters</b>
+                <Modal.Header closeButton className={containerStyle.grad}>
+                    <Modal.Title id="contained-modal-title-vcenter" className={sty.controlpanelfont} >
+                    {/* <img src='https://imgk.timesnownews.com/story/NHM_recruitment_2021_9.jpg?tr=w-400,h-300,fo-auto' width={100}/>  */}
+                    <div style={{display:'flex',flexDirection:'row'}}>
+                    <div style={{color:'white'}}><WorkIcon fontSize="large"/></div>
+                    <span style={{color:'white',fontSize:30,paddingTop:3}}>&nbsp;Companies That Recruite</span>
+                    </div>
                     </Modal.Title>
                 </Modal.Header>
                 
@@ -52,7 +57,7 @@ function Recruiters(props) {
                 
                 </Modal.Body>
                 
-                <Modal.Footer>
+                <Modal.Footer className={containerStyle.grad}>
                     <Button variant='danger' onClick={props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>

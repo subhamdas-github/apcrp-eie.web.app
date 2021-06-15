@@ -35,6 +35,15 @@ import navstyle from './css/FrontNavStyle.module.css';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import PulseLoader from 'react-spinners/PulseLoader'
+import Paper from '@material-ui/core/Paper';
+import an from './Animated.module.css'
+import Review from './Review';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import FadeInSection from './FadeInSection';
 function Teachers() {
     const [tasks, setTasks] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -44,6 +53,7 @@ function Teachers() {
     const [newfireYear, setNewFireYear] = React.useState('');
     const [searchTerm, setSearchTerm] = React.useState('');
     const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(false);
     var colors = 
     ['#00FFFF','#8A2BE2','#A52A2A','#5F9EA0','#0000FF','#D2691E','#00FFFF','#006400','#8B008B','#A9A9A9',
      '#556B2F','#FF8C00','#9932CC','#8B0000','#8FBC8F','#483D8B','#E9967A','#2F4F4F','#2F4F4F','#00CED1',
@@ -64,30 +74,37 @@ function Teachers() {
         fire.firestore().collection('teachers').onSnapshot(function(data){
             setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
             setLoading(false)
+            document.getElementById('tea-review').style.display='block'
             })
     },[])
     return (
         <div>
             <FrontHeading/>
+            
+                
+            <div style={{padding:20}} className={containerStyle.grad}>
+                {/* <Container fluid='xl'> */}
+                {/* <Container fluid='xl' className={containerStyle.container}> */}
+            <Paper elevation={9}  className={containerStyle.grad}>
+            
             <div style={{display:'block',textAlign:'center'}} className={sty.controlpanelfont}>
-                <br/>
-                <Container fluid='xl'>
-                <Container fluid='xl' className={containerStyle.container}>
-                    <br/>
-                    <Alert variant="success">
-                    <Alert.Heading>Faculty Members of Electronics and Instrumentation Engineering</Alert.Heading>
-                    <p>
+            <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Teachers</b></span></h1>
+                    <Alert variant="info">
+                    <Alert.Heading style={{fontSize:25}}>Faculty Members of Electronics and Instrumentation Engineering</Alert.Heading>
+                    <p style={{fontSize:20}}>
                         Acharya Prafulla Chandra Roy Polytechnic introducing their respected Teachers of Department
                         of Electronics and Instrumentation Engineering (DEIE)
                     </p>
+                    <p style={{fontSize:18}}>(N.B. Information contained in this page are not verified. Information in this page are used in due permission from their respective owners.
+                  See our <a href='/about/privacy_policy'>Privacy Policy</a>)</p>
                     <hr />    
                     </Alert>
                     <hr/>
-                </Container>
-                </Container>
+                {/* </Container> */}
+                {/* </Container> */}
             </div>
             <div style={{display:'block'}}>
-                <Container fluid='xl'>
+                {/* <Container fluid='xl'> */}
                 <div style={{textAlign:'center',paddingTop:50}}><PulseLoader color='#36D7B7' loading={loading}/></div>
                 
                         <CardColumns>
@@ -100,6 +117,7 @@ function Teachers() {
                                 return val
                             }
                         }).map(spell => (
+                          <FadeInSection>
                         <Card border='primary'
                             className="text-center p-1"
                             style={{
@@ -114,7 +132,7 @@ function Teachers() {
                                
                             {/* <Card.Img src={spell.url} className={containerStyle.imgstyle}/> */}
                             <ListGroup variant="flush">
-                                <ListGroup.Item style={{color:textcolors[Math.floor(Math.random() * 10)]}}><h5>{faceemoji[Math.floor(Math.random() * 10)]}<b>{spell.name}</b></h5>
+                                <ListGroup.Item style={{color:textcolors[Math.floor(Math.random() * 10)]}}><h5><b>{spell.name}</b></h5>
                                 {spell.status1}<br/>{spell.status2}<br/>{spell.status3}
                                 </ListGroup.Item>
                                 <ListGroup.Item><Card.Link>
@@ -126,15 +144,44 @@ function Teachers() {
                             </div>
                             
                         </Card>
+                        </FadeInSection>
                         ))}
                         </CardColumns>
-                    {/* ):( */}
-                    {/* <Spinner animation="border" /> 
-                    )} */}
-                    
-                </Container>
+                        <hr/>
+                        <div id='tea-review' style={{display:'none',padding:40}} className={sty.controlpanelfont}>
+                    <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                      <p></p>
+                      <div>
+                        <h5 style={{fontSize:18,display:'flex'}}><span style={{paddingTop:14}}>Was this page helpful?</span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="Yes" placement="top">
+                              <IconButton aria-label="like" onClick={() => {document.getElementById('like').style.color='white'; setPage(false);setTimeout(() => {setModalShow(true);document.getElementById('like').style.color='#175451';}, 3000);}}>
+                                <ThumbUpAltIcon id='like' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="No" placement="top">
+                              <IconButton aria-label="dislike" onClick={() =>{document.getElementById('dislike').style.color='white'; setPage(false); setTimeout(() => {setModalShow(true);document.getElementById('dislike').style.color='#175451';}, 3000); }}>
+                                <ThumbDownAltIcon id='dislike' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                        </h5>
+                        {/* <h5 className={an.review} onClick={() => {setPage(false);setModalShow(true)}}>Review this page</h5> */}
+                      </div>
+                      <p></p>
+                    </div>
+                </div>
+            </div>
+            </Paper>
             </div>
             <Footer/>
+            <Review
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            page={page}
+            />
         </div>
     )
 }

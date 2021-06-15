@@ -1,16 +1,58 @@
 .navi{
     font-size: 18px;
-    /* color: lightgrey; */
+    color:#e6e6e6;
     
 }
-.navi :hover{
-    color: red;
-}
+.navi:hover{
+    /* font-size: 19px; */
+    /* color: #20b2aa; */
+    
+background: hsla(202, 71%, 27%, 1);
 
+background: linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 100%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 100%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 100%, hsla(176, 45%, 66%, 1) 100%);
+color: aliceblue;   
+}
+.navdropdown{
+    background-color: #f0f8ff;
+    font-size: 18px;
+    
+}
+.navdropdown:hover{
+    background: hsla(202, 71%, 27%, 1);
+
+background: linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 65%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 65%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 65%, hsla(176, 45%, 66%, 1) 100%);
+color: aliceblue;   
+font-size: 19px;
+}
 /* .navifooter {
     
     color: red;
 } */
 .navifooter{
-    color: aqua;
+    color: white;
+    font-size: 18px;
+}
+
+.navifooter:hover{
+    color: #20b2aa;
+    font-size: 19px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.linkfacebook{
+    color: white;
+    font-size: 21px;
+}
+.linkfacebook:hover{
+    color: #20b2aa;
+    font-size: 21px;
 }

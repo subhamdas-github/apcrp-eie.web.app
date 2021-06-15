@@ -68,15 +68,41 @@
     scroll-behavior: smooth;
 }
 .borderbottomstyle{
+    
     /* border-bottom: 6px solid #800000; */
     /* border-bottom: 6px solid brown; */
-    border-left: 12px solid black;
+    /* border-left: 12px solid #20B2AA;
+    border-left-style:ridge; */
+    /* border-bottom: 10px solid hsl(177, 70%, 41%); */
+    /* border-bottom-style:groove; */
+    /* border-bottom: 1px solid #3e4042;
+    border-bottom-style:ridge; */
+    /* border-top: 10px solid #20B2AA;
+    border-top-style:ridge;
+    border-right: 10px solid #20B2AA;
+    border-right-style:ridge; */
     /* border-bottom: 12px solid black; */
     /* background-color: lightgrey; */
-    background-color: #343a40;
+    /* background-color: #343a40; */
+    /* background-color: #3d3e42; */
     color: aliceblue;
     /* border-radius: 50%; */
-}
+     /* background: hsla(240, 4%, 15%, 1);
+
+background: linear-gradient(0deg, hsla(240, 4%, 15%, 1) 0%, hsla(240, 4%, 15%, 1) 1%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(240, 4%, 15%, 1) 0%, hsla(240, 4%, 15%, 1) 1%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(240, 4%, 15%, 1) 0%, hsla(240, 4%, 15%, 1) 1%, hsla(176, 45%, 66%, 1) 100%); */
+
+background: hsla(180, 25%, 25%, 1);
+
+background: linear-gradient(0deg, hsla(180, 25%, 25%, 1) 51%, hsla(34, 10%, 13%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(180, 25%, 25%, 1) 51%, hsla(34, 10%, 13%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(180, 25%, 25%, 1) 51%, hsla(34, 10%, 13%, 1) 100%);
+} 
 
 .bodybg{
     /* background: url('https://i.pinimg.com/originals/51/35/21/5135217d73b01d17070716e72d73f092.jpg'); */
@@ -94,7 +120,46 @@
     font-size:medium;
 }
 .prefaceimage{
-    transform: translate(50%, -10%);
+    position: relative;
+    z-index:1;
+    /* width:100px; */
+    /* height:100px; */
+    /* margin:30px; */
+    
+    overflow:hidden;
+    
+    
+            
+            
+    /* background-image: url('https://th.bing.com/th/id/Rfb424a3ac702b34de7d22344805a79ec?rik=3HmBB47r5Joz1g&riu=http%3a%2f%2fassets.coolhunting.com%2fcoolhunting%2fchad-assets%2fcover_photos%2f2016%2f5%2f57335306616662000a3b0000%2flarge.jpg%3f1462981382&ehk=1pFfiWin5ZUXFS4G3%2bZGgmR26kYI%2fBuVrGkV4sqYXTo%3d&risl=&pid=ImgRaw');
+    background-repeat: no-repeat; */
+    /* opacity: 0.2; */
+    /* transform: translate(50%, -10%); */
+}
+.prefaceimage::before{
+    z-index:-1;
+    position:absolute;
+    width:430px;
+    height:430px;
+    /* left:10;
+    top:0; */
+    content: "";
+    background: url("https://firebasestorage.googleapis.com/v0/b/apcrp-eie.appspot.com/o/z.png?alt=media&token=ae8e4329-5483-481e-bca8-5c582bf2dd10") no-repeat center;
+    background-size: 100%;
+    
+    /* content: url('https://firebasestorage.googleapis.com/v0/b/apcrp-eie.appspot.com/o/z.png?alt=media&token=ae8e4329-5483-481e-bca8-5c582bf2dd10'); */
+
+    opacity:0.3;
+    /* top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+    position: absolute;
+    z-index: -1;
+    background-image: url('https://th.bing.com/th/id/Rfb424a3ac702b34de7d22344805a79ec?rik=3HmBB47r5Joz1g&riu=http%3a%2f%2fassets.coolhunting.com%2fcoolhunting%2fchad-assets%2fcover_photos%2f2016%2f5%2f57335306616662000a3b0000%2flarge.jpg%3f1462981382&ehk=1pFfiWin5ZUXFS4G3%2bZGgmR26kYI%2fBuVrGkV4sqYXTo%3d&risl=&pid=ImgRaw');
+    background-repeat: no-repeat;
+    opacity: 1; */
+    /* transform: translate(50%, -10%); */
 }
 /* .prefacediv{ */
     /* border:1px solid green; */
@@ -135,7 +200,7 @@ font-family: 'Quantico', sans-serif;
     width: 60%;
 }
 .footerconcept{
-    border-left: 5px solid lightcoral;
+    border-left: 5px solid #145276;
     padding-left: 5px;
 }
 .newtestfont{
@@ -169,6 +234,21 @@ align-items: center;
    
     
 }
+.prefacelogo{
+    opacity: 0.2;
+    position: absolute;
+    bottom: 0;
+
+    left: 0;
+    text-align: center;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 400px;
+    /* height: 100vh; */
+    max-height: 500px;
+    
+}
 
 .events{
     height: 200px;
@@ -178,6 +258,89 @@ align-items: center;
 .events :hover{
     background-color: #20B2AA;
 }
-.video{
+.grad{
+    background: hsla(202, 71%, 27%, 1);
+
+background: linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
 
 }
+.ach{
+    /* background: #CA4246;
+  background-color: #CA4246;
+  background: conic-gradient(
+    #CA4246 16.666%, 
+    #E16541 16.666%, 
+    #E16541 33.333%, 
+    #F18F43 33.333%, 
+    #F18F43 50%, 
+    #8B9862 50%, 
+    #8B9862 66.666%, 
+    #476098 66.666%, 
+    #476098 83.333%, 
+    #A7489B 83.333%);
+    */
+  
+/* background: hsla(202, 71%, 27%, 1); */
+/* background-color: hsla(202, 71%, 27%, 1); */
+background: linear-gradient(0deg, hsla(178, 71%, 40%, 1) 0%, hsla(177, 70%, 55%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(178, 71%, 40%, 1) 0%, hsla(177, 70%, 55%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(178, 71%, 40%, 1) 0%, hsla(177, 70%, 55%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+/* background-repeat: repeat;  */
+background-size: 50%;
+  /* Use the text as a mask for the background. */
+  /* This will show the gradient as a text color rather than element bg. */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+  
+  /* Animate the text when loading the element. */
+  /* This animates it on page load and when hovering out. */
+  animation: rainbow-text-animation-rev 0.5s ease forwards;
+
+  cursor: pointer;
+}
+.ach:hover {
+    animation: rainbow-text-animation 0.5s ease forwards;
+}
+  @keyframes rainbow-text-animation {
+    0% {
+      background-size: 57%;
+      background-position: 0 0;
+    }
+    20% {
+      background-size: 57%;
+      background-position: 0 1em;
+    }
+    100% {
+      background-size: 300%;
+      background-position: -9em 1em;
+    }
+  }
+  
+  /* Move the background and make it smaller. */
+  /* Animation shown when entering the page and after the hover animation. */
+  @keyframes rainbow-text-animation-rev {
+    0% {
+      background-size: 300%;
+      background-position: -9em 1em;
+    }
+    20% {
+      background-size: 57%;
+      background-position: 0 1em;
+    }
+    100% {
+      background-size: 57%;
+      background-position: 0 0;
+    }
+  }
+  .w3animatr{position:relative;animation:animateright 0.4s}
+  @keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}

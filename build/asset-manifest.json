@@ -1,27 +1,33 @@
 {
   "files": {
-    "main.css": "/static/css/main.5ffe82bb.chunk.css",
-    "main.js": "/static/js/main.8865471c.chunk.js",
-    "main.js.map": "/static/js/main.8865471c.chunk.js.map",
+    "main.css": "/static/css/main.fe33a1d7.chunk.css",
+    "main.js": "/static/js/main.8a9ba2ce.chunk.js",
+    "main.js.map": "/static/js/main.8a9ba2ce.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.714febf1.js",
     "runtime-main.js.map": "/static/js/runtime-main.714febf1.js.map",
-    "static/css/2.e2df32e2.chunk.css": "/static/css/2.e2df32e2.chunk.css",
-    "static/js/2.e1c99dba.chunk.js": "/static/js/2.e1c99dba.chunk.js",
-    "static/js/2.e1c99dba.chunk.js.map": "/static/js/2.e1c99dba.chunk.js.map",
+    "static/css/2.ee0a126c.chunk.css": "/static/css/2.ee0a126c.chunk.css",
+    "static/js/2.46121401.chunk.js": "/static/js/2.46121401.chunk.js",
+    "static/js/2.46121401.chunk.js.map": "/static/js/2.46121401.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/2.e2df32e2.chunk.css.map": "/static/css/2.e2df32e2.chunk.css.map",
-    "static/css/main.5ffe82bb.chunk.css.map": "/static/css/main.5ffe82bb.chunk.css.map",
-    "static/js/2.e1c99dba.chunk.js.LICENSE.txt": "/static/js/2.e1c99dba.chunk.js.LICENSE.txt",
+    "static/css/2.ee0a126c.chunk.css.map": "/static/css/2.ee0a126c.chunk.css.map",
+    "static/css/main.fe33a1d7.chunk.css.map": "/static/css/main.fe33a1d7.chunk.css.map",
+    "static/js/2.46121401.chunk.js.LICENSE.txt": "/static/js/2.46121401.chunk.js.LICENSE.txt",
     "static/media/alok.2e27d6b6.jpg": "/static/media/alok.2e27d6b6.jpg",
     "static/media/avatar.bf28321f.png": "/static/media/avatar.bf28321f.png",
     "static/media/login.05288498.jpg": "/static/media/login.05288498.jpg",
-    "static/media/logoeie.c9358c50.png": "/static/media/logoeie.c9358c50.png"
+    "static/media/logoeie.c9358c50.png": "/static/media/logoeie.c9358c50.png",
+    "static/media/normallogo.4c34d2a0.jpg": "/static/media/normallogo.4c34d2a0.jpg",
+    "static/media/students.ae362cbf.jpg": "/static/media/students.ae362cbf.jpg",
+    "static/media/teachers.8366f331.jpg": "/static/media/teachers.8366f331.jpg",
+    "static/media/x.6f2235ef.png": "/static/media/x.6f2235ef.png",
+    "static/media/y.e6cb1150.png": "/static/media/y.e6cb1150.png",
+    "static/media/z.44f0bb0b.png": "/static/media/z.44f0bb0b.png"
   },
   "entrypoints": [
     "static/js/runtime-main.714febf1.js",
-    "static/css/2.e2df32e2.chunk.css",
-    "static/js/2.e1c99dba.chunk.js",
-    "static/css/main.5ffe82bb.chunk.css",
-    "static/js/main.8865471c.chunk.js"
+    "static/css/2.ee0a126c.chunk.css",
+    "static/js/2.46121401.chunk.js",
+    "static/css/main.fe33a1d7.chunk.css",
+    "static/js/main.8a9ba2ce.chunk.js"
   ]
 }

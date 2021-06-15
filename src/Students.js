@@ -1,8 +1,8 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import Footer from './Footer'
 import FrontHeading from './FrontHeading'
 import sty from './css/adminFormImg.module.css';
-import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown,Nav,Button,Tabs,Tab,Modal,Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup,Badge, ProgressBar } from 'react-bootstrap'
+import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown,Overlay,Popover, Nav,Button,Tabs,Tab,Modal,Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup,Badge, ProgressBar } from 'react-bootstrap'
 import Login from './Login';
 import App from './App';
 import fire from './config/fire'
@@ -42,6 +42,18 @@ import { Placeholder } from 'rsuite';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import an from './Animated.module.css'
+import Review from './Review';
+import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import ErrorIcon from '@material-ui/icons/Error';
+import FadeInSection from './FadeInSection';
+import HelpIcon from '@material-ui/icons/Help';
+
 function Students() {
     function AlertF(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -57,7 +69,7 @@ function Students() {
       }));
       const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
+  const [page, setPage] = useState(false);
 //   const handleClick = () => {
 //     setOpen(true);
 //   };
@@ -106,6 +118,7 @@ function Students() {
             })
     },[])
     const studentoptselect = ()=>{
+      
         
         if (newfireYear==''){alert('Please select a year to Go')}
         else{
@@ -117,13 +130,18 @@ function Students() {
         .onSnapshot(function(data){
 
         setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));setLoading(false)
-        setOpen(true);
-        document.getElementById('search').style.display='block';
         setSearchTerm('')
+        setOpen(true)
+        document.getElementById('search').style.display='block'
+        document.getElementById('stu-review').style.display='block'
+        
     });
         
         }
     }
+    const [showt, setShowt] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
     return (
         <div>
             <div className={classes.root}>
@@ -139,29 +157,44 @@ function Students() {
     </div>
             {/* <LinearProgress/> */}
             <FrontHeading/>
-            <div style={{display:'block',textAlign:'center'}}>
+            <div style={{padding:20}} className={containerStyle.grad}>
+            <Paper elevation={9}  className={containerStyle.grad}>
+            
+            <div style={{display:'block',textAlign:'center'}} className={sty.controlpanelfont}>
+            <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Students</b></span></h1>
             <br/>
-            <Container fluid='xl'>
-            <Container fluid='xl' className={containerStyle.container}>
-                <br/><br/>
-                <Alert variant="success">
-                <Alert.Heading>Students of Electronics and Instrumentation Engineering</Alert.Heading>
-                <p>
+            {/* <Container fluid='xl'> */}
+            {/* <Container fluid='xl' className={containerStyle.container}> */}
+                
+                <Alert variant="info">
+                <Alert.Heading style={{fontSize:25}}>Students of Electronics and Instrumentation Engineering</Alert.Heading>
+                <p style={{fontSize:20}}>
                         Acharya Prafulla Chandra Roy Polytechnic introducing their Students of Department
                         of Electronics and Instrumentation Engineering (DEIE).
                 </p>
+                <p style={{fontSize:18}}>
+                  <div style={{display:'flex',justifyContent:'center'}}>
+                  <span style={{color:'#dc3545'}}><ErrorIcon/></span> <span style={{paddingTop:5}}>Information contained in this page are not verified. Information in this page are used in due permission from their respective owners.
+                  See our <a href='/about/privacy_policy'>Privacy Policy</a></span>
+                  </div></p>
                 <hr />
                 </Alert>
 
                 <Row><Col>
-                <Form style={{display:'flex'}}>
-                <Badge variant='primary' ><h6 style={{paddingTop:6}}>Choose Year</h6></Badge>
-                <Form.Control style={{paddingTop:6}} as="select" custom type="text" value={newfireYear} onChange={e=> setNewFireYear(e.target.value)} style={{textOverflow:'ellipsis',overflow:'hidden'}}>
-                {tasksyears.map(spell=>(
-                    <option >{spell.year_arr}</option>
-                ))}
-                </Form.Control>
-                <Button variant='danger' style={{width:80}} onClick={studentoptselect}>Go</Button>
+                <Form style={{display:'flex',justifyContent:'center'}}>
+                  <div>
+                    <Badge variant='primary' ><h6 style={{paddingTop:6}}>Select Year</h6></Badge>
+                  </div>
+                  <div style={{width:400}}>
+                    <Form.Control style={{paddingTop:6}} as="select" custom type="text" value={newfireYear} onChange={e=> setNewFireYear(e.target.value)} style={{textOverflow:'ellipsis',overflow:'hidden'}}>
+                    {tasksyears.map(spell=>(
+                        <option  className={an.studentyearnav}>{spell.year_arr}</option>
+                    ))}
+                    </Form.Control>
+                  </div>
+                  <div>
+                    <Button variant='danger' style={{width:80}} onClick={studentoptselect}>Go</Button>
+                  </div>
                 </Form>
                 </Col></Row><br/>
                 <Row><Col>
@@ -176,15 +209,15 @@ function Students() {
 
                 <br/>
 
-            </Container>
-            </Container>
+            {/* </Container> */}
+            {/* </Container> */}
             </div>
-
-            <div style={{display:'block'}}>
+                  
+            <div style={{display:'block'}} >
             
-                <Container fluid='xl'>
+                {/* <Container fluid='xl'> */}
                 {/* <Paragraph style={{ marginTop: 30,color:'red' }} rows={5} graph="circle" active /> */}
-                <div style={{textAlign:'center',paddingTop:50}}><PulseLoader color='#36D7B7' loading={loading}/></div>
+                <div style={{textAlign:'center',paddingTop:50}}><PulseLoader color='white' loading={loading}/></div>
                 {/* <Spinner animation="border" />  */}
                     {/* {loading?( */}
                         <CardColumns>
@@ -197,6 +230,7 @@ function Students() {
                                 return val
                             }
                         }).map(spell => (
+                          <FadeInSection>
                         <Card border='primary'
                             className="text-center p-1"
                             style={{
@@ -223,16 +257,74 @@ function Students() {
                             </div>
                             
                         </Card>
+                        </FadeInSection>
                         ))}
+                        
                         </CardColumns>
                     {/* ):( */}
                     {/* <Spinner animation="border" /> 
                     )} */}
                     
-                </Container>
+                {/* </Container> */}
+                
+                {/* <hr/> */}
+                <div id='stu-review' style={{display:'none',padding:40}} className={sty.controlpanelfont}>
+                <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}} className={sty.controlpanelfont}>
+                        <p></p>
+                        <p></p>
+                          <div ref={ref} style={{display:'flex',fontSize:17}}><HelpIcon fontSize="small"/><span className={an.articlefeedback} onClick={(event) => {setShowt(!show); setTarget(event.target);}}>Having trouble finding your name?</span><Overlay
+        show={showt}
+        target={target}
+        placement="top"
+        container={ref.current}
+        containerPadding={20}
+      >
+        <Popover id="popover-contained">
+          <Popover.Title as="h3">If you're Having trouble to find your name...</Popover.Title>
+          <Popover.Content>
+            <strong>Tip 1:</strong> Search your name or email above.<br/>
+            <strong>Tip 2:</strong> Make sure you've searched your passout year.<br/>
+            <strong>Tip 3:</strong> Refresh the web page.<br/>
+            <strong>Tip 4:</strong> Contact with present administrator.
+          </Popover.Content>
+        </Popover>
+      </Overlay></div>
+                    
+                </div>
+                <hr/>
+                    <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                      <p></p>
+                      <div>
+                        <h5 style={{fontSize:18,display:'flex'}}><span style={{paddingTop:14}}>Was this page helpful?</span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="Yes" placement="top">
+                              <IconButton aria-label="like" onClick={() => {document.getElementById('like').style.color='white'; setPage(false);setTimeout(() => {setModalShow(true);document.getElementById('like').style.color='#175451';}, 3000);}}>
+                                <ThumbUpAltIcon id='like' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="No" placement="top">
+                              <IconButton aria-label="dislike" onClick={() =>{document.getElementById('dislike').style.color='white'; setPage(false); setTimeout(() => {setModalShow(true);document.getElementById('dislike').style.color='#175451';}, 3000); }}>
+                                <ThumbDownAltIcon id='dislike' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                        </h5>
+                        {/* <h5 className={an.review} onClick={() => {setPage(false);setModalShow(true)}}>Review this page</h5> */}
+                      </div>
+                      <p></p>
+                    </div>
+                </div>
             </div>
-    
+            </Paper>
+            </div>
             <Footer/>
+            <Review
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            page={page}
+            />
         </div>
     )
 }

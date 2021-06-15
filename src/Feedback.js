@@ -26,6 +26,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 // import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 // import {signInWithGoogle} from './config/fire'
 // import {auth} from './config/fire'
 // const firebaseC = {
@@ -41,62 +44,37 @@ import Typography from '@material-ui/core/Typography';
     // firebase.initializeApp(firebaseC);
 //   }
 function Feedback() {
-    const [feedbacks,setFeedbacks] = useState([])
-    // const uiConfig = {
-    //     signInFlow: "popup",
-    //     signInOptions:[
-    //         firebase.auth.GithubAuthProvider
-    //     ]
-    // }
+  const labels = {
+   
+    1: 'Useless',
+   
+    2: 'Poor',
+    
+    3: 'Satisfactory',
 
-    const onsubmit = () =>{
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-          var credential = result.credential;console.log(credential)
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          // ...
-        }).catch((error) => {
-            console.log(error);
-        });
-      }
-    const logout = () =>{
-        firebase.auth().signOut().then((a) => {
-            // Sign-out successful.
-            console.log(a)
-          }).catch((error) => {
-            // An error happened.
-            console.log(error)
-          });
-          
-    }
+    4: 'Good',
+ 
+    5: 'Excellent',
+  };
+  
+    const [feedbacks,setFeedbacks] = useState([])
+    
+
+ 
 
     const [cuurentuser, setcurrentuser] = useState(null)
     const [count, setcouunt] = useState('')
     const [loading, setloading] = useState(true)
     var colormap = ['#aa00ff','#e91e63','#4caf50','#ff5722','#673ab7','#2c3e50','#C71585','#008080','#0077b5','#0063B1']
     useEffect(()=>{
-        // firebase.auth().onAuthStateChanged(user => {
-        //      setcurrentuser(user)
-        //   });
+        
         fire.firestore().collection("feedbacks").orderBy("name", "asc").onSnapshot(function(data){
             setFeedbacks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
             setcouunt(<span>{data.size} <span>Comments</span></span>)
             setloading(false)
           });
     },[])
-    // const auth = fire.auth();
-    // const googleProvider = new fire.auth.GoogleAuthProvider()
-    // const signInWithGoogle = () => {
-    //     auth.signInWithPopup(googleProvider).then((res) => {
-    //       console.log(res.user)
-    //     }).catch((error) => {
-    //       console.log(error.message)
-    //     })
-    //   }
+    
     const useStyles = makeStyles((theme) => ({
         root: {
           '& .MuiTextField-root': {
@@ -105,13 +83,22 @@ function Feedback() {
             
           },
         },
+        rate:{
+          
+            width: 200,
+            display: 'flex',
+            justifyContent:'space-between',
+            alignItems: 'center',
+          
+        },
       }));
       const classes = useStyles();
         const [name, setName] = React.useState('');
         const [email, setEmail] = React.useState('');
         const [comment, setComment] = React.useState('');
 
- 
+        const [value, setValue] = React.useState(0);
+        const [hover, setHover] = React.useState(-1);
         
     const responseGoogle=(res)=>{
         console.log(res.name)
@@ -119,19 +106,22 @@ function Feedback() {
     const onSend = ()=>{
         if (email=='' || name==''){alert('enter a email address')}
         else{
-        fire.firestore().collection('feedbacks').doc(email).set({name:name,email:email,comment:comment,year:7})
+        fire.firestore().collection('feedbacks').doc(email).set({rate:value,name:name,email:email,comment:comment,year:7})
         setName('')
         setEmail('')
         setComment('')
+        setValue(0)
         }
     }
     return (
         <div>
             <FrontHeading/>
-            <br/>
-            <b.Container fluid='xl'>
-            <b.Container fluid='xl' className={containerStyle.containerfeedback}>
-            <div>
+            
+            
+            <div style={{padding:20}} className={containerStyle.grad}>
+            <Paper elevation={9}  className={containerStyle.grad}>
+            <div >
+              {/* <b.Alert variant='info'> */}
                 <b.Row className="justify-content-md-center" >
                     <b.Col xs lg="2">
                     <h1 style={{fontSize:100}}>✍️</h1>
@@ -139,30 +129,62 @@ function Feedback() {
                     
                     <b.Col md="auto">
                        
-                            {/* <FeedbackIcon/> */}
-                            {/* <div style={{display:'flex',backgroundColor:'green',color:'white'}}> */}
-                            {/* <h1 style={{fontSize:100}}>✍️</h1> */}
-                            <div style={{paddingTop:20}}>
-                                <h5>How about giving a feedback?</h5>
-                                <h5>We're happy that you are using this web app.</h5>
-                                <h5>Kindly share your views, opinions, suggestions or ideas about it.</h5>
-                                <h5>We'll do our best to make this application more nice & useful.</h5>
+                            
+                            <div style={{paddingTop:20,color:'aliceblue'}}  className={sty.controlpanelfont}>
+                                <h5>&#10148; How about giving a feedback?</h5>
+                                <h5>&#10148; We're happy that you are using this web app.</h5>
+                                <h5>&#10148; Kindly share your views, opinions, suggestions or ideas about it.</h5>
+                                <h5>&#10148; We'll do our best to make this application more nice & useful.</h5>
                             </div>
-                            {/* </div> */}
+                          
                     </b.Col>
                     
                 </b.Row>
-
+                {/* </b.Alert> */}
             </div>
-            </b.Container>
-            </b.Container><br/>
-            <b.Container fluid='xl' className={sty.controlpanelfont}>
-            <b.Container fluid='xl' className={containerStyle.containerfront}>
+            
+            <hr/>
+            
                 <br/>
+                <b.Alert variant='info'>
             <div >
+              
                 <b.Row>
-                {/* <b.Col></b.Col> */}
-                <b.Col style={{textAlign:'center'}}>
+                <b.Col sm>
+                  <br/>
+                  <h4 style={{display:'flex'}}>5 Stars<Rating name="read-only" defaultValue={5} readOnly size="large"/></h4>
+                  <b.ProgressBar animated now={90} label={`${90}%`}/><br/>
+                  <h4 style={{display:'flex'}}>4 Stars<Rating name="read-only" defaultValue={4} readOnly size="large"/></h4>
+                  <b.ProgressBar animated now={5} label={`${5}%`}/><br/>
+                  <h4 style={{display:'flex'}}>3 Stars<Rating name="read-only" defaultValue={3} readOnly size="large"/></h4>
+                  <b.ProgressBar animated now={5} label={`${5}%`}/><br/>
+                  <h4 style={{display:'flex'}}>2 Stars<Rating name="read-only" defaultValue={2} readOnly size="large"/></h4>
+                  <b.ProgressBar animated now={1} label={`${0}%`}/><br/>
+                  <h4 style={{display:'flex'}}>1 Star<Rating name="read-only" defaultValue={1} readOnly size="large"/></h4>
+                  <b.ProgressBar animated now={1} label={`${0}%`}/>
+                </b.Col>
+                
+                <b.Col sm style={{textAlign:'center'}}>
+                <div >
+                  <p></p>
+                  <div className={sty.controlpanelfont}>
+                          <h2>Rate Us</h2>
+                          <Rating
+                            size="large"
+                            name="hover-feedback"
+                            value={value}
+                            precision={1}
+                            onChange={(event, newValue) => {
+                              setValue(newValue);
+                            }}
+                            onChangeActive={(event, newHover) => {
+                              setHover(newHover);
+                            }}
+                          />
+                          {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
+                    </div>
+                    <p></p>
+                  </div>
                 <form className={classes.root} noValidate autoComplete="off">
                 <div>
                     <TextField
@@ -191,12 +213,14 @@ function Feedback() {
                     size="small"
                     required
                     />
+
+                    
                     
                     <TextField
                     id="outlined-multiline-static"
-                    label="Add a public comment..."
+                    label="Write Something (Optional)"
                     multiline
-                    rows={4}
+                    rows={10}
                     value={comment}
                     
                     onChange={(e)=>{setComment(e.target.value)}}
@@ -207,7 +231,7 @@ function Feedback() {
                 </div>
                     <div >
                         {/* <p></p> */}
-                    <Button size="large" variant="contained" color="primary" endIcon={<SendIcon/>} onClick={onSend}>
+                    <Button  size="large" variant="contained" color="primary" endIcon={<SendIcon/>} onClick={onSend}>
                     Send
                     </Button>
                     {/* <p></p> */}
@@ -216,11 +240,15 @@ function Feedback() {
                 </b.Col>
                 {/* <b.Col></b.Col> */}
                 </b.Row>
+                
             </div>
-            </b.Container>
-            </b.Container>
-<br/>
-            <b.Container fluid='xl' className={sty.controlpanelfont}>
+            </b.Alert>
+            <hr/>
+            </Paper>
+            </div>
+            
+
+            {/* <b.Container fluid='xl' className={sty.controlpanelfont}>
             <b.Container fluid='xl' className={containerStyle.containerfront}>
                 <br/>
                 {loading?
@@ -251,7 +279,7 @@ function Feedback() {
                               className={classes.inline}
                               color="textPrimary"
                             >
-                              {/* {spell.email}-- */}
+                              
                             </Typography>
                             {spell.comment}
                           </React.Fragment>
@@ -264,7 +292,7 @@ function Feedback() {
               </div>
 }
             </b.Container>
-            </b.Container>
+            </b.Container> */}
             <Footer/>
         </div>
     )

@@ -41,7 +41,23 @@ import Notice from './Notice';
 import navstyle from './css/FrontNavStyle.module.css';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
+import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import SendIcon from '@material-ui/icons/Send';
+import Rating from '@material-ui/lab/Rating';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import SentimentDissatisfiedIcon from '@material-ui/icons/SentimentDissatisfied';
+import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfied';
+import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltOutlined';
+import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import BackToTop from 'react-back-to-top';
 function Footer() {
     const [tasks, setTasks] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -51,50 +67,68 @@ function Footer() {
     function getdate (){
         return new Date().getFullYear();
     }
+    
     return (
         <div>
-            <ScrollUpButton />
-            <Progressbar />
-<div style={{display:'block'}} className={sty.controlpanelfont}>
+            <ScrollUpButton EasingType="easeInQuart"/>
+            {/* <Progressbar /> */}
+            {/* <BackToTop
+        showOnScrollUp
+        showAt={100}
+        speed={1500}
+        easing="easeInOutQuint"
+      >
+        <span>scroll up</span>
+      </BackToTop> */}
+<div style={{display:'block'}} className={sty.controlpanelfont} >
                 {/* <Footer/> */}
-                <div >
+                
+                <div style={{padding:20}} className={containerStyle.grad}>
+                
+            {/* <Container fluid='xl'> */}
+            {/* <Container fluid='xl'  > */}
                 <br/><br/>
-            <Container fluid='xl'>
-            <Container fluid='xl' className={containerStyle.containerfront} style={{backgroundColor:'black',color:'whitesmoke',maxHeight:2000}}>
-                <br/><br/>
+                
+                <Paper elevation={9} style={{backgroundColor:'black',color:'whitesmoke',maxHeight:2000,padding:25}}>
+                
                 <Row>
                     <Col sm >
                     <br/>
                         
                     {/* <hr style={{borderWidth:5, borderColor:'#FF4500'}}></hr> */}
-                    <h2 style={{color:'#4169E1'}} >Acharya Prafulla Chandra Ray Polytechnic</h2>
+                    {/* <h3 style={{color:'#20b2aa'}} >Acharya Prafulla Chandra Ray Polytechnic</h3> */}
+                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Acharya Prafulla Chandra Ray Polytechnic</h3></div>
                     <div className={containerStyle.footerconcept}>
                     <h4 >Department of Electronics and Instrumentation Engineering</h4>
-                    <h7 >188, Raja Subodh Chandra Mallick Road Jadavpur,Kolkata: 700032<br/> Call : <a href='tel:03324146241'>03324146241</a>
+                    <h7 >188, Raja Subodh Chandra Mallick Road Jadavpur,Kolkata: 700032<br/> 
+                    Call : <a href='tel:03324146241'>03324146241</a>
                     <br/>email: <a href="mailto:apcraypolytechnic@gmail.com" target='_blank'>apcraypolytechnic@gmail.com</a>/<br/><a href='mailto:officeapcray@gmail.com' target='_blank'>officeapcray@gmail.com</a>
-                    <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><sup> <SiFacebook/> </sup> facebook</a> community</h7>
+                    <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><sup> <SiFacebook/> </sup> facebook</a> community
+                    </h7>
                     </div>
                     </Col>
                     <Col sm>
                         <br/>
                         
-                        <h2 style={{color:'#4169E1'}} >🔗Quick Links</h2>
+                        <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Quick Links</h3></div>
                         <div style={{display:'flex'}}>
-                        <div className={containerStyle.footerconcept} > 
-                        <h7><Nav.Link className={navstyle.navifooter} href='/' > <span >&gt; Home</span> </Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='/#about-eie'> <span >&gt; About Us</span> </Nav.Link></h7>
-                        {/* <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Preface</Nav.Link></h7> */}
-                        <h7><Nav.Link className={navstyle.navifooter} href='/students' >&gt; Students</Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='/teachers' >&gt; Teachers</Nav.Link></h7>
-                        
-                        </div>
-                        <div>
-                        
-                        <h7><Nav.Link className={navstyle.navifooter} onClick={()=>{setModalShowGallery(true)}}>&gt; Gallery</Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='/#events-eie'>&gt; Events</Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} onClick={() => {setModalShowRecrt(true);}}>&gt; Recruiters</Nav.Link></h7>
-                        <h7><Nav.Link className={navstyle.navifooter} href='/preface'>&gt; Why this website?</Nav.Link></h7>
-                        </div>
+                            <div className={containerStyle.footerconcept} >
+                            <h7><Nav.Link className={navstyle.navifooter} href='/' >  <span>&gt;Home</span> </Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/#about-eie'>  <span>&gt;About</span> </Nav.Link></h7>
+                            {/* <h7><Nav.Link className={navstyle.navifooter} href='#preface' onClick={()=>{setTasks([]);document.getElementById('btngroup').style.display = 'none';document.getElementById('teachersdescrp').style.display='none';document.getElementById('front').style.display='none';document.getElementById('studentsCard').style.display='none';document.getElementById('googlemap').style.display='none';document.getElementById('preface').style.display='block';}}>&gt; Preface</Nav.Link></h7> */}
+                            <h7><Nav.Link className={navstyle.navifooter} href='/students' > <span>&gt;Students</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/teachers' > <span>&gt;Teachers</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/feedback' > <span>&gt;Feedback</span></Nav.Link></h7>
+                            
+                            </div>
+                            <div style={{paddingLeft:30}}>
+                            
+                            <h7><Nav.Link className={navstyle.navifooter} onClick={()=>{setModalShowGallery(true)}}> <span>&gt;Gallery</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/#events-eie'> <span>&gt;Events</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} onClick={() => {setModalShowRecrt(true);}}> <span>&gt;Recruiters</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/about/privacy_policy'> <span>&gt;Privacy Policy</span></Nav.Link></h7>
+                            <h7><Nav.Link className={navstyle.navifooter} href='/preface'> <span>&gt;Why this website?</span></Nav.Link></h7>
+                            </div>
                         </div>
                     </Col>
                     
@@ -114,13 +148,23 @@ function Footer() {
                     <Col sm ><br/>
                     {/* <hr style={{borderWidth:5, borderColor:'#FF4500'}}></hr> */}
                     
-                    <h3 style={{color:'#4169E1'}} >✒️Conceptualist</h3>
+                    {/* <h3 style={{color:'#20b2aa'}} >✒️Conceptualist</h3> */}
+                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Conceptualist</h3></div>
                     <div className={containerStyle.footerconcept}>
-                    <p> <h5 style={{display:'flex'}}>Alok Mondal 
-                    {/* <img src={alok} width={23} style={{borderRadius:20}}/> */}
-                     </h5>
-                    <a href='https://www.facebook.com/alok.mondal.56481379' target='_blank' style={{color:'white'}}><FaFacebook /></a>&nbsp;<a href='https://www.instagram.com/i.am.alok.mondal/' target='_blank' style={{color:'white'}}><RiInstagramFill/></a> &nbsp;<a href='https://www.linkedin.com/in/alok-mondal-84664a200' target='_blank' style={{color:'white'}}><FaLinkedinIn/></a> &nbsp;<a href='mailto:alokmondal70@gmail.com' target='_blank' style={{color:'white'}}><MdEmail/></a> <br/> Electronics & Instrumentation Engineering<br/>
-                    Acharya Prafulla Chandra Ray Polytechnic, Kolkata-700032<br/></p>
+                     <h5>Alok Mondal </h5>
+                     
+                    <a href='https://www.facebook.com/alok.mondal.56481379' target='_blank' className={navstyle.linkfacebook}>
+                        <FaFacebook /></a>&nbsp;
+                    <a href='https://www.instagram.com/i.am.alok.mondal/' target='_blank' className={navstyle.linkfacebook}>
+                            <RiInstagramFill/></a> &nbsp;
+                    <a href='https://www.linkedin.com/in/alok-mondal-84664a200' target='_blank' className={navstyle.linkfacebook}>
+                        <FaLinkedinIn/></a> &nbsp;
+                    <a href='mailto:alokmondal70@gmail.com' target='_blank' className={navstyle.linkfacebook}>
+                        <MdEmail/></a> 
+                        
+                    <br/> Electronics & Instrumentation Engineering<br/>
+                    Acharya Prafulla Chandra Ray Polytechnic, Kolkata-700032<br/>
+                    
                     </div>
                     </Col>
 
@@ -129,26 +173,39 @@ function Footer() {
                     <Col sm ><br/>
                     {/* <hr style={{borderWidth:5,borderColor:'#FF4500'}}></hr> */}
                     
-                    <h3 style={{color:'#4169E1'}} >👨‍💻Designed & Developed by</h3>
+                    {/* <h3 style={{color:'#20b2aa'}} >👨‍💻Designed & Developed by</h3> */}
+                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Designed & Developed by</h3></div>
                     <div className={containerStyle.footerconcept}>
                         <p>
-                     <h5>Subham Das  &lt;/&gt;</h5><a href='https://www.facebook.com/subham.das.908347' target='_blank' style={{color:'white'}}><FaFacebook /></a>&nbsp;<a href='' target='_blank' style={{color:'white'}}><RiInstagramFill/></a> &nbsp;<a href='https://www.linkedin.com/in/subham-das-43a396199/' target='_blank' style={{color:'white'}}><FaLinkedinIn/></a> &nbsp;<a href='mailto:dsubham776@gmail.com' target='_blank' style={{color:'white'}}><MdEmail/></a>&nbsp;<FaGithub/>&nbsp;<FaHackerrank/><br/> Computer Science & Technology<br/>
+                     <h5>Subham Das  &lt;&gt;</h5>
+                     <a href='https://www.facebook.com/subham.das.908347' target='_blank' className={navstyle.linkfacebook}>
+                    <FaFacebook /></a>&nbsp;<a href='/' target='_blank' className={navstyle.linkfacebook}>
+                    <RiInstagramFill/></a> &nbsp;
+                    <a href='https://www.linkedin.com/in/subham-das-43a396199/' target='_blank' className={navstyle.linkfacebook}>
+                    <FaLinkedinIn/></a> &nbsp;<a href='mailto:dsubham776@gmail.com' target='_blank' className={navstyle.linkfacebook}>
+                    <MdEmail/></a>&nbsp;<a href='https://github.com/dsubham76' target='_blank' className={navstyle.linkfacebook}>
+                    <FaGithub/></a>&nbsp;<FaHackerrank/><br/> Computer Science & Technology<br/>
                     Acharya Prafulla Chandra Ray Polytechnic, Kolkata-700032</p>
                     </div>
                     </Col>
                 </Row>
+                <br/>
+                <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                    <p></p>
+                    <a className={navstyle.navifooter} href='/feedback'>Is this website helpful ? Give a feedback</a>
+                    <p></p>
+                </div>
                 
                 <p></p><br/>
-                <p style={{fontSize:13}}>©️ This Web Application doesn't collect any personal data or cookie from anyone. The information contained in this website are not verified. The data in this website is used in due permission from their respective owners. The present administrator(s) is fully responsible for availability of data and information in this website. see our <a href='/about/privacy_policy'>Privacy Policy</a> </p>
+                <p style={{fontSize:15}}>©️ This Web Application doesn't collect any personal data or cookie from anyone. The information contained in this website are not verified. The data in this website is used in due permission from their respective owners. The present administrator(s) is fully responsible for availability of data and information in this website. see our <a href='/about/privacy_policy'>Privacy Policy</a> </p>
                 <p style={{textAlign:'center'}}><a href=''>Copyright © {getdate()}</a>. All rights reserved.</p>
-            </Container>
-            </Container>
+            {/* </Container> */}
+            {/* </Container> */}
+            </Paper>
             </div>
+            
             </div>
-            {/* <Login
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            /> */}
+            
             <Gallery
             show={modalShowGallery}
             onHide={() => setModalShowGallery(false)}

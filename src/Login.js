@@ -24,6 +24,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
 const useStyles = makeStyles((theme) => ({
 	root: {
 	  '& > *': {
@@ -110,13 +111,13 @@ const Login = ()=> {
 		<>
 		
 		
-			<div style={{backgroundColor:'white',height:700}}>
+		<div  className={containerStyle.grad} style={{height:1000}}>
 			{/* <LinearProgress /> */}
-		<Container fluid='xl'>
+	<Container fluid='xl'>
       <Row>
 		  <Col></Col>
 		  <Col md={6}>
-		  
+		
         
 			{/* <img src='https://firebasestorage.googleapis.com/v0/b/collect-db.appspot.com/o/website-images%2F55788fea0c1e66112a0b497f312aa01e.jpg?alt=media&token=3898a3ef-3fc5-4721-bef7-ccf7f3f1a12c' width={100}/> */}
 			{/* <img src={loginimg} width={100}/> */}
@@ -124,6 +125,7 @@ const Login = ()=> {
 		  {/* <b style={{color:'#800000'}}>Administrator Login</b> */}
         
         
+		<Paper elevation={6} >
         <div className={loginsty.loginbox}>
 		{isbtnloading &&<LinearProgress />}
 	  		<div className={loginsty.loginkey}>
@@ -133,40 +135,20 @@ const Login = ()=> {
 				  ADMIN LOGIN
 			  </div>
 			  <div className={loginsty.loginform}>
-				  {/* <div className={loginsty.loginform}> */}
-
-				  {/* <form className={classes.root} noValidate autoComplete="off">
-      <TextField id="standard-basic" label="Standard" />
-      <TextField id="filled-basic" label="Filled" variant="filled" />
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-    </form> */}
+				  
 			<form  className={classes.root} noValidate autoComplete="off" >
 			
-		  
 			<TextField className={loginsty.logintext} id="standard-basic" label="Username/Email Address" type="email" value={email} onChange={(e)=>setemail(e.target.value)} />
 			<p style={{color:'red'}}>{emailerror}</p>
 			
 			<TextField className={loginsty.logintext} id="standard-basic" label="Password" type="password" value={password} onChange={(e)=>setpassword(e.target.value)}/>
 			<p style={{color:'red'}}>{passworderror}</p>
 
-			
-				{/* <Form.Group controlId="formBasicEmail">
-					<MdEmail/><Form.Label><small>Username/Email Address</small></Form.Label>
-					<Form.Control  type="email" placeholder="Enter email address" value={email} onChange={(e)=>setemail(e.target.value)} />
-					<p style={{color:'red'}}>{emailerror}</p>
-				</Form.Group> */}
-
-				{/* <Form.Group controlId="formBasicPassword">
-					<RiLockPasswordFill/><Form.Label><small>Password</small></Form.Label>
-					<Form.Control type="password" placeholder="Enter password" value={password} onChange={(e)=>setpassword(e.target.value)} />
-					<p style={{color:'red'}}>{passworderror}</p>
-				</Form.Group> */}
-
 				<Form.Group controlId="formBasicCheckbox">
 					<Form.Check type="checkbox" label="Remember me" />
 				</Form.Group>
 				<div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
-					{/* <Button size='lg' variant='info' href='/'>Home</Button> */}
+
 					<p></p>
 				<Button  variant="contained" color="primary" style={{height:49}}
 				onClick={login} disabled={isbtnloading}
@@ -182,15 +164,13 @@ const Login = ()=> {
 			</form>
 			
 			</div>
-			  {/* </div> */}
-			  {/* <LinearProgress /> */}
-			</div>
-			
+		</div>
+		</Paper>
 			
 			
 			</Col>
 			<Col></Col>
-	  </Row>
+	  	</Row>
 		  
 	  </Container>
 

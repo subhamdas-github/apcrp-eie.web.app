@@ -3,11 +3,12 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 // import { MobilePDFReader,PDFReader } from 'reactjs-pdf-reader';
 // import { Document, Page, Text, View, StyleSheet,PDFViewer,ReactPDF } from '@react-pdf/renderer';
 import sty from './css/adminFormImg.module.css';
-import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown,Nav,Button,Modal,Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup, ProgressBar } from 'react-bootstrap'
+import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown,Nav,Button,Modal,Accordion, Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup, ProgressBar } from 'react-bootstrap'
 // import Login from './Login';
 // import App from './App';
 import fire from './config/fire'
 import { AlignCenter, Justify } from 'react-bootstrap-icons';
+
 import containerStyle from './AdminContainer.module.css'
 import { grey } from '@material-ui/core/colors';
 import {FcAbout,FcGallery,FcRules,FcFeedback,FcAdvertising,FcSportsMode,FcOrganization,FcVoicePresentation,FcGraduationCap,FcBriefcase,FcNews,FcBullish,FcLibrary,FcReadingEbook,FcDisplay,FcCircuit,FcConferenceCall, FcHighPriority, FcPlus,FcCollapse,FcExpand,FcSearch,FcAddressBook,FcPhone,FcEngineering,FcElectronics,FcIphone,FcHome,FcElectroDevices,FcDepartment} from 'react-icons/fc';
@@ -21,6 +22,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import Gallery from './Gallery';
 import eielogo from './images/logoeie.png';
+import x from './images/x.png'
+import y from './images/y.png'
+import z from './images/z.png'
 import alok from './images/alok.jpg'
 import ScrollUpButton from "react-scroll-up-button";
 import Googlemaps from './Googlemaps';
@@ -43,7 +47,7 @@ import PacmanLoader from 'react-spinners/PacmanLoader'
 import BeatLoader from 'react-spinners/BeatLoader'
 import DotLoader from 'react-spinners/DotLoader'
 import HashLoader from 'react-spinners/HashLoader'
-
+import './HoverNav.css';
 import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -70,7 +74,47 @@ import FolderIcon from '@material-ui/icons/Folder';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import Paper from '@material-ui/core/Paper';
+import n from './images/normallogo.jpg'
+import an from './Animated.module.css'
+import Review from './Review';
+import EditIcon from '@material-ui/icons/Edit';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
+import NearMeIcon from '@material-ui/icons/NearMe';
+
+import ButtonBase from '@material-ui/core/ButtonBase';
+import stu from './images/students.jpg'
+import tea from './images/teachers.jpg'
+import FadeInSection from './FadeInSection';
+import FadeInSectionL from './FadeInSectionL';
+import FadeInSectionR from './FadeInSectionR';
+import './css/fadein.css'
 function FrontPage({placeName}) {
+  const images = [
+    {
+      url: {stu},
+      title: 'Visit Our Students',
+      width: '34%',
+      href:'/students',
+    },
+    {
+      url: {tea},
+      title: 'Visit Our Teachers',
+      width: '33%',
+      href:'/teachers',
+    },
+    {
+      url: 'https://static.vecteezy.com/system/resources/previews/000/403/929/original/vector-floral-frame-card-design-illustration.jpg',
+      title: 'Love from Seniors',
+      width: '33%',
+      href:'/preface',
+    },
+  ];
+  
+
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
       
@@ -104,10 +148,88 @@ function FrontPage({placeName}) {
         };
       }
       const useStyles = makeStyles((theme) => ({
+        
         root: {
           flexGrow: 1,
           width: '100%',
           backgroundColor: theme.palette.background.paper,
+        },
+        im:{
+          display: 'flex',
+          flexWrap: 'wrap',
+          minWidth: 300,
+          width: '100%',
+        },
+        image: {
+          position: 'relative',
+          height: 350,
+          [theme.breakpoints.down('xs')]: {
+            width: '100% !important', // Overrides inline-style
+            height: 300,
+          },
+          '&:hover, &$focusVisible': {
+            zIndex: 1,
+            '& $imageBackdrop': {
+              opacity: 0.15,
+            },
+            '& $imageMarked': {
+              opacity: 0,
+            },
+            '& $imageTitle': {
+              border: '4px solid #20b2aa',
+              color:'#17827d',
+              
+            },
+          },
+        },
+        focusVisible: {},
+        imageButton: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          
+        },
+        imageSrc: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 40%',
+        },
+        imageBackdrop: {
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          backgroundColor: '#20b2aa',
+          opacity: 0.8,
+          transition: theme.transitions.create('opacity'),
+          
+        },
+        imageTitle: {
+          position: 'relative',
+          padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+          fontSize:24,
+          fontWeight:'bold',
+        },
+        imageMarked: {
+          height: 3,
+          width: 18,
+          backgroundColor: theme.palette.common.white,
+          position: 'absolute',
+          bottom: -2,
+          left: 'calc(50% - 9px)',
+          transition: theme.transitions.create('opacity'),
+          
         },
       }));
       function generate(element) {
@@ -124,6 +246,7 @@ function FrontPage({placeName}) {
     const [tasks, setTasks] = useState([]);
     const [tasksS, setTasksS] = useState([]);
     const [modalShow, setModalShow] = useState(false);
+    const [page, setPage] = useState(false);
     const [modalShowGallery, setModalShowGallery] = React.useState(false);
     const [modalShowRecrt, setModalShowRecrt] = React.useState(false);
     const [tasksyears, setTasksyears] = React.useState([]);
@@ -192,7 +315,7 @@ function FrontPage({placeName}) {
                     // document.getElementById('nonotice').style.display='none';
                 // setcountx(<span style={{display:'flex'}}><span style={{color:'#483D8B',fontSize:20}}><MdEventNote/> </span><span style={{paddingTop:8,paddingLeft:5}}>Notice</span> <sup><Badge style={{fontSize:12}} pill variant='primary'>{data.size}</Badge></sup></span>);
                 setcountx(<Badge badgeContent={data.size} color="secondary" overlap="circle">
-                <EventNoteIcon style={{color:'#3f51b5'}} fontSize="large"/>
+                <EventNoteIcon style={{color:'white'}} fontSize="large"/>
               </Badge>)
             }
             })
@@ -205,15 +328,29 @@ function FrontPage({placeName}) {
                 // setcounty(<span style={{display:'flex'}}><span style={{color:'red',fontSize:20}}><IoLogoYoutube/> </span><span style={{paddingTop:8,paddingLeft:5}}> Videos</span></span>);
             }else{
                 // setcounty(<span style={{display:'flex'}}><span style={{color:'red',fontSize:20}}> </span><span style={{paddingTop:8,paddingLeft:5}}> Videos</span> <sup><Badge style={{fontSize:12}} pill variant='primary'>{data.size}</Badge></sup></span>); 
-                setcounty(<Badge badgeContent={data.size} color="primary" overlap="circle">
-                <YouTubeIcon style={{color:'red'}} fontSize="large"/>
+                setcounty(<Badge badgeContent={data.size} color="secondary" overlap="circle">
+                <YouTubeIcon style={{color:'white'}} fontSize="large"/>
               </Badge>)
             }      
                 })
             fire.firestore().collection('magazines')
             .onSnapshot(function(data){
               setTasksMag(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+              if(data.size==0){
+                // setcounty(<span style={{display:'flex'}}><span style={{color:'red',fontSize:20}}><IoLogoYoutube/> </span><span style={{paddingTop:8,paddingLeft:5}}> Videos</span></span>);
+            }else{
+                // setcounty(<span style={{display:'flex'}}><span style={{color:'red',fontSize:20}}> </span><span style={{paddingTop:8,paddingLeft:5}}> Videos</span> <sup><Badge style={{fontSize:12}} pill variant='primary'>{data.size}</Badge></sup></span>); 
+                setcountz(<Badge badgeContent={data.size} color="secondary" overlap="circle">
+                <PictureAsPdfIcon style={{color:'white'}} fontSize="large"/>
+              </Badge>)
+            }
             })
+            // document.getElementById('like').addEventListener('click',()=>{
+            //   document.getElementById('like').style.color='white';
+            // })
+            // document.getElementById('dislike').addEventListener('click',()=>{
+            //   document.getElementById('dislike').style.color='white';
+            // })
         
                 // setcountz(<span style={{display:'flex'}}><span style={{color:'#FF8C00',fontSize:20}}><IoHome/> </span><span style={{paddingTop:8,paddingLeft:5}}>Home</span></span>);   
 
@@ -223,11 +360,7 @@ function FrontPage({placeName}) {
             setLoading(false)
             fetchData();
         }, 3000);
-        // setLoading(false)
-    //     if (!loading){
-    //     fetchData();
-    // }
-
+        
         
 
     //   handleShow()
@@ -265,13 +398,15 @@ function FrontPage({placeName}) {
     
     :
 
-            <div >
+            <div className={containerStyle.grad}>
             <FrontHeading/>
             <div id='front' style={{display:'block'}}>
-            <div id='frontimage' >
-            <br/>
-            <Container fluid='xl'>
-            <Container fluid='xl' className={containerStyle.containerfront}>
+            <div id='frontimage' style={{padding:25}}>
+            
+            <Paper elevation={9} className={containerStyle.grad}>
+              <hr/>
+            {/* <Container fluid='xl'> */}
+            {/* <Container fluid='xl' > */}
             <Carousel fade>
                 {tasksS.map(spell=>
                 (
@@ -280,102 +415,179 @@ function FrontPage({placeName}) {
                     className="d-block w-100"
                     src={spell.url}
                     alt="slide"
-                    style={{maxHeight:500,objectFit:'contain'}}
+
+                    style={{objectFit:'contain'}}
+                    
                     />
                     </Carousel.Item>
                 ))}
                 
             </Carousel>
-            </Container>
-            </Container>
+            {/* </Container> */}
+            {/* </Container> */}
+            <hr/>
+            </Paper>
             </div>
 
-            <div id='about-eie' className={sty.controlpanelfont}>
+            <FadeInSection>
+            <div id='about-eie' className={sty.controlpanelfont} style={{padding:20}}>
+            
                 <br/><br/>
-                <Container fluid='xl'>
-                <Container fluid='xl' className={containerStyle.containerfront}>
-                <h1 style={{textAlign:'center'}} className={containerStyle.borderbottomstyle}>📝About Us</h1>
-                    <Row>
-                        <Col sm={8} style={{textAlign:'center'}}>
+                <Paper elevation={9} className={containerStyle.grad}>
+                
+                {/* <Container fluid='xl'> */}
+                <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>About Us</b></span></h1>
+                {/* <Container fluid='xl' > */}
+                
+                    <Row >
+                        <Col sm={8} style={{textAlign:'center'}} >
                         <p style={{textAlign:'justify'}}>
-                        <Alert variant="success">
+                        <Alert variant="info">
                         {/* <Alert.Heading>Hey, welcome to DEIE Events</Alert.Heading> */}
-                        <p style={{textAlign:'justify',fontSize:16}}>
+                        <p style={{textAlign:'justify',fontSize:18}} >
                         <a href='http://www.apcraypolytechnic.in/' target='_blank'>Acharya Prafulla Chandra Ray Polytechnic</a>, a diploma level Government Technical Institute named
                         after the famous Indian scientist <a href='https://en.wikipedia.org/wiki/Prafulla_Chandra_Ray' target='_blank'>Acharaya Prafulla Chandra Ray</a> (2 August 1861 – 16 June 1944). It was established long back at
                         1950 and formerly known as Jadavpur Polytechnic. It is located at 188, Raja Subodh Chandra Mallick
                         Road, Jadavpur, Kolkata,  West Bengal - 700032. It is affiliated to the <a href='https://webscte.co.in/' target='_blank'>West Bengal State Council for
                         Technical and Vocational Education</a> and approved by All India Council for Technical Education (<a href='https://www.aicte-india.org/' target='_blank'>AICTE</a>).
                         <br/><br/>
-
+                        <hr/>
                         <b>Department of Electronics & Instrumentation Engineering</b> is one of the six departments of <a href='http://www.apcraypolytechnic.in/' target='_blank'> A.P.C.
                         Ray Polytechnic</a>. <b>This is a specialised branch of engineering which deals with the major industrial
                         sectors including automation and control.</b> It also deals with major Electronics manufacturing and IT industries,
                         including core economic industries such as power, steel plants etc.
                         The institute provides quality lab and outstanding faculty to its students.
                         Mainly emphasize on growth of practical knowledge along with theoretical understanding.
-                        {/* <br/><br/> */}
+                        <br/><br/>
                         </p>
                         <hr />
-
+                        
+                        <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}}>
+                        <p></p>
+                        <p></p>
+                          <div style={{display:'flex'}}><EditIcon fontSize="small"/><span className={an.articlefeedback} onClick={() =>{setPage(true);setModalShow(true)}}>Give feedback about this article</span></div>
+                    
+                        </div>
                         </Alert>
                         
 
                         </p></Col>
                         <Col sm={4} >
-                        {/* <Alert variant="success" style={{height:370}}> */}
+                        
                         <img
                         className="d-block w-100"
-                        // src='https://firebasestorage.googleapis.com/v0/b/collect-db.appspot.com/o/website-images%2F1619426245557.png?alt=media&token=5583d30c-589d-4141-ac30-37ce01b1ead1' 
-                        src={eielogo}
+                        src={z}
                         />
-                        
-                        {/* </Alert> */}
+ 
                         </Col>
-                        
-                        
+
                     </Row>
-                </Container>
-                </Container>
+                    
+                {/* </Container> */}
+                {/* </Container> */}
+                
+                </Paper>
+                 
             </div>
+            </FadeInSection> 
+            <FadeInSection>
+            <div id='frontachivements' className={sty.controlpanelfont} style={{padding:20}}>
             
-            <div id='frontachivements' className={sty.controlpanelfont}>
                 <br/><br/>
-                <Container fluid='xl'>
-                <Container fluid='xl' className={containerStyle.containerfront}>
+
+                <Paper elevation={9} className={containerStyle.grad}>
+                
+                {/* <Container fluid='xl'> */}
+                <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Achievements</b></span> </h1>
+                {/* <Container fluid='xl' > */}
                     <IconContext.Provider value={{color:'red'}}>
-                        <h1 style={{textAlign:'center'}} className={containerStyle.borderbottomstyle}>🏆Achievements</h1>
-                        <p style={{textAlign:'justify',fontSize:16}}>
-                        <Alert variant="success">
+                        
+                        
+                        <Alert variant="info">
+                        <p style={{textAlign:'justify',fontSize:18}}>
                         {/* <Alert.Heading>Hey, welcome to DEIE Events</Alert.Heading> */}
                         <p style={{textAlign:'justify'}}>
                         The students of the department achieved many milestones from time to time in various field like 
-                        <b > academics🎓, robotics🦾, sports⚽️</b> etc. Some of the achievements are :-
+                        <b > academics🎓, robotics🤖, sports⚽️</b> etc. Some of the achievements are :-
                         Champion in 2015,
                         stood 2nd position in 2017 & stood 4th position in 2018 at <a href='https://portal.e-yantra.org/' target='_blank'>E-yantra Robotics Competition(E-YRC)</a>, IIT Bombay.
                         Every year the magazine <b >''UTTORON''</b> is published by the department and every year farewell  ceremony is
                         held for our final year students naming <b >''ANTAHIN''</b>.  A Cultural programme is also arranged every year
                         on the Teachers' Day.
                         </p>
-                        <hr />
-
+                        <hr /></p>
+                        <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}}>
+                        <p></p>
+                        <p></p>
+                          <div style={{display:'flex'}}><EditIcon fontSize="small"/><span className={an.articlefeedback} onClick={() => {setPage(true); setModalShow(true)}}>Give feedback about this article</span></div>
+                    
+                        </div>
                         </Alert>
+
                         
-                        
-                        </p>
                         <hr/>
                     </IconContext.Provider>
-                </Container>
-                </Container>
+                {/* </Container> */}
+                {/* </Container> */}
+                
+                </Paper>
+                
             </div>
-
-            
-            <div id='video-events' className={sty.controlpanelfont}>
-                <br/>
-                <Container fluid='xl' id='about-events'>
-                <Container fluid='xl' className={containerStyle.containerfront} id='notice-events'>
+            </FadeInSection>
+            {/* <div id='Navigation' className={sty.controlpanelfont} style={{padding:20}}>
+              <br/>
+              <Paper elevation={9} className={containerStyle.grad}>
+                
+                <div className={classes.im} >
+                  {images.map((image) => (
+                    <ButtonBase
+                      focusRipple
+                      key={image.title}
+                      className={classes.image}
+                      focusVisibleClassName={classes.focusVisible}
+                      style={{
+                        width: image.width,
                         
-                        <h1 style={{textAlign:'center'}} className={containerStyle.borderbottomstyle}>📢Explore Events</h1>
+                      }}
+                      href={image.href}
+                      
+                    >
+                      <span
+                        className={classes.imageSrc}
+                        style={{
+                          backgroundImage: `url(${image.url})`,
+                        }}
+                      />
+                      <span className={classes.imageBackdrop} />
+                      <span className={classes.imageButton}>
+                        <Typography
+                          component="span"
+                          variant="subtitle1"
+                          color="inherit"
+                          className={classes.imageTitle}
+                        >
+                          {image.title}
+                          <span className={classes.imageMarked} />
+                          
+                        </Typography>
+                      </span>
+                    </ButtonBase>
+                  ))}
+                </div>
+                <hr/>
+              </Paper>
+            </div> */}
+
+<FadeInSection >
+            <div id='video-events' className={sty.controlpanelfont} style={{padding:20}}>
+            
+                <br/>
+                <Paper elevation={9} className={containerStyle.grad}>
+                {/* <FadeInSection> */}
+                <div id='about-events'>
+                <div id='notice-events'>
+                        
+                        <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Explore Events</b></span></h1>
                         {/* <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                         <Tab eventKey="home" title={countz}>
 
@@ -488,39 +700,75 @@ function FrontPage({placeName}) {
                             <p>z</p>
                             <p>w</p>
                         </div> */}
-    <div className={classes.root} id='mazagize-events'>
-      <AppBar position="static" color="default">
+    <div className={classes.root} id='mazagize-events' className={containerStyle.grad}>
+      {/* <div> */}
+      <AppBar position="static" color='default'>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
+          indicatorColor="secondary"
           textColor="primary"
           variant="scrollable"
           scrollButtons="on"
           aria-label="scrollable force tabs example"
           className={sty.controlpanelfont}
+          className={containerStyle.grad}
         >
-         <Tooltip title='Home' ><Tab  icon={<HomeIcon style={{color:'#3f51b5'}} fontSize="large"/>} {...a11yProps(0)} /></Tooltip>
-         <Tooltip title='Youtube Videos'><Tab  icon={county} {...a11yProps(1)} onClick={()=>setcounty(<YouTubeIcon style={{color:'red'}} fontSize="large"/>)}/></Tooltip>
-         <Tooltip title='Notice'><Tab  icon={countx} {...a11yProps(2)} onClick={()=>setcountx(<EventNoteIcon style={{color:'#3f51b5'}} fontSize="large"/>)}/></Tooltip>
-         <Tooltip title='Magazine'><Tab  icon={<PictureAsPdfIcon style={{color:'red'}} fontSize="large"/>} {...a11yProps(3)} /></Tooltip>
+         <Tooltip title='Home'><Tab  icon={<HomeIcon style={{color:'white'}} fontSize="large"/>} {...a11yProps(0)} /></Tooltip>
+         <Tooltip title='Youtube Videos'><Tab  icon={county} {...a11yProps(1)} onClick={()=>setcounty(<YouTubeIcon style={{color:'white'}} fontSize="large"/>)}/></Tooltip>
+         <Tooltip title='Notice'><Tab  icon={countx} {...a11yProps(2)} onClick={()=>setcountx(<EventNoteIcon style={{color:'white'}} fontSize="large"/>)}/></Tooltip>
+         <Tooltip title='Magazine'><Tab  icon={countz} {...a11yProps(3)} onClick={()=>setcountz(<PictureAsPdfIcon style={{color:'white'}} fontSize="large"/>)}/></Tooltip>
           
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-      <div style={{textAlign:'center',fontSize:16}} className={sty.controlpanelfont}>
-                        <Alert variant="success">
+      {/* <div> */}
+                        <Alert variant="info" className={sty.controlpanelfont}>
+                        <div style={{textAlign:'center',fontSize:18}} >
                         <Alert.Heading>Hey, welcome to DEIE Events</Alert.Heading>
                         <p style={{textAlign:'justify'}}>
                         Enjoy yourself with the most entertaining, passionate events with us. Every year our college
-                        organises freshers (AOHVAAN), fest (METAMORPHOSIS), sports (POLYMPIC). Open Video tab to watch youtube 
-                        videos and if there is any notice then it will be appear as notification.
+                        organises freshers <b>(AOHVAAN)</b>, fest <b>(METAMORPHOSIS)</b>, sports <b>(POLYMPIC)</b>. Open Video tab to watch youtube 
+                        videos and PDF tab to read magazines. If there is any Video, Notice and Magazine then they will be appear as notification.
                         </p>
                         <hr />
-
-                        </Alert>
-                        <hr />
+                        
                         </div>
+                        <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}}>
+                        <p></p>
+                        <p></p>
+                          <div style={{display:'flex'}}><EditIcon fontSize="small"/><span className={an.articlefeedback} onClick={() => {setPage(true); setModalShow(true)}}>Give feedback about this article</span></div>
+                    
+                        </div>
+                        </Alert>
+                        {/* </div> */}
+                        <hr />
+                        
+                   <div  style={{padding:4}} className={sty.controlpanelfont}>
+                    <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                      <p></p>
+                      <div>
+                        <h5 style={{fontSize:18,display:'flex'}}><span style={{paddingTop:14}}>Was this page helpful?</span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="Yes" placement="top">
+                              <IconButton aria-label="like" onClick={() => {document.getElementById('like').style.color='white'; setPage(false);setTimeout(() => {setModalShow(true)}, 3000);}}>
+                                <ThumbUpAltIcon id='like' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                          <span style={{cursor:'pointer'}}>
+                            <Tooltip title="No" placement="top">
+                              <IconButton aria-label="dislike" onClick={() =>{document.getElementById('dislike').style.color='white'; setPage(false); setTimeout(() => {setModalShow(true)}, 3000); }}>
+                                <ThumbDownAltIcon id='dislike' style={{color:'#175451'}} />
+                              </IconButton>
+                            </Tooltip>
+                          </span>
+                        </h5>
+                        {/* <h5 className={an.review} onClick={() => {setPage(false);setModalShow(true)}}>Review this page</h5> */}
+                      </div>
+                      <p></p>
+                    </div>
+                </div>
       </TabPanel>
       <TabPanel value={value}  index={1} >
           <div className={sty.controlpanelfont}>
@@ -579,10 +827,11 @@ function FrontPage({placeName}) {
       <TabPanel value={value} index={3}>
 
       {/* <Grid container spacing={2}> */}
-        
+        <Alert variant='info'>
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={classes.title} >
-            Our Magazines
+           <div style={{display:'flex'}}> <NearMeIcon fontSize="large"/><h2 className={sty.controlpanelfont} style={{fontSize:29}}>Published Magazines</h2></div>
+            <h7 className={sty.controlpanelfont} style={{fontSize:17}}>Click on the following PDF links to read it on Google Drive</h7>
           </Typography>
           <div className={classes.demo}>
             <List dense={dense}>
@@ -620,19 +869,30 @@ function FrontPage({placeName}) {
             </List>
           </div>
         </Grid>
+        </Alert>
       {/* </Grid> */}
 
       </TabPanel>
-      
+      {/* </div> */}
     </div>
 
-                </Container>
-                </Container>
+                </div>
+                </div>
+                {/* </FadeInSection> */}
+                </Paper>
+                
             </div>
 
-
+            </FadeInSection>
             </div>
+            
             <Footer/>
+            <Review
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            page={page}
+            />
+            
                  </div>
 }
         </div>

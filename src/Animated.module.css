@@ -1,6 +1,14 @@
 input[type=text] {
     width: 140px;
-    
+    /* background: hsla(202, 71%, 27%, 1);
+
+background: linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -moz-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%);
+
+background: -webkit-linear-gradient(0deg, hsla(202, 71%, 27%, 1) 0%, hsla(177, 70%, 41%, 1) 50%, hsla(176, 45%, 66%, 1) 100%); */
+    border-radius: 5px;
+
     border: none;
     border-width: 0;
     
@@ -20,4 +28,37 @@ input[type=text] {
     -webkit-appearance: none;
     outline: none!important;
     
+  }
+  ::placeholder{
+    color: rgb(2, 19, 34);
+    opacity: 1;
+  }
+  ::-webkit-input-placeholder{
+    color: rgb(2, 19, 34);
+  }
+  :-ms-input-placeholder{
+    color: rgb(2, 19, 34);
+  }
+
+  .studentyearnav{
+    font-size: 19px;
+    
+  }
+  .review{
+    font-size: 18px;
+    text-decoration: underline black;
+  }
+  .review:hover{
+    font-size: 19px;
+    color:white;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .articlefeedback{
+    text-decoration: underline black;
+  }
+  .articlefeedback:hover{
+    text-decoration: none;
+    color: #072c2a;
+    cursor: pointer;
   }
