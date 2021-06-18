@@ -103,7 +103,7 @@ function Footer() {
                     <h7 >188, Raja Subodh Chandra Mallick Road Jadavpur,Kolkata: 700032<br/> 
                     Call : <a href='tel:03324146241'>03324146241</a>
                     <br/>email: <a href="mailto:apcraypolytechnic@gmail.com" target='_blank'>apcraypolytechnic@gmail.com</a>/<br/><a href='mailto:officeapcray@gmail.com' target='_blank'>officeapcray@gmail.com</a>
-                    <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><sup> <SiFacebook/> </sup> facebook</a> community
+                    {/* <br/>Visit our <a href='https://www.facebook.com/groups/192098204773124' target='_blank'><sup> <SiFacebook/> </sup> facebook</a> community */}
                     </h7>
                     </div>
                     </Col>

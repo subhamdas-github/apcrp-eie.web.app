@@ -20,10 +20,16 @@ import IconButton from '@material-ui/core/IconButton';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import FadeInSection from './FadeInSection';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; 
+import LabelImportantIcon from '@material-ui/icons/LabelImportant';
 // import { Alert } from 'react-bootstrap';
 function Preface() {
     const [modalShow, setModalShow] = useState(false);
     const [page, setPage] = useState(false);
+    useEffect(()=>{
+      AOS.init();
+    },[])
     return (
         <>
         <FrontHeading/>
@@ -43,17 +49,19 @@ function Preface() {
         </Grid>
         </Grid> */}
         
-        <div className={containerStyle.grad} style={{padding:20}}>
+        <div className={containerStyle.grad} style={{padding:20}} >
         
             {/* <Container fluid='xl'> */}
             {/* <Container fluid='xl' className={containerStyle.containerfront}> */}
-            <Paper elevation={9}  className={containerStyle.grad}>
+            <Paper elevation={9}  className={containerStyle.grad} data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="1200">
                 
             
             
         
         <div style={{textAlign:'justify',color:'#00008B',fontSize:19}} className={sty.controlpanelfont}>
-        <h1 style={{textAlign:'center',fontSize:44}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>To Our Juniors</b></span></h1>
+        <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+        <div style={{paddingBottom:12,color:'#D1ECF1'}}><LabelImportantIcon fontSize="large"/></div>
+        <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>To Our Juniors</b></span></h1>
         <Alert variant='info'>     
             <p>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{fontSize:34}}>W</span>e the students of <span style={{color:'#C71585'}}><b> DEIE(2018-2021)</b></span> have always thought it to be our duty to give ourselves

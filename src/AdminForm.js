@@ -66,6 +66,7 @@ function AdminForm(props) {
     const [tab, setTab] = React.useState('');
     const [emailerror, setemailerror] = useState('');
     const [loading, setLoading] = useState(false)
+    const [yearDeleteModal, setYearDeleteModal] = useState(false)
     var flag=false
     var curr_y = ''
 
@@ -93,8 +94,8 @@ function AdminForm(props) {
       setNewStudentYear('')
     }
     }
-    const onDelete = (e) =>{
-      e.preventDefault()
+    const onDelete = () =>{
+      // e.preventDefault()
       const db = fire.firestore();
       db.collection('students').doc(newfireYear).delete()
     }
@@ -269,7 +270,7 @@ function AdminForm(props) {
 			// 	setTaskst(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
 			// });
 
-      fire.firestore().collection('students').onSnapshot(function(data){
+      fire.firestore().collection('students').orderBy("year_arr","desc"). onSnapshot(function(data){
         setTasksyears(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
       });
     //   setTimeout(() => {
@@ -442,7 +443,7 @@ function AdminForm(props) {
       <div style={{display:'flex',justifyContent:'space-between'}}>
       {/* <Button variant='danger' onClick={props.onHide}>Close</Button> */}
       <Button variant="warning" onClick={onCreate} style={{borderColor:'yellow'}}>Create New</Button>
-      <Button variant="danger" onClick={onDelete} style={{borderColor:'red'}}>Delete Year</Button>
+      <Button variant="danger" onClick={()=>setYearDeleteModal(true)} style={{borderColor:'red'}}>Delete Year</Button>
       </div>
     </Form.Group>
     </Col>
@@ -829,6 +830,31 @@ function AdminForm(props) {
     </Container>
     
     </Modal>
+
+              <Modal 
+            
+                show={yearDeleteModal}
+                onHide={()=>setYearDeleteModal(false)}
+                // size="lg"
+                // aria-labelledby="contained-modal-title-vcenter"
+                // centered
+                >
+                <Modal.Header closeButton>
+                <Modal.Title>⛔️Delete Year <b>{newfireYear}</b>?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete year <b>{newfireYear}</b> ?
+                All the data inside <b>{newfireYear}</b> will be lost. Recovery of data is not possible after Delete!
+                </Modal.Body>
+                <Modal.Footer>
+                
+                <Button variant="secondary" onClick={()=>setYearDeleteModal(false)}>
+                    Cancel
+                </Button>
+                <Button variant="danger" onClick={()=>{setYearDeleteModal(false);onDelete()}}>
+                    Delete
+                </Button>
+                </Modal.Footer>
+            </Modal>
 
         </div>
     )

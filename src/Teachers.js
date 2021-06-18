@@ -44,6 +44,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import FadeInSection from './FadeInSection';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 function Teachers() {
     const [tasks, setTasks] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -71,6 +74,7 @@ function Teachers() {
     var faceemoji = 
     ['😀','😃','😄','😁','😊','😇','😎','😉','😋','🙂']
     useEffect(()=>{
+      AOS.init();
         fire.firestore().collection('teachers').onSnapshot(function(data){
             setTasks(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
             setLoading(false)
@@ -88,7 +92,9 @@ function Teachers() {
             <Paper elevation={9}  className={containerStyle.grad}>
             
             <div style={{display:'block',textAlign:'center'}} className={sty.controlpanelfont}>
-            <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Teachers</b></span></h1>
+            <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+            <div style={{paddingBottom:12,color:'#D1ECF1'}}><SupervisedUserCircleIcon fontSize="large"/></div>
+            <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>Our Teachers</b></span></h1>
                     <Alert variant="info">
                     <Alert.Heading style={{fontSize:25}}>Faculty Members of Electronics and Instrumentation Engineering</Alert.Heading>
                     <p style={{fontSize:20}}>
@@ -105,7 +111,7 @@ function Teachers() {
             </div>
             <div style={{display:'block'}}>
                 {/* <Container fluid='xl'> */}
-                <div style={{textAlign:'center',paddingTop:50}}><PulseLoader color='#36D7B7' loading={loading}/></div>
+                <div style={{textAlign:'center',paddingTop:50}}><PulseLoader color='white' loading={loading}/></div>
                 
                         <CardColumns>
                         {tasks.filter((val)=>{
@@ -117,7 +123,7 @@ function Teachers() {
                                 return val
                             }
                         }).map(spell => (
-                          <FadeInSection>
+                          <div data-aos="zoom-in">
                         <Card border='primary'
                             className="text-center p-1"
                             style={{
@@ -144,7 +150,7 @@ function Teachers() {
                             </div>
                             
                         </Card>
-                        </FadeInSection>
+                        </div>
                         ))}
                         </CardColumns>
                         <hr/>

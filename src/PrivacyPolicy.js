@@ -30,7 +30,11 @@ function PrivacyPolicy() {
             <Paper elevation={9}  className={containerStyle.grad}>   
             
 <div className={sty.controlpanelfont}>
-<h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach} ><b className={sty.controlpanelfont}>Privacy Policy</b></span></h1>
+<h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+<div style={{paddingBottom:12,color:'#D1ECF1'}}><PolicyIcon fontSize="large"/></div>
+<span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>Privacy Policy</b></span></h1>
+
+{/* <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach} ><b className={sty.controlpanelfont}>Privacy Policy</b></span></h1> */}
                 {/* <b.Container fluid='xl' > */}
                     {/* <b.Container fluid='xl' className={containerStyle.containerfront}> */}
 

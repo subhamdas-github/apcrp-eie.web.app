@@ -52,7 +52,12 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import ErrorIcon from '@material-ui/icons/Error';
 import FadeInSection from './FadeInSection';
+import ContactMailIcon from '@material-ui/icons/ContactMail';
 import HelpIcon from '@material-ui/icons/Help';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+import GroupIcon from '@material-ui/icons/Group';
+// ..
 
 function Students() {
     function AlertF(props) {
@@ -113,7 +118,8 @@ function Students() {
     var faceemoji = 
     ['😀','😃','😄','😁','😊','😇','😎','😉','😋','🙂']
     useEffect(()=>{
-        fire.firestore().collection('students').onSnapshot(function(data){
+      AOS.init();
+        fire.firestore().collection('students').orderBy('year_arr','desc'). onSnapshot(function(data){
             setTasksyears(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
             })
     },[])
@@ -161,7 +167,11 @@ function Students() {
             <Paper elevation={9}  className={containerStyle.grad}>
             
             <div style={{display:'block',textAlign:'center'}} className={sty.controlpanelfont}>
-            <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Students</b></span></h1>
+            <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+              
+              <div style={{paddingBottom:12,color:'#D1ECF1'}}><GroupIcon fontSize="large"/></div>
+              <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>Our Students</b></span>
+            </h1>
             <br/>
             {/* <Container fluid='xl'> */}
             {/* <Container fluid='xl' className={containerStyle.container}> */}
@@ -230,7 +240,7 @@ function Students() {
                                 return val
                             }
                         }).map(spell => (
-                          <FadeInSection>
+                          <div data-aos="zoom-in">
                         <Card border='primary'
                             className="text-center p-1"
                             style={{
@@ -245,8 +255,9 @@ function Students() {
                                
                             {/* <Card.Img src={spell.url} className={containerStyle.imgstyle}/> */}
                             <ListGroup variant="flush">
-                                <ListGroup.Item style={{color:textcolors[Math.floor(Math.random() * 10)]}}><h5>{faceemoji[Math.floor(Math.random() * 10)]}<b>{spell.name}</b></h5>
-                                {spell.status1}<br/>{spell.status2}<br/>{spell.status3}
+                                <ListGroup.Item style={{color:textcolors[Math.floor(Math.random() * 10)]}}>
+                                  <h5>{faceemoji[Math.floor(Math.random() * 10)]}<b>{spell.name}</b></h5>
+                                  {spell.status1}<br/>{spell.status2}<br/>{spell.status3}
                                 </ListGroup.Item>
                                 <ListGroup.Item><Card.Link>
                                     
@@ -257,7 +268,7 @@ function Students() {
                             </div>
                             
                         </Card>
-                        </FadeInSection>
+                        </div>
                         ))}
                         
                         </CardColumns>

@@ -48,11 +48,13 @@
 }
 .tableoverflow{
     overflow-y: scroll;
+    overflow-x: scroll;
+    height: 350px;
 }
 .createbutton{
     position: fixed;
     right: 3%;
-    bottom: 4%;
+    bottom: 6%;
     /* cursor: pointer; */
 }
 .fonts{

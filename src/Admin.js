@@ -23,6 +23,7 @@ import containerStyle from './AdminContainer.module.css'
 import { Block } from '@material-ui/icons';
 import Login from './Login';
 import animate from './Animated.module.css';
+import './css/adminanimated.css'
 import Chart from "react-google-charts";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import { storage } from './config/fire';
@@ -50,6 +51,12 @@ import MouseIcon from '@material-ui/icons/Mouse';
 import TouchAppIcon from '@material-ui/icons/TouchApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GroupIcon from '@material-ui/icons/Group';
+import navstyle from './css/FrontNavStyle.module.css';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import IconButton from '@material-ui/core/IconButton';
+import AdminDelete from './AdminDelete';
+import AdminUpdate from './AdminUpdate';
+import AdminFooter from './AdminFooter';
 function Admin() {
 	const [graphloading, setgraphloading] = useState(false)
 	const [Arr, setArr] = useState([])
@@ -88,14 +95,30 @@ function Admin() {
 	const [apiloading, setApiLoading] = useState(false);
 	const [imgloading, setimgloading] = useState('')
 
+	const [tableid, settableid] = useState('')
+	const [newimUrlS, setnewImUrlS] = React.useState('');
+
+
+    const [newkh, setnewKh] = React.useState('');
   	const handleCloseDelete = () => setShowDelete(false);
   	const handleShowDelete = () => setShowDelete(true);
 	const handleCloseUpdate = () => setShowUpdate(false);
 	const handleShowUpdate = () => setShowUpdate(true);
+	const [showresolution, setShowresolution] = useState(false);
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [showUpdateModal, setShowUpdateModal] = useState(false);
+	
 	var i = 0
 	var m=''
+	function onAdd(id){
+		console.log('https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65))
+		
+		setnewKh('https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65));
+		document.getElementById(id).src = 'https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65);
+	}
+
 	useEffect(()=>{
-		const fetchData = async () =>{
+		const fetchData = () =>{
 			const db = fire.firestore();
 			// document.getElementById('btngroup').style.display='none';
 			// document.getElementById('teachersdescrp').style.display='none';
@@ -422,13 +445,14 @@ function Admin() {
 					
 			// 	))
 				// setgraphloading(true)
-			console.log(studentarray)
+			
+			fire.firestore().collection('students').orderBy("year_arr","desc").onSnapshot(function(data){
+				setTasksyearsA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+				
+				})
 			
 		};
-		fire.firestore().collection('students').onSnapshot(function(data){
-			setTasksyearsA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
-			
-			})
+		
 		
 		
 		setTimeout(() => {
@@ -461,17 +485,224 @@ function Admin() {
 		else if(year== 8){db.collection('magazines').doc(id).delete()}
 		else{db.collection('students').doc('year').collection(newfireYearA).doc(id).delete()}
 	}
-	// function onUpdate(id,name, email,phone,status1,status2,status3,year,url){
-	// 	setnewTask(name)
-	// 	setnewPhone(phone)
-	// 	setnewStatus1(status1)
-	// 	setnewStatus2(status2)
-	// 	setnewStatus3(status3)
+	// function onUpdate(id,year, name, email,phone,status1,status2,status3,url){
+	// 	if (id!=tableid){
+	// 		alert('wrong database selected!')
+	// 		// settableid('')
+	// 	}
+	// 	else{
+	// 		settableid('')
+	// 	if(newTask=='' && newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	// 1 change
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	// 2 change
+	// 	else if(newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	// 3 change
+	// 	else if(newStatus2==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:url})
+	// 	}
+	// 	else if(newStatus1==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newStatus1==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newStatus1==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	// 4 change
+	// 	else if(newStatus3==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
+	// 	}
+	// 	else if(newStatus2==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newStatus2==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newStatus1==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newStatus1==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newStatus1==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newPhone==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''&&newStatus1==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newTask==''&&newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newStatus1==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''&&newPhone==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	// 5 change
+	// 	else if(newkh==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
+	// 	}
+	// 	else if(newStatus3==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
+	// 	}
+	// 	else if(newStatus2==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newStatus1==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newPhone==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	else if(newTask==''){
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	// 6 change
+	// 	else{
+	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
+	// 	}
+	// 	// else if(newTask==''){setnewTask(name)}
+	// 	// else if(newPhone==''){setnewPhone(phone)}
+	// 	// else if(newStatus1==''){setnewStatus1(status1)}
+	// 	// else if(newStatus2==''){setnewStatus2(status2)}
+	// 	// else if(newStatus3==''){setnewStatus3(status3)}
+	// 	// setnewTask('')
+	// 	// setnewPhone('')
+	// 	// setnewStatus1('')
+	// 	// setnewStatus2('')
+	// 	// setnewStatus3('')
+	// }
+	// 	// const db = fire.firestore()
+	//     // if(year== 1){db.collection('teachers').doc(id).update({name:newTask,phone:newPhone,status1:newStatus1,url:url})}
 		
-	// 	const db = fire.firestore()
-	//     if(year== 1){db.collection('teachers').doc(id).update({name:newTask,phone:newPhone,status1:newStatus1,url:url})}
-		
-	// 	else{db.collection('students').doc('year').collection(newfireYear).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})}
+	// 	// fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
+	
 	// }
 	// const onUpdate = (id,name,email,phone,status,year,url) =>{
 	// 	const db = fire.firestore()
@@ -489,7 +720,11 @@ function Admin() {
 		setApiLoading(true)
 		fire.firestore().collection('students').doc('year').collection(newfireYearA).orderBy("name","asc")
 		.onSnapshot(function(data){setCount(data.size);setTasksA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
-		document.getElementById('count').style.display='block'});
+		document.getElementById('count').style.display='block'
+		// document.getElementById('upname').value=data.data().name
+	}
+		);
+		
 		setTimeout(() => {
 			setApiLoading(false)
 		}, 2000);
@@ -519,6 +754,52 @@ function Admin() {
 		},
 	  }));
 	  const classes = useStyles();	  
+
+	const handleresolution = ()=>{
+		if (window.innerWidth<800 && window.innerHeight <800){
+			// alert('Your Resolution is->'+'width: '+window.innerWidth+'height: '+window.innerHeight+' Try Laptop/Desktop')
+			setShowresolution(true)
+		}
+		else{
+			// alert('width:'+window.innerWidth+'height:'+window.innerHeight)
+			setModalShow(true)
+		}
+	}
+	// function functionDelete(id, year){
+	// 	setShowDeleteModal(true);
+	// 	<Modal 
+	//   	show={showDeleteModal}
+    //     onHide={()=>setShowDeleteModal(false)}
+    //     size="sm"
+    //  	aria-labelledby="contained-modal-title-vcenter"
+    //   	centered
+    //     >
+    //     <Modal.Header closeButton>
+    //       <Modal.Title>📵 Unsupported!</Modal.Title>
+    //     </Modal.Header>
+    //     <Modal.Body>Please open Micro Admin Panel from your Desktop or Laptop for best experiences!
+	// 	</Modal.Body>
+    //     <Modal.Footer>
+          
+    //       <Button variant="secondary" onClick={()=>setShowDeleteModal(false)}>
+    //         Cancel
+    //       </Button>
+	// 	  <Button variant="danger" onClick={()=>onDelete(id, year)}>
+    //         Delete
+    //       </Button>
+    //     </Modal.Footer>
+    //   </Modal>
+	// }
+	const [deleteid, setdeleteid]=useState('')
+	const [deleteyear, setdeleteyear]=useState('')
+	const [upid, setupid] = useState('')
+	const [upname, setupname] = useState('')
+	const [upemail, setupemail] = useState('')
+	const [upphone, setupphone] = useState('')
+	const [upstatus1, setupstatus1] = useState('')
+	const [upstatus2, setupstatus2] = useState('')
+	const [upstatus3, setupstatus3] = useState('')
+	const [upurl, setupurl] = useState('')
 return (
 	<div>
 	{
@@ -531,28 +812,35 @@ return (
 		
 
 				<div>
-					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
+					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed='top'>
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
 						<Navbar.Collapse id="responsive-navbar-nav">
 						{/* <Navbar.Brand href="#home">Admin Panel</Navbar.Brand> */}
 						<Nav className="mr-auto">
-						<Nav.Link id="home" href="#home"><FcHome/> Home</Nav.Link>
+						{/* <span className={navstyle.navi}><FcQuestions/>Help </span> */}
+						<Nav.Link id="home" href="#home"><span className={navstyle.navi}><FcHome/>Home </span></Nav.Link>
 						{/* <Nav.Link id="about" href="#About"><FcAbout/> About</Nav.Link> */}
-						<Nav.Link id='students' href="#student"><FcReading/> Students</Nav.Link>
-						<Nav.Link id='teachers' href="#teacher"><FcBusinesswoman/> Teachers</Nav.Link>
-						<Nav.Link id="slideshows" href="#slideshow"><FcPhotoReel/> Slideshow</Nav.Link>
-						<Nav.Link id='gallerycontrol' href="#gallery"><FcStackOfPhotos/> Gallery</Nav.Link>
-						<Nav.Link id='recruiterscontrol' href="#recruiters"><FcConferenceCall/> Recruiters</Nav.Link>
-						<Nav.Link id='noticecontrol' href="#notice">📋Notice</Nav.Link>
-						<Nav.Link id='videocontrol' href="#video">🎦Video</Nav.Link>
-						<Nav.Link id='magazinecontrol' href="#magazine">Magazine</Nav.Link>
-						<Nav.Link id='feedbackcontrol' href="#feedback">Feedback</Nav.Link>
-						<Nav.Link id='helplink' href="mailto:dsubham776050@gmail.com?subject=Help regarding...&body=Hi, my name is..." target='_blank'><FcQuestions/> Help</Nav.Link>
+						<Nav.Link id='students' href="#student"><span className={navstyle.navi}><FcReading/>Students </span></Nav.Link>
+						<Nav.Link id='teachers' href="#teacher"><span className={navstyle.navi}><FcBusinesswoman/>Teachers </span></Nav.Link>
+						<Nav.Link id="slideshows" href="#slideshow"><span className={navstyle.navi}><FcPhotoReel/>Slideshow </span></Nav.Link>
+						<Nav.Link id='gallerycontrol' href="#gallery"><span className={navstyle.navi}><FcStackOfPhotos/>Gallery </span></Nav.Link>
+						<Nav.Link id='recruiterscontrol' href="#recruiters"><span className={navstyle.navi}><FcConferenceCall/>Recruiters </span></Nav.Link>
+						<Nav.Link id='noticecontrol' href="#notice"><span className={navstyle.navi}>📋Notice </span></Nav.Link>
+						<Nav.Link id='videocontrol' href="#video"><span className={navstyle.navi}>🎦Video </span></Nav.Link>
+						<Nav.Link id='magazinecontrol' href="#magazine"><span className={navstyle.navi}>📂Magazine </span></Nav.Link>
+						<Nav.Link id='feedbackcontrol' href="#feedback"><span className={navstyle.navi}>✍Feedback </span></Nav.Link>
+						{/* <Nav.Link id='helplink' href="mailto:dsubham776050@gmail.com?subject=Help regarding...&body=Hi, my name is..." target='_blank'><span className={navstyle.navi}><FcQuestions/>Help </span></Nav.Link> */}
 						</Nav>
 						<Form inline>
-						<p>.</p>
-						<Button variant="outline-danger" onClick={logout}>Logout</Button>
+						{/* <p>.</p> */}
+						{/* <Button variant="outline-danger" onClick={logout}>Logout</Button> */}
+						{/* <div style={{color:'red'}}><ExitToAppIcon/></div> */}
+						<Tooltip title='Log Out'>
+						<IconButton aria-label="logout" color="secondary" onClick={logout}>
+							<ExitToAppIcon/>
+						</IconButton>
+						</Tooltip>
 						</Form>
 						</Navbar.Collapse>
 					</Navbar>
@@ -564,8 +852,8 @@ return (
 	{/* <div id='home' style={{display:'block'}}><p>hello</p></div> */}
 	
 
-	<div id='homecard' style={{display:'block'}}>
-
+	<div id='homecard' style={{display:'block',backgroundColor:'#D1ECF1'}}>
+<br/><br/>
 	<Timeline align="alternate">
       <TimelineItem>
         <TimelineOppositeContent>
@@ -671,7 +959,7 @@ return (
       </TimelineItem>
     </Timeline>
 	
-		
+		<hr/>
 		
 	</div>
 	<div id='all' style={{display:'none'}}>
@@ -689,7 +977,7 @@ return (
 		</Form.Control>
 		<Button onClick={adminstudentopt}>Go</Button>
 		</Form>
-		</Col><Col><h4 id='count' style={{display:'none'}}>Results found <Badge variant='warning' ><span >{count}</span></Badge></h4></Col></Row>
+		</Col><Col><h4 id='count' style={{display:'none'}}>Results found <sup><Badge variant='warning' ><span >{count}</span></Badge></sup></h4></Col></Row>
 	</div>
 
 	<div id='teacherheading' style={{display:'none',textAlign:'center'}}>
@@ -700,7 +988,15 @@ return (
 	<div id='slideshowheading' style={{display:'none',textAlign:'center'}}>
 
 	<h2 style={{backgroundColor:'#343a40',color:'whitesmoke',borderRadius:10}}>📽Welcome to Slideshow Table</h2>
-	
+	<div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+		<p></p>
+		<Alert variant='danger'>
+		<p style={{fontSize:18}}>⚠️The first three images of Slideshow are locally stored. You can't view or replace them. Make sure you will
+			not upload those three images further or Slides will messed up. Be careful. Enjoy !
+		</p>
+		</Alert>
+		<p></p>
+	</div>
 	</div>
 	<div id='galleryheading' style={{display:'none',textAlign:'center'}}>
 
@@ -742,18 +1038,19 @@ return (
 	<Col>
 	{/* {imgloading&&setApiLoading(false)} */}
 	<input type='text' placeholder='🔍Search...' onChange={(e)=>setSearchTerm(e.target.value)}/>
-	<div style={{overflow:'scroll',maxHeight:350}}>
-	<Table responsive striped bordered hover variant="dark" className={containerStyle.tableoverflow}>
+	<div >
+	<Table responsive striped bordered hover variant="dark" >
 	<thead>
 	<tr>
 		<th>😀Name</th>
-		<th>📮Email (Uname)</th>
+		<th>📮Email (Username)</th>
 		<th>📞Mobile</th>
 		<th>📜About1</th>
 		<th>📜About2</th>
 		<th>📜About3</th>
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
+		<th>⚠️Update</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -768,20 +1065,44 @@ return (
 		}).map(spell=>(
 			
 			<tr key={spell.id}>
-			<td>{spell.name}<br/>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.name}<br/>
+			<div ><input id='upname' type='text' style={{width:90,height:30}} defaultValue={spell.name}  onChange={(e)=>{settableid(spell.id);setnewTask(e.target.value)}}/></div>
 			</td>
-			<td>{spell.email}<br/></td>
-			<td>{spell.phone}<br/>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.email}<br/></td>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.phone}<br/>
+			<div ><input id='upphone' type='text' style={{width:90,height:30}} defaultValue={spell.phone}  onChange={(e)=>{settableid(spell.id);setnewPhone(e.target.value)}}/></div>
 			</td>
-			<td>{spell.status1}<br/>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.status1}<br/>
+			<div ><input id='upstatus1' type='text' style={{width:90,height:30}} defaultValue={spell.status1}  onChange={(e)=>{settableid(spell.id);setnewStatus1(e.target.value)}}/></div>
 			</td>
-			<td>{spell.status2}<br/>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.status2}<br/>
+			<div ><input id='upstatus2' type='text' style={{width:90,height:30}} defaultValue={spell.status2} onChange={(e)=>{settableid(spell.id);setnewStatus2(e.target.value)}}/></div>
 			</td>
-			<td>{spell.status3}<br/>
+			<td style={{maxWidth:110,wordWrap:'break-word'}}>{spell.status3}<br/>
+			<div ><input id='upstatus3' type='text' style={{width:90,height:30}} defaultValue={spell.status3} onChange={(e)=>{settableid(spell.id);setnewStatus3(e.target.value)}}/></div>
 			</td>
-			<img src={spell.url} onLoad={()=>{console.log('done loading');setimgloading('loaded')}} width={100}/>
-			<td><Button variant="danger" onClick={()=>onDelete(spell.id, spell.year)}
+			<td><img id={spell.id} src={spell.url}  width={100} /><br/>
+			<div style={{display:'flex'}}><input id='photo' type='text' placeholder='new url' style={{width:90,height:30}}  onPaste={(e)=>{settableid(spell.id);
+      setnewImUrlS(e.clipboardData.getData('Text'))
+     }}/><Button size="sm" onClick={()=>onAdd(spell.id)}>Add</Button></div>
+			</td>
+			{/* <td><Button variant="danger" onClick={()=>onDelete(spell.id, spell.year)}
+			>Delete</Button></td> */}
+			<td><Button variant="danger" onClick={()=>{setdeleteid(spell.id);setdeleteyear(spell.year);setShowDeleteModal(true)}}
 			>Delete</Button></td>
+			{/* <td><Button variant="warning" onClick={()=>onUpdate(spell.id, spell.year, spell.name,spell.email,spell.phone,spell.status1,spell.status2,spell.status3,spell.url)}
+			>Update</Button></td> */}
+			<td><Button variant="warning" onClick={()=>{
+				setupid(spell.id);
+				setupname(spell.name);
+				setupemail(spell.email);
+				setupphone(spell.phone);
+				setupstatus1(spell.status1);
+				setupstatus2(spell.status2);
+				setupstatus3(spell.status3);
+				setupurl(spell.url);
+				setShowUpdateModal(true);}}
+			>Update</Button></td>
 			</tr>
 		))}
 		
@@ -807,7 +1128,7 @@ return (
 		<th>📞Mobile</th>
 		<th>📜About</th>
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -852,7 +1173,7 @@ return (
 		<th>Slide Name</th>
 
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -892,7 +1213,7 @@ return (
 		<th>Image Id</th>
 
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -929,7 +1250,7 @@ return (
 	<tr>
 		<th>Company Name</th>
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>
+		<th>⛔️Delete</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -967,7 +1288,7 @@ return (
 		<th>Title</th>
 		<th>📜Description</th>
 		<th>📷Photo</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -1006,7 +1327,7 @@ return (
 
 		<th>Title</th>
 		<th>Link</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -1044,7 +1365,7 @@ return (
 
 		<th>Name</th>
 		<th>Link</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -1083,7 +1404,7 @@ return (
 		<th>Name</th>
 		<th>Email</th>
 		<th>Comments</th>
-		<th>⚠️Delete</th>	
+		<th>⛔️Delete</th>	
 	</tr>
 	</thead>
 	<tbody>
@@ -1112,15 +1433,16 @@ return (
 	</div>
 			<div className={containerStyle.createbutton}>
 			<Tooltip title='Add' >
-			<Fab color="primary" aria-label="add" onClick={() => setModalShow(true)}>
+			<Fab color="primary" aria-label="add" onClick={handleresolution}>
 				<AddIcon />
 			</Fab>
 			</Tooltip>
 			</div>
 	</Container>
+	
 	</div>
 
-
+	<AdminFooter/>
 
 	{/* <Modal
         show={showDelete}
@@ -1167,9 +1489,79 @@ return (
 	  
     
 	
-			
+	  <Modal 
+	  	show={showresolution}
+        onHide={()=>setShowresolution(false)}
+        backdrop="static"
+        keyboard={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>📵 Unsupported!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Please open Micro Admin Panel from your Desktop or Laptop for best experiences!
+		</Modal.Body>
+        <Modal.Footer>
+          
+          <Button variant="primary" onClick={()=>setShowresolution(false)}>
+            Understood
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
-	
+	  {/* <Modal 
+	  	show={showDeleteModal}
+        onHide={()=>setShowDeleteModal(false)}
+        size="sm"
+     	aria-labelledby="contained-modal-title-vcenter"
+      	centered
+        >
+        <Modal.Header closeButton>
+          <Modal.Title>📵 Unsupported!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Please open Micro Admin Panel from your Desktop or Laptop for best experiences!
+		</Modal.Body>
+        <Modal.Footer>
+          
+          <Button variant="secondary" onClick={()=>setShowresolution(false)}>
+            Cancel
+          </Button>
+		  <Button variant="danger" onClick={()=>onDelete(spell.id, spell.year)}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal> */}
+
+		<AdminDelete
+        show={showDeleteModal}
+        onHide={() => setShowDeleteModal(false)}
+		fireyear={newfireYearA}
+		year={deleteyear}
+		id={deleteid}
+      />
+	  <AdminUpdate
+        show={showUpdateModal}
+        onHide={() => setShowUpdateModal(false)}
+
+		fireyear={newfireYearA}
+
+		upid={upid}
+		upname={upname}
+		upemail={upemail}
+		upphone={upphone}
+		upstatus1={upstatus1}
+		upstatus2={upstatus2}
+		upstatus3={upstatus3}
+		upurl={upurl}
+
+		newTask={newTask}
+		newEmail={newEmail}
+		newPhone={newPhone}
+		newStatus1={newStatus1}
+		newStatus2={newStatus2}
+		newStatus3={newStatus3}
+		newkh={newkh}
+		
+		tableid={tableid}
+      />
 	</div>
 }
 	</div>

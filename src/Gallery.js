@@ -7,6 +7,7 @@ import 'react-gallery-carousel/dist/index.css';
 import containerStyle from './AdminContainer.module.css'
 import ImageIcon from '@material-ui/icons/Image';
 import {FcMms} from 'react-icons/fc';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 function Gallery(props) {
     const [tasksGallery, setTasksGallery] = React.useState([]);
     React.useEffect(()=>{
@@ -29,7 +30,7 @@ function Gallery(props) {
                 <Modal.Header closeButton className={containerStyle.grad}>
                     <Modal.Title id="contained-modal-title-vcenter" className={sty.controlpanelfont}>
                     <div style={{display:'flex'}}>
-                    <div style={{color:'white'}}><ImageIcon fontSize="large"/> </div>
+                    <div style={{color:'white'}}><PhotoLibraryIcon fontSize="large"/> </div>
                     <span style={{fontSize:28,color:'white',paddingTop:4}}>&nbsp;Web Gallery</span>
                     </div>
                     </Modal.Title>

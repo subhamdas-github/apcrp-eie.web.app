@@ -37,7 +37,10 @@ function Recruiters(props) {
                     </Modal.Title>
                 </Modal.Header>
                 
-                <Modal.Body style={{height:350,overflow:'scroll'}}>
+                <Modal.Body 
+                style={{height:370}}
+                >
+                <marquee behavior="alternate" direction="up" height="350" >
 <CardColumns >
 
 
@@ -54,7 +57,7 @@ function Recruiters(props) {
 
 </CardColumns>
 
-                
+</marquee>
                 </Modal.Body>
                 
                 <Modal.Footer className={containerStyle.grad}>

@@ -120,6 +120,9 @@ function Feedback() {
             
             <div style={{padding:20}} className={containerStyle.grad}>
             <Paper elevation={9}  className={containerStyle.grad}>
+            <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+        <div style={{paddingBottom:12,color:'#D1ECF1'}}><FeedbackIcon fontSize="large"/></div>
+        <span className={containerStyle.ach} style={{paddingTop:2,paddingLeft:2}}><b className={sty.controlpanelfont}>Feedback Form</b></span></h1>
             <div >
               {/* <b.Alert variant='info'> */}
                 <b.Row className="justify-content-md-center" >
@@ -130,7 +133,7 @@ function Feedback() {
                     <b.Col md="auto">
                        
                             
-                            <div style={{paddingTop:20,color:'aliceblue'}}  className={sty.controlpanelfont}>
+                            <div style={{padding:20,color:'aliceblue'}}  className={sty.controlpanelfont}>
                                 <h5>&#10148; How about giving a feedback?</h5>
                                 <h5>&#10148; We're happy that you are using this web app.</h5>
                                 <h5>&#10148; Kindly share your views, opinions, suggestions or ideas about it.</h5>
@@ -150,8 +153,9 @@ function Feedback() {
             <div >
               
                 <b.Row>
-                <b.Col sm>
+                <b.Col sm style={{maxWidth:350}}>
                   <br/>
+                  <h3>Overall Rating</h3>
                   <h4 style={{display:'flex'}}>5 Stars<Rating name="read-only" defaultValue={5} readOnly size="large"/></h4>
                   <b.ProgressBar animated now={90} label={`${90}%`}/><br/>
                   <h4 style={{display:'flex'}}>4 Stars<Rating name="read-only" defaultValue={4} readOnly size="large"/></h4>

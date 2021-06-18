@@ -70,6 +70,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 // import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import one from './images/1.jpg'
+import two from './images/2.jpg'
+import three from './images/3.jpg'
 import FolderIcon from '@material-ui/icons/Folder';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -91,7 +94,18 @@ import tea from './images/teachers.jpg'
 import FadeInSection from './FadeInSection';
 import FadeInSectionL from './FadeInSectionL';
 import FadeInSectionR from './FadeInSectionR';
+import SportsCricketIcon from '@material-ui/icons/SportsCricket';
+// import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import SchoolIcon from '@material-ui/icons/School';
+import ComputerIcon from '@material-ui/icons/Computer';
 import './css/fadein.css'
+import AOS from 'aos';
+import 'aos/dist/aos.css'; 
+import InfoIcon from '@material-ui/icons/Info';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
+import ExploreIcon from '@material-ui/icons/Explore';
+
+
 function FrontPage({placeName}) {
   const images = [
     {
@@ -298,11 +312,13 @@ function FrontPage({placeName}) {
     ['primary','secondary','warning','danger','info','success','dark']
 
     React.useEffect(()=>{
+      AOS.init({duration:1150});
         fire.firestore().collection('slideshow').onSnapshot(function(data){
             setTasksS(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
         });
 
         const fetchData = async ()=>{
+
             const db = fire.firestore();
 
             fire.firestore().collection('notice')
@@ -401,22 +417,47 @@ function FrontPage({placeName}) {
             <div className={containerStyle.grad}>
             <FrontHeading/>
             <div id='front' style={{display:'block'}}>
-            <div id='frontimage' style={{padding:25}}>
+            <div id='frontimage' style={{padding:20}} >
             
             <Paper elevation={9} className={containerStyle.grad}>
               <hr/>
             {/* <Container fluid='xl'> */}
             {/* <Container fluid='xl' > */}
+
             <Carousel fade>
+              <Carousel.Item>
+                <img
+                className="d-block w-100"
+                src={one}
+                alt='first'
+                style={{objectFit:'contain',maxHeight:700}}
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                className="d-block w-100"
+                src={two}
+                alt='second'
+                style={{objectFit:'contain',maxHeight:700}}
+                />
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                className="d-block w-100"
+                src={three}
+                alt='third'
+                style={{objectFit:'contain',maxHeight:700}}
+                />
+              </Carousel.Item>
                 {tasksS.map(spell=>
                 (
                     <Carousel.Item>
                     <img
                     className="d-block w-100"
                     src={spell.url}
-                    alt="slide"
+                    alt={spell.url}
 
-                    style={{objectFit:'contain'}}
+                    style={{objectFit:'contain',maxHeight:700}}
                     
                     />
                     </Carousel.Item>
@@ -429,14 +470,20 @@ function FrontPage({placeName}) {
             </Paper>
             </div>
 
-            <FadeInSection>
+            {/* <FadeInSection> */}
+            <div data-aos="zoom-in-up" >
             <div id='about-eie' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/><br/>
                 <Paper elevation={9} className={containerStyle.grad}>
                 
                 {/* <Container fluid='xl'> */}
-                <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>About Us</b></span></h1>
+                <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+              
+              <div style={{paddingBottom:12,color:'#D1ECF1'}}><InfoIcon fontSize="large"/></div>
+              <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>About Us</b></span>
+            </h1>
+                {/* <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>About Us</b></span></h1> */}
                 {/* <Container fluid='xl' > */}
                 
                     <Row >
@@ -489,8 +536,9 @@ function FrontPage({placeName}) {
                 </Paper>
                  
             </div>
-            </FadeInSection> 
-            <FadeInSection>
+            </div>
+            {/* </FadeInSection>  */}
+            <div data-aos="zoom-in-right">
             <div id='frontachivements' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/><br/>
@@ -498,7 +546,12 @@ function FrontPage({placeName}) {
                 <Paper elevation={9} className={containerStyle.grad}>
                 
                 {/* <Container fluid='xl'> */}
-                <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Achievements</b></span> </h1>
+                <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+              
+              <div style={{paddingBottom:12,color:'#D1ECF1'}}><EmojiEventsIcon fontSize="large"/></div>
+              <span className={containerStyle.ach} style={{paddingTop:11,paddingLeft:2}}><b>Achievements</b></span>
+            </h1>
+                {/* <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Achievements</b></span> </h1> */}
                 {/* <Container fluid='xl' > */}
                     <IconContext.Provider value={{color:'red'}}>
                         
@@ -508,7 +561,7 @@ function FrontPage({placeName}) {
                         {/* <Alert.Heading>Hey, welcome to DEIE Events</Alert.Heading> */}
                         <p style={{textAlign:'justify'}}>
                         The students of the department achieved many milestones from time to time in various field like 
-                        <b > academics🎓, robotics🤖, sports⚽️</b> etc. Some of the achievements are :-
+                        <b > Academics <sup><SchoolIcon/></sup>, Robotics <sup><ComputerIcon/></sup>, Sports <sup><SportsCricketIcon/></sup></b> etc. Some of the achievements are :-
                         Champion in 2015,
                         stood 2nd position in 2017 & stood 4th position in 2018 at <a href='https://portal.e-yantra.org/' target='_blank'>E-yantra Robotics Competition(E-YRC)</a>, IIT Bombay.
                         Every year the magazine <b >''UTTORON''</b> is published by the department and every year farewell  ceremony is
@@ -533,7 +586,7 @@ function FrontPage({placeName}) {
                 </Paper>
                 
             </div>
-            </FadeInSection>
+            </div>
             {/* <div id='Navigation' className={sty.controlpanelfont} style={{padding:20}}>
               <br/>
               <Paper elevation={9} className={containerStyle.grad}>
@@ -578,16 +631,20 @@ function FrontPage({placeName}) {
               </Paper>
             </div> */}
 
-<FadeInSection >
+<div data-aos="zoom-in-left">
             <div id='video-events' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/>
                 <Paper elevation={9} className={containerStyle.grad}>
-                {/* <FadeInSection> */}
+                {/* <div> */}
                 <div id='about-events'>
                 <div id='notice-events'>
-                        
-                        <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Explore Events</b></span></h1>
+                <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
+              
+              <div style={{paddingBottom:12,color:'#D1ECF1'}}><ExploreIcon fontSize="large"/></div>
+              <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>Explore Events</b></span>
+            </h1>
+                        {/* <h1 style={{textAlign:'center',fontSize:45}} className={containerStyle.borderbottomstyle}>&gt;&gt;<span className={containerStyle.ach}><b>Explore Events</b></span></h1> */}
                         {/* <Tabs defaultActiveKey="home" id="uncontrolled-tab-example">
                         <Tab eventKey="home" title={countz}>
 
@@ -878,12 +935,12 @@ function FrontPage({placeName}) {
 
                 </div>
                 </div>
-                {/* </FadeInSection> */}
+                {/* </div> */}
                 </Paper>
                 
             </div>
 
-            </FadeInSection>
+            </div>
             </div>
             
             <Footer/>
