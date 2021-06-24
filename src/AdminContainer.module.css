@@ -66,6 +66,12 @@
     height: 170px;
     border-radius: 50%;
 }
+.imgstylenew{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #0c5460;
+}
 .html{
     scroll-behavior: smooth;
 }
@@ -203,6 +209,8 @@ font-family: 'Quantico', sans-serif;
 }
 .footerconcept{
     border-left: 5px solid #145276;
+    /* border-bottom: 5px solid #145276; */
+    /* position: relative; */
     padding-left: 5px;
 }
 .newtestfont{

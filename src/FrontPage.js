@@ -470,8 +470,8 @@ function FrontPage({placeName}) {
             </Paper>
             </div>
 
-            {/* <FadeInSection> */}
-            <div data-aos="zoom-in-up" >
+            <FadeInSection>
+            <div >
             <div id='about-eie' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/><br/>
@@ -537,8 +537,8 @@ function FrontPage({placeName}) {
                  
             </div>
             </div>
-            {/* </FadeInSection>  */}
-            <div data-aos="zoom-in-right">
+            </FadeInSection>
+            <FadeInSectionL>
             <div id='frontachivements' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/><br/>
@@ -586,7 +586,7 @@ function FrontPage({placeName}) {
                 </Paper>
                 
             </div>
-            </div>
+            </FadeInSectionL>
             {/* <div id='Navigation' className={sty.controlpanelfont} style={{padding:20}}>
               <br/>
               <Paper elevation={9} className={containerStyle.grad}>
@@ -631,7 +631,7 @@ function FrontPage({placeName}) {
               </Paper>
             </div> */}
 
-<div data-aos="zoom-in-left">
+<FadeInSection >
             <div id='video-events' className={sty.controlpanelfont} style={{padding:20}}>
             
                 <br/>
@@ -940,7 +940,7 @@ function FrontPage({placeName}) {
                 
             </div>
 
-            </div>
+                              </FadeInSection>
             </div>
             
             <Footer/>

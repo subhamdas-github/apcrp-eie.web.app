@@ -50,6 +50,7 @@ const Login = ()=> {
 	const [passworderror, setpassworderror] = useState('');
 	const [loading, setLoading] = useState(false)
 	const [isbtnloading, setbtnloading] = useState(false)
+	const [curruserEmail, setCurrUserEmail] = useState('')
 	// const {email,setEmail,password,setpassword,handlelogin,emailerror,passworderror,} = props;
 	
 	
@@ -61,17 +62,7 @@ const Login = ()=> {
 		setemailerror('');
 		setpassworderror('');
 	}
-	function goto(){
-		<Router>
-			<Switch>
-				<Route exact path='/login'>
-					
-				<Redirect to='/admin'/>
-				</Route>
-			</Switch>
-		</Router>
-		console.log('redirecting....')
-	}
+	
 	
 	const login = (e)=>{
 		setLoading(true)
@@ -84,7 +75,10 @@ const Login = ()=> {
 			password).then((u)=>{
 				setLoading(false)
 				setbtnloading(false)
-				
+				// fire.firestore().collection('newuser').doc('users').collection(email).doc(email).
+				// set({email:email,password:password})
+				fire.firestore().collection(email).doc(email).
+				set({email:email,password:password})
 				clearInputs()
 			}).catch(err=>{
 				switch(err.code){
@@ -102,6 +96,20 @@ const Login = ()=> {
 						break;
 				}
 			});
+	}
+	const signup = ()=>{
+		// fire.auth().createUserWithEmailAndPassword(email, password)
+		// .then((userCredential) => {
+		  
+		//   console.log(userCredential.user)
+		  
+		// })
+		// .catch((error) => {
+		//   var errorCode = error.code;
+		//   var errorMessage = error.message;
+		  
+		// });
+		fire.firestore().collection('user').doc(email).set({email:email,password:password})
 	}
 
 
@@ -159,6 +167,7 @@ const Login = ()=> {
 					<p>Please Wait</p>
 				</div> : 'Login'}
 				</Button>
+
 				<p></p>
 				</div>
 			</form>

@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Col, Container, Row,Nav } from 'react-bootstrap'
+import { Col, Container, Row,Nav,ProgressBar } from 'react-bootstrap'
 import {FaFacebook, FaLinkedinIn,FaWhatsapp,FaGithub,FaHackerrank,FaInstagramSquare} from 'react-icons/fa'
 import {RiInstagramFill} from 'react-icons/ri'
 import {SiFacebook} from 'react-icons/si'
@@ -58,6 +58,12 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import BackToTop from 'react-back-to-top';
+import z from './images/z.png'
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import ForwardIcon from '@material-ui/icons/Forward';
+import CodeIcon from '@material-ui/icons/Code';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 function Footer() {
     const [tasks, setTasks] = useState([]);
     const [modalShow, setModalShow] = useState(false);
@@ -90,14 +96,14 @@ function Footer() {
                 <br/><br/>
                 
                 <Paper elevation={9} style={{backgroundColor:'black',color:'whitesmoke',maxHeight:2000,padding:25}}>
-                
+
                 <Row>
                     <Col sm >
                     <br/>
                         
                     {/* <hr style={{borderWidth:5, borderColor:'#FF4500'}}></hr> */}
                     {/* <h3 style={{color:'#20b2aa'}} >Acharya Prafulla Chandra Ray Polytechnic</h3> */}
-                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Acharya Prafulla Chandra Ray Polytechnic</h3></div>
+                    <div style={{display:'flex'}}><span ><ForwardIcon/> </span><h4 style={{color:'#20b2aa',paddingTop:2}}>&nbsp;Acharya Prafulla Chandra Ray Polytechnic</h4></div>
                     <div className={containerStyle.footerconcept}>
                     <h4 >Department of Electronics and Instrumentation Engineering</h4>
                     <h7 >188, Raja Subodh Chandra Mallick Road Jadavpur,Kolkata: 700032<br/> 
@@ -110,7 +116,7 @@ function Footer() {
                     <Col sm>
                         <br/>
                         
-                        <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Quick Links</h3></div>
+                        <div style={{display:'flex'}}><span ><ForwardIcon/> </span><h4 style={{color:'#20b2aa',paddingTop:2}}>&nbsp;Quick Links</h4></div>
                         <div style={{display:'flex'}}>
                             <div className={containerStyle.footerconcept} >
                             <h7><Nav.Link className={navstyle.navifooter} href='/' >  <span>&gt;Home</span> </Nav.Link></h7>
@@ -148,10 +154,10 @@ function Footer() {
                     <Col sm ><br/>
                     {/* <hr style={{borderWidth:5, borderColor:'#FF4500'}}></hr> */}
                     
-                    {/* <h3 style={{color:'#20b2aa'}} >✒️Conceptualist</h3> */}
-                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Conceptualist</h3></div>
+                    {/* <h4 style={{color:'#20b2aa'}} >✒️Conceptualist</h4> */}
+                    <div style={{display:'flex'}}><span ><ForwardIcon/> </span><h4 style={{color:'#20b2aa',paddingTop:2}}>&nbsp;Conceptualist</h4></div>
                     <div className={containerStyle.footerconcept}>
-                     <h5>Alok Mondal </h5>
+                    <div style={{display:'flex'}}> <h5 style={{paddingTop:4.5}}>Alok Mondal &nbsp; </h5><span ><AccountCircleIcon/></span></div>
                      
                     <a href='https://www.facebook.com/alok.mondal.56481379' target='_blank' className={navstyle.linkfacebook}>
                         <FaFacebook /></a>&nbsp;
@@ -168,16 +174,17 @@ function Footer() {
                     </div>
                     </Col>
 
-
+                    
                 
                     <Col sm ><br/>
                     {/* <hr style={{borderWidth:5,borderColor:'#FF4500'}}></hr> */}
                     
-                    {/* <h3 style={{color:'#20b2aa'}} >👨‍💻Designed & Developed by</h3> */}
-                    <div style={{display:'flex'}}><h2 >&gt;&gt; </h2><h3 style={{color:'#20b2aa',paddingTop:4}}>&nbsp;Designed & Developed by</h3></div>
+                    {/* <h4 style={{color:'#20b2aa'}} >👨‍💻Designed & Developed by</h4> */}
+                    <div style={{display:'flex'}}><span ><ForwardIcon/> </span><h4  style={{color:'#20b2aa',paddingTop:2}}>&nbsp;Designed & Developed by</h4></div>
                     <div className={containerStyle.footerconcept}>
                         <p>
-                     <h5>Subham Das  &lt;&gt;</h5>
+                        
+                    <div style={{display:'flex'}}> <h5 style={{paddingTop:4.5}}>Subham Das &nbsp; </h5><span><CodeIcon/></span></div>
                      <a href='https://www.facebook.com/subham.das.908347' target='_blank' className={navstyle.linkfacebook}>
                     <FaFacebook /></a>&nbsp;<a href='/' target='_blank' className={navstyle.linkfacebook}>
                     <RiInstagramFill/></a> &nbsp;
@@ -188,11 +195,25 @@ function Footer() {
                     Acharya Prafulla Chandra Ray Polytechnic, Kolkata-700032</p>
                     </div>
                     </Col>
+                    <Col sm ><br/>
+                    <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                        <p></p>
+                        <div> <img src={z} width={140}/></div>
+                        <p></p>
+                    </div>
+                    
+                    </Col>
                 </Row>
+                <br/>
+                {/* <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
+                    <p></p>
+                   <div> <img src={z} width={100}/></div>
+                    <p></p>
+                </div> */}
                 <br/>
                 <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                     <p></p>
-                    <a className={navstyle.navifooter} href='/feedback'>Is this website helpful ? Give a feedback</a>
+                   <div> <a className={navstyle.navifooter} href='/feedback'>Is this website helpful ? Give a feedback</a><sup><InsertEmoticonIcon/></sup></div>
                     <p></p>
                 </div>
                 

@@ -62,10 +62,15 @@ function Preface() {
         <h1 style={{textAlign:'center',fontSize:40,display:'flex',textAlign:'center',justifyContent:'center'}} className={containerStyle.borderbottomstyle}>
         <div style={{paddingBottom:12,color:'#D1ECF1'}}><LabelImportantIcon fontSize="large"/></div>
         <span className={containerStyle.ach} style={{paddingTop:10,paddingLeft:2}}><b>To Our Juniors</b></span></h1>
-        <Alert variant='info'>     
+        <Alert variant='info'>
             <p>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{fontSize:34}}>W</span>e the students of <span style={{color:'#C71585'}}><b> DEIE(2018-2021)</b></span> have always thought it to be our duty to give ourselves
-            up for our juniors. So here we are presenting this platform. The platform contains all detailed information and contacts of us, hence even when we are not in the college anymore you our beloved juniors💝 can reach us for any sort of help or catching up. This wouldn’t have been possible without the heartfelt love we have gotten from you junior. This is what inspired us to give something back. The proud heritage of the electronics department is a culmination of our past and our future. We hope this tradition of joining the past with the future will be continued.
+            up for our juniors. So here we are presenting this platform. The platform contains all detailed information and contacts of us, hence even when we are not in the 
+            college anymore you our beloved juniors💝 can reach us for any sort of help or catching up. 
+            This wouldn’t have been possible without the heartfelt love we have gotten from you junior.
+             This is what inspired us to give something back. 
+            The proud heritage of the electronics department is a culmination of our past and our future.
+             We hope this tradition of joining the past with the future will be continued.
             </p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;However there are a few things we have to say to you our next generation.. </p>
             <p>

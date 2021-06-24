@@ -12,6 +12,16 @@ import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import {TiWarning} from 'react-icons/ti';
 import PulseLoader from 'react-spinners/PulseLoader'
 import avt from './avatar.png';
+import Tooltip from '@material-ui/core/Tooltip';
+import HomeIcon from '@material-ui/icons/Home';
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
+import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
+import SlideshowIcon from '@material-ui/icons/Slideshow';
+import ImageIcon from '@material-ui/icons/Image';
+import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
+import EventNoteIcon from '@material-ui/icons/EventNote';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 // import AdminCreateSuccessToast from './AdminCreateSuccessToast';
 
 function AdminForm(props) {
@@ -321,17 +331,18 @@ function AdminForm(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className={sty.controlpanelfont}
+      
       >
         
 <Container fluid='xl' >
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
         <Modal.Title id="contained-modal-title-vcenter">
        <div style={{display:'flex'}}><FcApproval/><span style={{color:'#2F4F4F',fontSize:30}}><b>Micro Control Panel</b></span> <Badge pill variant='warning' style={{height:25}}>Beta</Badge></div>
         </Modal.Title>
       </Modal.Header>
         
       <Tabs defaultActiveKey="home" transition={false} >
-          <Tab eventKey="home" title="Home">
+          <Tab eventKey="home" title={<Tooltip title='Home'><HomeIcon fontSize="large"/></Tooltip>}>
             <div style={{textAlign:'center'}}>
           <Alert variant="warning">
             <Alert.Heading>Welcome to Micro Control Panel 😎</Alert.Heading>
@@ -349,7 +360,7 @@ function AdminForm(props) {
             </Alert>
             </div>
           </Tab>
-          <Tab eventKey="students" title="Students" onClick={()=>setTab('student')}>
+          <Tab eventKey="students" title={<Tooltip title='Students'><LocalLibraryIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('student')}>
             
             <Tab.Container id="left-tabs-example" defaultActiveKey="202" >
               
@@ -419,10 +430,10 @@ function AdminForm(props) {
       
     
 {/* <PulseLoader color='#36D7B7' loading={loading}/> */}
-<div>
+<div >
   <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
     <Row className="justify-content-md-center" style={{marginBottom:10}} className={sty.boxshadow}>
-      <Col xs md={6} style={{backgroundColor:'#008080',width:330}} >
+      <Col xs md={6} style={{backgroundColor:'#008080',width:330}} className={containerStyle.grad}>
     <Form.Group>
       <br />
       <div style={{display:'flex'}}><h2><FcContacts/></h2><span style={{paddingTop:7}}><Form.Control id="name" placeholder="Full Name" type="text" value={newTask} onChange={e=> setnewTask(toTitleCase(e.target.value))} /></span></div>
@@ -478,10 +489,10 @@ function AdminForm(props) {
           </Tab.Container>
           </Tab>
 
-          <Tab eventKey="teachers" title="Teachers" onClick={()=>setTab('teacher')}>
+          <Tab eventKey="teachers" title={<Tooltip title='Teachers'><SupervisedUserCircleIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('teacher')}>
               <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{backgroundColor:'#008080',width:310}}>
+                  <Col style={{backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <br/>
                   <div style={{display:'flex'}}><h2><FcContacts/></h2><span style={{paddingTop:7}}><Form.Control id="namet" placeholder="Full Name" type="text" value={newTaskforT} onChange={e=> setnewTaskforT(toTitleCase(e.target.value))} /></span></div>
@@ -525,11 +536,11 @@ function AdminForm(props) {
               </Form>
           </Tab>
 
-          <Tab eventKey="slideshow" title="Slideshow" onClick={()=>setTab('slideshow')}>
+          <Tab eventKey="slideshow" title={<Tooltip title='Slideshow'><SlideshowIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('slideshow')}>
  
             <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h2><FcPhotoReel/></h2><span style={{paddingTop:7}}><Form.Control id="emailS" placeholder="Slideshow Image Name" type="text" value={newEmailforSS} onChange={e=> {setnewEmailforSS(e.target.value);document.getElementById('emailerrs').style.display='none';document.getElementById('emailS').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrs" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Slideshow image name required!</p>
@@ -565,10 +576,10 @@ function AdminForm(props) {
                 </Row>
               </Form>
           </Tab>
-          <Tab eventKey="gallery" title="Gallery" onClick={()=>setTab('gallery')}>
+          <Tab eventKey="gallery" title={<Tooltip title='Gallery'><ImageIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('gallery')}>
           <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h2><FcStackOfPhotos/></h2><span style={{paddingTop:7}}><Form.Control id="emailG" placeholder="Gallery Image Name" type="text" value={newEmailforG} onChange={e=> {setnewEmailforG(e.target.value);document.getElementById('emailerrg').style.display='none';document.getElementById('emailG').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrg" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Gallery image name required!</p>
@@ -604,10 +615,10 @@ function AdminForm(props) {
                 </Row>
               </Form>
           </Tab>
-          <Tab eventKey="recruiters" title="Recruiters" onClick={()=>setTab('recruiter')}>
+          <Tab eventKey="recruiters" title={<Tooltip title='Recruiters'><BusinessCenterIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('recruiter')}>
               <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h2><FcConferenceCall/></h2><span style={{paddingTop:7}}><Form.Control id="emailR" placeholder="Recruiters Image Name" type="text" value={newEmailforR} onChange={e=> {setnewEmailforR(e.target.value);document.getElementById('emailerrr').style.display='none';document.getElementById('emailR').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrr" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Recruiter image name required!</p>
@@ -643,10 +654,10 @@ function AdminForm(props) {
                 </Row>
               </Form>
           </Tab>
-          <Tab eventKey="notices" title="Notice" onClick={()=>setTab('notice')}>
+          <Tab eventKey="notices" title={<Tooltip title='Notices'><EventNoteIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('notice')}>
               <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h4 style={{paddingTop:12}}>📝</h4><span style={{paddingTop:7}}><Form.Control id="emailN" placeholder="Notice Image Name" type="text" value={newEmailforN} onChange={e=> {setnewEmailforN(e.target.value);document.getElementById('emailerrn').style.display='none';document.getElementById('emailN').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrn" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Notice image name required!</p>
@@ -684,10 +695,10 @@ function AdminForm(props) {
                 </Row>
               </Form>
           </Tab>
-          <Tab eventKey="videos" title="Videos" onClick={()=>setTab('video')}>
+          <Tab eventKey="videos" title={<Tooltip title='Youtube Videos'><YouTubeIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('video')}>
               <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h2><FcConferenceCall/></h2><span style={{paddingTop:7}}><Form.Control id="emailV" placeholder="Video Name" type="text" value={newEmailforV} onChange={e=> {setnewEmailforV(e.target.value);document.getElementById('emailerrv').style.display='none';document.getElementById('emailV').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrv" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Video name required!</p>
@@ -720,10 +731,10 @@ function AdminForm(props) {
               </Form>
           </Tab>
 
-          <Tab eventKey="magazines" title="Magazine" onClick={()=>setTab('magazine')}>
+          <Tab eventKey="magazines" title={<Tooltip title='Magazines'><PictureAsPdfIcon fontSize="large"/></Tooltip>} onClick={()=>setTab('magazine')}>
               <Form style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
                 <Row className="justify-content-md-center" style={{marginLeft:120,marginTop:10,marginBottom:10}} className={sty.boxshadow}>
-                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}}>
+                  <Col style={{paddingTop:130,backgroundColor:'#008080',width:310}} className={containerStyle.grad}>
                 <Form.Group>
                   <div style={{display:'flex'}}><h2><FcConferenceCall/></h2><span style={{paddingTop:7}}><Form.Control id="emailM" placeholder="Magazine Name" type="text" value={newEmailforM} onChange={e=> {setnewEmailforM(e.target.value);document.getElementById('emailerrm').style.display='none';document.getElementById('emailM').style.borderColor='#ced4da';}} style={{borderColor:'#ced4da'}}/></span></div>
                   <p id="emailerrm" style={{display:'none', color:'red',backgroundColor:'white',borderRadius:5}}>Magazine name required!</p>

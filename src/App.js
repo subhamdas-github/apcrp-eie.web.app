@@ -43,6 +43,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { PropagateLoader } from 'react-spinners';
 import PrivacyPolicy from './PrivacyPolicy';
 import Feedback from './Feedback';
+import Signup from './Signup';
 // document.getElementById('btngroup').style.display='none';
 				// document.getElementById('teachersdescrp').style.display='none';
 				// document.getElementById('front').style.display='none';
@@ -135,6 +136,12 @@ class App extends React.Component{
 					<Route exact path='/login'>
 						{this.state.user?
 							<Redirect to='/admin'/> : <Login/>
+						}
+					</Route>
+
+					<Route exact path='/signup'>
+						{this.state.user?
+							<Redirect to='/admin'/> : <Signup/>
 						}
 					</Route>
 

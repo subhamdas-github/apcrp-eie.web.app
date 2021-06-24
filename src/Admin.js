@@ -3,15 +3,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {FcHome,FcFeedback,FcQuestions,FcReading,FcBusinesswoman,FcPhotoReel,FcStackOfPhotos,FcConferenceCall} from 'react-icons/fc';
 import fire from './config/fire';
+import sty from './css/adminFormImg.module.css';
 import {FcAbout, FcHighPriority, FcPlus,FcCollapse,FcExpand,FcSearch} from 'react-icons/fc';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import {ToolkitProvider,Search,products,columns,BootstrapTable} from 'react-bootstrap-table2-toolkit';
-import {Button,Row, Container, Col, Form, Navbar,Nav,FormControl, Table, Modal,Alert, OverlayTrigger} from 'react-bootstrap';
+import {Button,Row, Container, Col, Form,InputGroup, Navbar,Nav,FormControl, Table, Modal,Alert, OverlayTrigger, NavDropdown} from 'react-bootstrap';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import IconButton from '@material-ui/core/IconButton';
 import Image from 'react-bootstrap/Image'
 import AdminForm from './AdminForm';
-import {ToggleButtonGroup, ToggleButton, Badge} from 'react-bootstrap';
+import {ToggleButtonGroup, ToggleButton} from 'react-bootstrap';
 import Batch from './batch';
 import CreateNew from './CreateNew';
 import Footer from './Footer';
@@ -31,7 +32,7 @@ import HashLoader from 'react-spinners/HashLoader'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -57,7 +58,110 @@ import IconButton from '@material-ui/core/IconButton';
 import AdminDelete from './AdminDelete';
 import AdminUpdate from './AdminUpdate';
 import AdminFooter from './AdminFooter';
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import HelpIcon from '@material-ui/icons/Help';
+import DoneIcon from '@material-ui/icons/Done';
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from '@material-ui/core/Grid';
+// import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SwipeableViews from 'react-swipeable-views'
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
+import Grow from '@material-ui/core/Grow';
+import Popper from '@material-ui/core/Popper';
+import MenuList from '@material-ui/core/MenuList';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Avatar from '@material-ui/core/Avatar';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import PersonIcon from '@material-ui/icons/Person';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+
+function TabPanel(props) {
+	const { children, value, index, ...other } = props;
+  
+	return (
+	  <div
+		role="tabpanel"
+		hidden={value !== index}
+		id={`scrollable-force-tabpanel-${index}`}
+		aria-labelledby={`scrollable-force-tab-${index}`}
+		{...other}
+	  >
+		{value === index && (
+		  <Box p={3}>
+			<Typography>{children}</Typography>
+		  </Box>
+		)}
+	  </div>
+	);
+  }
+  
+  TabPanel.propTypes = {
+	children: PropTypes.node,
+	index: PropTypes.any.isRequired,
+	value: PropTypes.any.isRequired,
+  };
+  
+  function a11yProps(index) {
+	return {
+	  id: `scrollable-force-tab-${index}`,
+	  'aria-controls': `scrollable-force-tabpanel-${index}`,
+	};
+  }
+  
+//   const useStyles = makeStyles((theme) => ({
+// 	root: {
+// 	  backgroundColor: theme.palette.background.paper,
+// 	  width: 500,
+// 	},
+//   }));
+
 function Admin() {
+	// const classes = useStyles();
+  const theme = useTheme();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+	// const useStyles = makeStyles((theme) => ({
+	// 	root: {
+	// 	  flexGrow: 1,
+	// 	  maxWidth: 752,
+	// 	},
+	// 	demo: {
+	// 	  backgroundColor: theme.palette.background.paper,
+	// 	},
+	// 	title: {
+	// 	  margin: theme.spacing(4, 0, 2),
+	// 	},
+	//   }));
+	const [openusertooltip, setOpenusertooltip] = useState(false)
 	const [graphloading, setgraphloading] = useState(false)
 	const [Arr, setArr] = useState([])
 	var studentarray = [['year','count']]
@@ -76,7 +180,12 @@ function Admin() {
     const [newYear, setnewYear] = React.useState('');
 	const [updateTask, setupdateTask] = React.useState('');
 	const [newfireYearA, setNewFireYearA] = React.useState('');
+	const [usr, setusr] = React.useState('');
+	const [newuser, setNewUser] = React.useState([]);
 	const [tasksyearsA, setTasksyearsA] = React.useState([]);
+	const [tasksadmin, setTasksadmin] = React.useState([]);
+	const [tasksadmins, setTasksadmins] = React.useState([]);
+	const [tasksactivities, setTasksactivities] = React.useState([]);
 	const [searchTerm, setSearchTerm] = React.useState('');
 	const [searchTermforT, setSearchTermforT] = React.useState('');
 	const [searchTermforSS, setSearchTermforSS] = React.useState('');
@@ -107,22 +216,87 @@ function Admin() {
 	const [showresolution, setShowresolution] = useState(false);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showUpdateModal, setShowUpdateModal] = useState(false);
-	
+	const [showadmin, setShowadmin] = useState(false);
+	const [showlogout, setShowlogout] = useState(false);
+	const [showuserinfo, setShowuserinfo] = useState(false);
+	const [showapproveconfirm, setShowapproveconfirm] = useState(false);
+
+
+
+
+
+	const [showfname, setshowfname] = useState('')
+	const [showlname, setshowlname] = useState('')
+	const [showemail, setshowemail] = useState('')
+	const [showlocation, setshowlocation] = useState('')
+	const [showtime, setshowtime] = useState('')
+	const [showdate, setshowdate] = useState('')
+	const [showimg, setshowimg] = useState('')
+
 	var i = 0
 	var m=''
+	var colormap = ['#aa00ff','#e91e63','#4caf50','#ff5722','#673ab7','#2c3e50','#C71585','#008080','#0077b5','#0063B1']
 	function onAdd(id){
 		console.log('https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65))
 		
 		setnewKh('https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65));
 		document.getElementById(id).src = 'https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65);
 	}
-
+	const [countx, setcountx] = useState('')
+	const [textwhennouser, settextwhennouser] = useState('')
+	
+	const [open, setOpen] = React.useState(false);
+	const anchorRef = React.useRef(null);
+	const prevOpen = React.useRef(open);
 	useEffect(()=>{
+		fire.firestore().collection('user').onSnapshot(function(data){
+			setTasksadmin(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+			if(data.size==0){
+                // setcountx(<span style={{display:'flex'}}><span style={{color:'#483D8B',fontSize:20}}><MdEventNote/> </span><span style={{paddingTop:8,paddingLeft:5}}>Notice</span></span>);document.getElementById('nonotice').style.display='block';
+				setcountx(<NotificationsIcon style={{color:'white'}}/>)
+				settextwhennouser(<Alert variant='info'><p>No one has signed up for Administrator. User record empty!</p></Alert>)
+			}
+                else{
+                    // document.getElementById('nonotice').style.display='none';
+                // setcountx(<span style={{display:'flex'}}><span style={{color:'#483D8B',fontSize:20}}><MdEventNote/> </span><span style={{paddingTop:8,paddingLeft:5}}>Notice</span> <sup><Badge style={{fontSize:12}} pill variant='primary'>{data.size}</Badge></sup></span>);
+                setcountx(<Badge badgeContent={data.size} color="secondary" overlap="circle">
+                <NotificationsIcon style={{color:'white'}}/>
+              </Badge>)
+			  settextwhennouser(<Alert variant='info'><p>The following User(s) want to access Admin Panel...</p></Alert>)
+            }
+		})
+		fire.firestore().collection('admins').orderBy('email','desc').onSnapshot(function(data){
+			setTasksadmins(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+			
+		})
+
 		const fetchData = () =>{
 			const db = fire.firestore();
-			// document.getElementById('btngroup').style.display='none';
-			// document.getElementById('teachersdescrp').style.display='none';
-			// document.getElementById('front').style.display='none';
+
+			document.getElementById('home').addEventListener('click',()=>{
+				setTasksA([])
+				document.getElementById('all').style.display = 'none';
+				document.getElementById('studentbody').style.display = 'none';
+				document.getElementById('teachersbody').style.display = 'none';
+				document.getElementById('slideshowbody').style.display = 'none';
+				document.getElementById('gallerybody').style.display = 'none';
+				document.getElementById('recruiterbody').style.display = 'none';
+				document.getElementById('noticebody').style.display = 'none';
+				document.getElementById('videobody').style.display = 'none';
+				document.getElementById('feedbackbody').style.display = 'none';
+				document.getElementById('batch').style.display = 'none';
+				document.getElementById('teacherheading').style.display = 'none';
+				document.getElementById('slideshowheading').style.display = 'none';
+				document.getElementById('galleryheading').style.display = 'none';
+				document.getElementById('recruiterheading').style.display = 'none';
+				document.getElementById('noticeheading').style.display = 'none';
+				document.getElementById('videoheading').style.display = 'none';
+				document.getElementById('magazinebody').style.display = 'none';
+				document.getElementById('magazineheading').style.display = 'none';
+				document.getElementById('feedbackheading').style.display = 'none';
+				document.getElementById('homecard').style.display = 'block';
+			});
+			
 			document.getElementById('students').addEventListener('click',()=>{
 				setTasksA([])
 				document.getElementById('all').style.display = 'block';
@@ -387,69 +561,17 @@ function Admin() {
 					setApiLoading(false)
 				}, 2000);
 			})
-			document.getElementById('home').addEventListener('click',()=>{
-				setTasksA([])
-				document.getElementById('all').style.display = 'none';
-				document.getElementById('studentbody').style.display = 'none';
-				document.getElementById('teachersbody').style.display = 'none';
-				document.getElementById('slideshowbody').style.display = 'none';
-				document.getElementById('gallerybody').style.display = 'none';
-				document.getElementById('recruiterbody').style.display = 'none';
-				document.getElementById('noticebody').style.display = 'none';
-				document.getElementById('videobody').style.display = 'none';
-				document.getElementById('feedbackbody').style.display = 'none';
-				document.getElementById('batch').style.display = 'none';
-				document.getElementById('teacherheading').style.display = 'none';
-				document.getElementById('slideshowheading').style.display = 'none';
-				document.getElementById('galleryheading').style.display = 'none';
-				document.getElementById('recruiterheading').style.display = 'none';
-				document.getElementById('noticeheading').style.display = 'none';
-				document.getElementById('videoheading').style.display = 'none';
-				document.getElementById('magazinebody').style.display = 'none';
-				document.getElementById('magazineheading').style.display = 'none';
-				document.getElementById('feedbackheading').style.display = 'none';
-				document.getElementById('homecard').style.display = 'block';
-			});
-			// document.getElementById('about').addEventListener('click',()=>{
-			// 	setTasksA([])
-			// 	document.getElementById('all').style.display = 'none';
-			// 	document.getElementById('studentbody').style.display = 'none';
-			// 	document.getElementById('teachersbody').style.display = 'none';
-			// 	document.getElementById('slideshowbody').style.display = 'none';
-			// 	document.getElementById('gallerybody').style.display = 'none';
-			// 	document.getElementById('recruiterbody').style.display = 'none';
-			// 	document.getElementById('noticebody').style.display = 'none';
-			// 	document.getElementById('videobody').style.display = 'none';
-			// 	document.getElementById('feedbackbody').style.display = 'none';
-			// 	document.getElementById('batch').style.display = 'none';
-			// 	document.getElementById('teacherheading').style.display = 'none';
-			// 	document.getElementById('slideshowheading').style.display = 'none';
-			// 	document.getElementById('galleryheading').style.display = 'none';
-			// 	document.getElementById('recruiterheading').style.display = 'none';
-			// 	document.getElementById('noticeheading').style.display = 'none';
-			// 	document.getElementById('videoheading').style.display = 'none';
-			// 	document.getElementById('magazinebody').style.display = 'none';
-			// 	document.getElementById('magazineheading').style.display = 'none';
-			// 	document.getElementById('feedbackheading').style.display = 'none';
-			// 	document.getElementById('homecard').style.display = 'block';
-			// });
 			
-			// fire.firestore().collection('students').onSnapshot(function(data){
-			// 	setTasksyearsA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
-				
-				
-
-			// 	})
-			// tasksyearsA.map(spell=>(
-			// 		setArr.push(spell.year_arr)
-					
-			// 	))
-				// setgraphloading(true)
+			
+			
 			
 			fire.firestore().collection('students').orderBy("year_arr","desc").onSnapshot(function(data){
 				setTasksyearsA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
 				
 				})
+			// fire.firestore().collection(fire.auth().currentUser.email).onSnapshot(function(data){
+			// 		setNewUser(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));	
+			// 	})
 			
 		};
 		
@@ -459,19 +581,33 @@ function Admin() {
             setLoading(false)
 			fetchData();
         }, 3000);
-		// if(!loading){
-		// fetchData();
-	// }
-	// if (imgloading=='loaded'){
-	// 	alert('done')
-	// 	setApiLoading(false)
-	// }
-	// else{
-	// 	console.log('false')
-	// }
-	}, []);
 
+		if (prevOpen.current === true && open === false) {
+			anchorRef.current.focus();
+		  }
+	  
+		  prevOpen.current = open;
+	}, [open]);
 	
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleCloseP = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
 	
 	function onDelete(id, year){
 		const db = fire.firestore()
@@ -485,234 +621,7 @@ function Admin() {
 		else if(year== 8){db.collection('magazines').doc(id).delete()}
 		else{db.collection('students').doc('year').collection(newfireYearA).doc(id).delete()}
 	}
-	// function onUpdate(id,year, name, email,phone,status1,status2,status3,url){
-	// 	if (id!=tableid){
-	// 		alert('wrong database selected!')
-	// 		// settableid('')
-	// 	}
-	// 	else{
-	// 		settableid('')
-	// 	if(newTask=='' && newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	// 1 change
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	// 2 change
-	// 	else if(newStatus1==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus1==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	// 3 change
-	// 	else if(newStatus2==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:url})
-	// 	}
-	// 	else if(newStatus1==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newStatus1==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newStatus1==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	// 4 change
-	// 	else if(newStatus3==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:url})
-	// 	}
-	// 	else if(newStatus2==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newStatus2==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newStatus1==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newStatus1==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newStatus1==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newPhone==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''&&newStatus1==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newTask==''&&newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newStatus1==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''&&newPhone==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	// 5 change
-	// 	else if(newkh==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
-	// 	}
-	// 	else if(newStatus3==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:status3,url:newkh})
-	// 	}
-	// 	else if(newStatus2==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:status2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newStatus1==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:status1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newPhone==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:phone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	else if(newTask==''){
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:name,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	// 6 change
-	// 	else{
-	// 	fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkh})
-	// 	}
-	// 	// else if(newTask==''){setnewTask(name)}
-	// 	// else if(newPhone==''){setnewPhone(phone)}
-	// 	// else if(newStatus1==''){setnewStatus1(status1)}
-	// 	// else if(newStatus2==''){setnewStatus2(status2)}
-	// 	// else if(newStatus3==''){setnewStatus3(status3)}
-	// 	// setnewTask('')
-	// 	// setnewPhone('')
-	// 	// setnewStatus1('')
-	// 	// setnewStatus2('')
-	// 	// setnewStatus3('')
-	// }
-	// 	// const db = fire.firestore()
-	//     // if(year== 1){db.collection('teachers').doc(id).update({name:newTask,phone:newPhone,status1:newStatus1,url:url})}
-		
-	// 	// fire.firestore().collection('students').doc('year').collection(newfireYearA).doc(id).update({name:newTask,email:email,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:url})
-	
-	// }
-	// const onUpdate = (id,name,email,phone,status,year,url) =>{
-	// 	const db = fire.firestore()
-	// 	if (newTask=='' && newPhone=='' && newStatus==''){
-	// 		db.collection('cafes').doc(id).set({name:name,email:email,phone:phone,status:status,year:year,url:url})
-	// 	}
-	// 	else{
-	// 	db.collection('cafes').doc(id).update({name:newTask,phone:newPhone,status:newStatus})
-	// 	}
-	// }
+
 	
 
 	const adminstudentopt = ()=>{
@@ -740,21 +649,41 @@ function Admin() {
 	const logout = ()=>{
 		fire.auth().signOut()
 		.then(function(){
-	
+			
 		}).catch((e)=>{
 	
 		})
 	  }
-	  const useStyles = makeStyles((theme) => ({
-		paper: {
-		  padding: '6px 16px',
-		},
-		secondaryTail: {
-		  backgroundColor: theme.palette.secondary.main,
-		},
-	  }));
-	  const classes = useStyles();	  
-
+	//   const useStyles = makeStyles((theme) => ({
+	// 	paper: {
+	// 	  padding: '6px 16px',
+	// 	},
+	// 	secondaryTail: {
+	// 	  backgroundColor: theme.palette.secondary.main,
+	// 	},
+	// 	root: {
+	// 		flexGrow: 1,
+	// 		maxWidth: 1000,
+	// 	  },
+	// 	  demo: {
+	// 		backgroundColor: theme.palette.background.paper,
+	// 		flexGrow: 1,
+	// 		maxWidth: 1000,
+	// 	  },
+	// 	  title: {
+	// 		margin: theme.spacing(4, 0, 2),
+	// 	  },
+	//   }));
+	//   const classes = useStyles();
+	  const [dense, setDense] = React.useState(false);
+	  const [secondary, setSecondary] = React.useState(false);
+	  function generate(element) {
+		return [0, 1, 2].map((value) =>
+		  React.cloneElement(element, {
+			key: value,
+		  }),
+		);
+	  }
 	const handleresolution = ()=>{
 		if (window.innerWidth<800 && window.innerHeight <800){
 			// alert('Your Resolution is->'+'width: '+window.innerWidth+'height: '+window.innerHeight+' Try Laptop/Desktop')
@@ -765,31 +694,19 @@ function Admin() {
 			setModalShow(true)
 		}
 	}
-	// function functionDelete(id, year){
-	// 	setShowDeleteModal(true);
-	// 	<Modal 
-	//   	show={showDeleteModal}
-    //     onHide={()=>setShowDeleteModal(false)}
-    //     size="sm"
-    //  	aria-labelledby="contained-modal-title-vcenter"
-    //   	centered
-    //     >
-    //     <Modal.Header closeButton>
-    //       <Modal.Title>📵 Unsupported!</Modal.Title>
-    //     </Modal.Header>
-    //     <Modal.Body>Please open Micro Admin Panel from your Desktop or Laptop for best experiences!
-	// 	</Modal.Body>
-    //     <Modal.Footer>
-          
-    //       <Button variant="secondary" onClick={()=>setShowDeleteModal(false)}>
-    //         Cancel
-    //       </Button>
-	// 	  <Button variant="danger" onClick={()=>onDelete(id, year)}>
-    //         Delete
-    //       </Button>
-    //     </Modal.Footer>
-    //   </Modal>
-	// }
+	function signupprocess(emailaddress, userpassword){
+		fire.auth().createUserWithEmailAndPassword(emailaddress, userpassword)
+		.then((userCredential) => {
+		  
+		  console.log(userCredential.user)
+		  
+		})
+		.catch((error) => {
+		  var errorCode = error.code;
+		  var errorMessage = error.message;
+		  
+		});
+	}
 	const [deleteid, setdeleteid]=useState('')
 	const [deleteyear, setdeleteyear]=useState('')
 	const [upid, setupid] = useState('')
@@ -800,6 +717,56 @@ function Admin() {
 	const [upstatus2, setupstatus2] = useState('')
 	const [upstatus3, setupstatus3] = useState('')
 	const [upurl, setupurl] = useState('')
+	const [confirmmsg, setconfirmmsg] = useState('')
+	const [curr_id, setcurr_id] = useState('')
+	const [curr_email, setcurr_email] = useState('')
+	const [curr_password, setcurr_password] = useState('')
+
+	const [openback, setOpenback] = React.useState(false);
+
+function handleapprove(){
+if (confirmmsg!='CONFIRM'){
+	alert('Write "CONFIRM" to approve')
+	setOpenback(false)
+}
+else{
+	
+	fire.auth().createUserWithEmailAndPassword(curr_email, curr_password)
+	.then((userCredential) => {
+	  
+	//   console.log(userCredential.user)
+	  fire.firestore().collection('admins').doc(curr_id).set({email:curr_email,password:curr_password})
+	  fire.firestore().collection('user').doc(curr_id).delete()
+	  setShowapproveconfirm(false)
+	  setOpenback(false)
+	  setShowlogout(true)
+	})
+	.catch((error) => {
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+
+	});
+}
+}
+function handledecline(curr_id){
+	fire.firestore().collection('user').doc(curr_id).delete()
+}
+	// const [anchorEl, setAnchorEl] = useState(null);
+  	// const open = Boolean(anchorEl);
+	  var userColor = ['#4cae50','#ff5722','#e91e63','#6539b3']
+// const CurrentUser = fire.auth().currentUser.email
+const useStyles = makeStyles((theme) => ({
+	backdrop: {
+	  zIndex: theme.zIndex.drawer + 1,
+	  color: '#fff',
+	},
+	root: {
+		backgroundColor: theme.palette.background.paper,
+		// width: 500,
+	  },
+  }));
+  const classes = useStyles();
+  
 return (
 	<div>
 	{
@@ -813,39 +780,132 @@ return (
 
 				<div>
 					<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed='top'>
+					
 					<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 					
 						<Navbar.Collapse id="responsive-navbar-nav">
-						{/* <Navbar.Brand href="#home">Admin Panel</Navbar.Brand> */}
+						<Navbar.Brand href="#home"><BubbleChartIcon />Admin Panel</Navbar.Brand>
 						<Nav className="mr-auto">
 						{/* <span className={navstyle.navi}><FcQuestions/>Help </span> */}
-						<Nav.Link id="home" href="#home"><span className={navstyle.navi}><FcHome/>Home </span></Nav.Link>
+						<Nav.Link id="home" href="#home"><span className={navstyle.navi}>Home </span></Nav.Link>
 						{/* <Nav.Link id="about" href="#About"><FcAbout/> About</Nav.Link> */}
-						<Nav.Link id='students' href="#student"><span className={navstyle.navi}><FcReading/>Students </span></Nav.Link>
-						<Nav.Link id='teachers' href="#teacher"><span className={navstyle.navi}><FcBusinesswoman/>Teachers </span></Nav.Link>
-						<Nav.Link id="slideshows" href="#slideshow"><span className={navstyle.navi}><FcPhotoReel/>Slideshow </span></Nav.Link>
-						<Nav.Link id='gallerycontrol' href="#gallery"><span className={navstyle.navi}><FcStackOfPhotos/>Gallery </span></Nav.Link>
-						<Nav.Link id='recruiterscontrol' href="#recruiters"><span className={navstyle.navi}><FcConferenceCall/>Recruiters </span></Nav.Link>
-						<Nav.Link id='noticecontrol' href="#notice"><span className={navstyle.navi}>📋Notice </span></Nav.Link>
-						<Nav.Link id='videocontrol' href="#video"><span className={navstyle.navi}>🎦Video </span></Nav.Link>
-						<Nav.Link id='magazinecontrol' href="#magazine"><span className={navstyle.navi}>📂Magazine </span></Nav.Link>
-						<Nav.Link id='feedbackcontrol' href="#feedback"><span className={navstyle.navi}>✍Feedback </span></Nav.Link>
+						<Nav.Link id='students' href="#student"><span className={navstyle.navi}>Students </span></Nav.Link>
+						<Nav.Link id='teachers' href="#teacher"><span className={navstyle.navi}>Teachers </span></Nav.Link>
+						<Nav.Link id="slideshows" href="#slideshow"><span className={navstyle.navi}>Slideshow </span></Nav.Link>
+						<Nav.Link id='gallerycontrol' href="#gallery"><span className={navstyle.navi}>Gallery </span></Nav.Link>
+						<Nav.Link id='recruiterscontrol' href="#recruiters"><span className={navstyle.navi}>Recruiters </span></Nav.Link>
+						<Nav.Link id='noticecontrol' href="#notice"><span className={navstyle.navi}>Notice </span></Nav.Link>
+						<Nav.Link id='videocontrol' href="#video"><span className={navstyle.navi}>Video </span></Nav.Link>
+						<Nav.Link id='magazinecontrol' href="#magazine"><span className={navstyle.navi}>Magazine </span></Nav.Link>
+						<Nav.Link id='feedbackcontrol' href="#feedback"><span className={navstyle.navi}>Feedback </span></Nav.Link>
+						{/* <Nav.Link id='adminusercontrol' href="#" onClick={()=>setShowadmin(true)}><span className={navstyle.navi}>User </span></Nav.Link> */}
 						{/* <Nav.Link id='helplink' href="mailto:dsubham776050@gmail.com?subject=Help regarding...&body=Hi, my name is..." target='_blank'><span className={navstyle.navi}><FcQuestions/>Help </span></Nav.Link> */}
+						
+						
 						</Nav>
-						<Form inline>
-						{/* <p>.</p> */}
-						{/* <Button variant="outline-danger" onClick={logout}>Logout</Button> */}
-						{/* <div style={{color:'red'}}><ExitToAppIcon/></div> */}
-						<Tooltip title='Log Out'>
-						<IconButton aria-label="logout" color="secondary" onClick={logout}>
-							<ExitToAppIcon/>
+						{/* <Form inline>
+						<div style={{display:'flex'}}>
+						<Tooltip title='Notification'>
+						<IconButton aria-label="notification" onClick={()=>{setcountx(<NotificationsIcon style={{color:'white'}}/>);setShowadmin(true)}}>
+							{countx}
 						</IconButton>
 						</Tooltip>
-						</Form>
+						<Tooltip title='Help'>
+						<IconButton aria-label="help" >
+							<HelpIcon style={{color:'white'}}/>
+						</IconButton>
+						</Tooltip>
+						<Tooltip title='Log Out'>
+						<IconButton aria-label="logout" onClick={logout}>
+							<ExitToAppIcon style={{color:'white'}}/>
+						</IconButton>
+						</Tooltip>
+						<Tooltip title='Your Profile'>
+						
+							<IconButton aria-label="user"
+							ref={anchorRef}
+							aria-controls={open ? 'menu-list-grow' : undefined}
+							aria-haspopup="true"
+							onClick={handleToggle}>
+								<Avatar style={{width:24,height:24,backgroundColor:'#e91e63'}}></Avatar>
+							</IconButton>	
+						</Tooltip>
+							<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+							{({ TransitionProps, placement }) => (
+								<Grow
+								{...TransitionProps}
+								style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+								>
+								<Paper style={{backgroundColor:'#343a40',color:'white'}}>
+									<ClickAwayListener onClickAway={handleCloseP}>
+									<MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+									
+										<MenuItem onClick={handleCloseP}><p>Signed in as<br/> <span style={{fontSize:14}}><b>{fire.auth().currentUser.email}</b></span></p></MenuItem>
+										
+										<MenuItem onClick={handleCloseP}>Documentation</MenuItem>
+										<MenuItem ><a href="mailto:dsubham776050@gmail.com" style={{color:'white',textDecoration:'none'}}>Report a problem</a></MenuItem>
+										<MenuItem onClick={logout}>Logout</MenuItem>
+									</MenuList>
+									</ClickAwayListener>
+								</Paper>
+								</Grow>
+							)}
+							</Popper>
+						</div>
+						</Form> */}
 						</Navbar.Collapse>
+						<Form inline>
+						<div style={{display:'flex'}}>
+						<Tooltip title='Notification'>
+						<IconButton aria-label="notification" onClick={()=>{setcountx(<NotificationsIcon style={{color:'white'}}/>);setShowadmin(true)}}>
+							{countx}
+						</IconButton>
+						</Tooltip>
+						<Tooltip title='Help'>
+						<IconButton aria-label="help" >
+							<HelpIcon style={{color:'white'}}/>
+						</IconButton>
+						</Tooltip>
+						<Tooltip title='Log Out'>
+						<IconButton aria-label="logout" onClick={logout}>
+							<ExitToAppIcon style={{color:'white'}}/>
+						</IconButton>
+						</Tooltip>
+						<Tooltip title='Your Profile'>
+						
+							<IconButton aria-label="user"
+							ref={anchorRef}
+							aria-controls={open ? 'menu-list-grow' : undefined}
+							aria-haspopup="true"
+							onClick={handleToggle}>
+								<Avatar style={{width:24,height:24,backgroundColor:'#e91e63'}}></Avatar>
+							</IconButton>	
+						</Tooltip>
+							<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+							{({ TransitionProps, placement }) => (
+								<Grow
+								{...TransitionProps}
+								style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+								>
+								<Paper style={{backgroundColor:'black',color:'white'}}>
+									<ClickAwayListener onClickAway={handleCloseP}>
+									<MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+										<MenuItem onClick={handleCloseP}><p>Signed in as<br/> <span style={{fontSize:14}}><b>{fire.auth().currentUser.email}</b></span></p></MenuItem>
+										<MenuItem onClick={handleCloseP}>Documentation</MenuItem>
+										<MenuItem ><a href="mailto:dsubham776050@gmail.com" style={{color:'white',textDecoration:'none'}}>Report a problem</a></MenuItem>
+										<MenuItem onClick={logout}>Logout</MenuItem>
+									</MenuList>
+									</ClickAwayListener>
+								</Paper>
+								</Grow>
+							)}
+							</Popper>
+						</div>
+						</Form>
 					</Navbar>
 					{apiloading&& <LinearProgress />}
-				</div><br/>
+				</div>
+				<br/>
 	
 
 	{/* <Container fluid='xl' className={containerStyle.container} ><br/><br/> */}
@@ -866,7 +926,7 @@ return (
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Ease of use
             </Typography>
@@ -885,7 +945,7 @@ return (
           <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Fast & Secure
             </Typography>
@@ -901,7 +961,7 @@ return (
           <TimelineConnector  />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Micro Control Panel
             </Typography>
@@ -917,7 +977,7 @@ return (
 		  <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Be an Admin
             </Typography>
@@ -933,11 +993,11 @@ return (
 		  <TimelineConnector />
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Cool Experience
             </Typography>
-            <Typography>Enjoy every touches and get cool experiences with us. Never forget to give a feedback!</Typography>
+            <Typography>Enjoy every touches and get cool experiences with this Admin Panel. Never forget to give a feedback!</Typography>
           </Paper>
         </TimelineContent>
       </TimelineItem>
@@ -949,7 +1009,7 @@ return (
 		  
         </TimelineSeparator>
         <TimelineContent>
-          <Paper elevation={3} className={classes.paper}>
+          <Paper elevation={3} style={{padding:15}}>
             <Typography variant="h6" component="h1">
               Be Respectful
             </Typography>
@@ -963,7 +1023,7 @@ return (
 		
 	</div>
 	<div id='all' style={{display:'none'}}>
-	<Container fluid='xl' className={containerStyle.container} ><br/><br/>
+	<Container fluid='xl' className={containerStyle.container} ><br/><br/><br/>
 	<div id='batch' style={{display:'none',textAlign:'center'}} >
 	{/* <LinearProgress /> */}
 		<h2 style={{backgroundColor:'#343a40',color:'whitesmoke',borderRadius:10}}>👩‍🎓Welcome to Students' Database Table</h2>
@@ -1506,7 +1566,259 @@ return (
           </Button>
         </Modal.Footer>
       </Modal>
+	  <Modal 
+	  size="sm"
+	  	show={showapproveconfirm}
+        onHide={()=>setShowapproveconfirm(false)}
+        // backdrop="static"
+        // keyboard={false}
+		aria-labelledby="contained-modal-title-vcenter"
+      	centered
+		>
+        <Modal.Header closeButton>
+          <Modal.Title>Approve?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+			<p>Do you want to approve user <b>{curr_email}</b>? white CONFIRM to approve.</p>
+			
+		<InputGroup className="mb-3">
+			<FormControl
+			// type="text"
+			placeholder="CONFIRM"
+			aria-label="Recipient's username"
+			aria-describedby="basic-addon2"
+			onChange={(e)=>setconfirmmsg(e.target.value)}
+			/>
+			<InputGroup.Append>
+			<Button variant="success" onClick={()=>{setOpenback(!open); handleapprove()}}>Approve</Button>
+			</InputGroup.Append>
+		</InputGroup>
 
+		<Backdrop className={classes.backdrop} open={openback} >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+		</Modal.Body>
+        
+      </Modal>
+
+	  <Modal 
+	  
+	  	show={showuserinfo}
+        onHide={()=>setShowuserinfo(false)}
+        // backdrop="static"
+        // keyboard={false}
+		aria-labelledby="contained-modal-title-vcenter"
+      	centered
+		  
+		>
+        <Modal.Header closeButton>
+          <Modal.Title>ℹ️ About</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+		{/* {tasksadmin.map((spell=>( */}
+			<div>
+				<div style={{textAlign:'center',backgroundColor:'#20b2aa'}}>
+					<img src={showimg} className={containerStyle.imgstylenew}/>
+				</div>
+				<div style={{padding:15,color:'#0c5460',textAlign:'center'}}>
+			<p>Name: {showfname}&nbsp;{showlname}</p>
+			<p>Email: {showemail}</p>
+			<p>Location: {showlocation}</p>
+			<p>Signup Time: {showtime}</p>
+			<p>Date: {showdate}</p>
+				</div>
+			</div>
+		{/* )))} */}
+		
+		</Modal.Body>
+        
+      </Modal>
+
+	  <Modal 
+	//   size="sm"
+	  	show={showlogout}
+        onHide={()=>setShowlogout(false)}
+        backdrop="static"
+        keyboard={false}
+		aria-labelledby="contained-modal-title-vcenter"
+      	centered
+		>
+        {/* <Modal.Header closeButton>
+          <Modal.Title>Approve?</Modal.Title>
+        </Modal.Header> */}
+        <Modal.Body>Please Logout and Login again to continue...
+		<br/>
+		<Button variant="danger" onClick={()=>{logout()}}>Logout</Button>
+			
+		<Backdrop className={classes.backdrop} open={openback} >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+		</Modal.Body>
+        
+      </Modal>
+
+	  <Modal 
+	  size='lg'
+	  	show={showadmin}
+        onHide={()=>setShowadmin(false)}
+        
+		aria-labelledby="contained-modal-title-vcenter"
+      	centered
+		>
+        {/* <Modal.Header closeButton>
+          <Modal.Title>New Users</Modal.Title>
+        </Modal.Header> */}
+        <Modal.Body >
+			
+						
+						
+						{/* <Row>
+							<Col>
+							<span>{spell.email}</span>
+							</Col>
+							<Col xs lg="1">
+									
+							</Col>
+							<Col xs lg="1" style={{display:'flex'}}>
+								
+							<Tooltip title='Log Out'>
+									<IconButton aria-label="logout" onClick={()=>{signupprocess(spell.email, spell.password)}}>
+										<div style={{color:'green'}}><DoneIcon/></div>
+									</IconButton>
+									</Tooltip>
+									
+									<Tooltip title='Log Out'>
+									<IconButton aria-label="logout" >
+										<div style={{color:'red'}}><CloseIcon/></div>
+									</IconButton>
+									</Tooltip>
+							</Col>
+						</Row> */}
+		<div className={classes.root}>				
+	<AppBar position="static" color="default">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+		  scrollButtons="on"
+          indicatorColor="primary"
+          textColor="primary"
+          variant="scrollable"
+          aria-label="scrollable force tabs example"
+        >
+          <Tab label={<div style={{display:'flex'}}><PersonIcon/><span>Admin Requests</span></div>} {...a11yProps(0)} />
+          <Tab label={<div style={{display:'flex'}}><SupervisorAccountIcon/><span>Admins</span></div>} {...a11yProps(1)} />
+		  <Tab label={<div style={{display:'flex'}}><SupervisorAccountIcon/><span>Activities</span></div>} {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+	  </div>
+      <SwipeableViews
+        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+						<Grid item xs={12} md={12}>
+						<Typography variant="h6"  >
+							<h7 className={sty.controlpanelfont} style={{fontSize:17}}>{textwhennouser}</h7>
+						</Typography>
+						<div >
+							<List >
+							{tasksadmin.map((spell=>(
+								<div>
+								<ListItem >
+									<ListItemIcon>
+									<AccountCircleIcon />
+									</ListItemIcon>
+									<ListItemText
+									primary={
+									<Tooltip 
+										title='Click to more info'>
+										<a onClick={()=>
+										{setshowfname(spell.firstname);
+										 setshowlname(spell.lastname);
+										 setshowemail(spell.email);
+										 setshowlocation(spell.city);
+										 setshowtime(spell.time);
+										 setshowdate(spell.date);
+										 setshowimg(spell.url);
+										 setShowuserinfo(true)}}
+										 style={{cursor:'pointer'}}>{spell.email}</a>
+									</Tooltip>
+									
+									}
+									
+									/>
+									<ListItemSecondaryAction>
+										<Tooltip title="Accept">
+										<IconButton edge="end" aria-label="ok" onClick={()=>{setcurr_id(spell.id);
+											setcurr_email(spell.email);
+											setcurr_password(spell.password);
+											setShowapproveconfirm(true)}}>
+										
+										<div style={{color:'green'}}><DoneIcon/></div>
+										</IconButton>
+										</Tooltip>
+										<Tooltip title="Decline">
+										<IconButton edge="end" aria-label="close" onClick={()=>handledecline(spell.id)}>
+										
+										<div style={{color:'red'}}><CloseIcon/></div>
+										</IconButton>
+										</Tooltip>
+									</ListItemSecondaryAction>
+									
+									
+								</ListItem>
+								
+								</div>
+							)))}
+							</List>
+						</div>
+						</Grid>
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+		<Grid item xs={12} md={12}>
+
+						{tasksadmins.map((spell=>(
+						<Accordion>
+							<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+							>
+							<Typography style={{display:'flex'}}><Avatar style={{width:25,height:25,backgroundColor:colormap[Math.floor(Math.random() * 10)]}}>S</Avatar><span style={{paddingLeft:12}}>{spell.email}</span></Typography>
+							</AccordionSummary>
+							<AccordionDetails>
+							<Typography>
+								<p>Personal Details:</p>
+								<p>Comming Soon...</p>
+							</Typography>
+							</AccordionDetails>
+						</Accordion>
+      					)))}
+						
+						</Grid>
+        </TabPanel>
+
+		<TabPanel value={value} index={2} dir={theme.direction}>
+		<Grid item xs={12} md={12}>
+
+						<h2 style={{textAlign:'center'}}>Comming Soon...</h2>
+						
+						</Grid>
+        </TabPanel>
+        
+      </SwipeableViews>
+	 
+		</Modal.Body>
+        <Modal.Footer>
+		  {/* <Button variant="success" onClick={()=>{signupprocess()}}>
+            Approve
+          </Button>
+          <Button variant="danger" onClick={()=>setShowadmin(false)}>
+            Decline
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
 	  {/* <Modal 
 	  	show={showDeleteModal}
         onHide={()=>setShowDeleteModal(false)}

@@ -64,6 +64,7 @@ import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import MoreIcon from '@material-ui/icons/More';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import LockIcon from '@material-ui/icons/Lock';
 function FrontHeading() {
 
 
@@ -156,7 +157,7 @@ function FrontHeading() {
                 </Alert>
                 </Paper>
             </div>
-                <Container fluid='xl' className={sty.controlpanelfont}>
+                <Container fluid='xl' className={sty.controlpanelfont} >
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed='top'>
                 <Navbar.Brand href="/"><span style={{fontSize:25}} className={containerStyle.ach}><b>apcrp-eie.web.app</b></span></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
@@ -188,7 +189,8 @@ function FrontHeading() {
                     
                     
                     <NavDropdown title={more()} id="collasible-nav-dropdown">
-                        <NavDropdown.Item className={navstyle.navdropdown} href="/login" ><sup><PersonPinIcon /></sup>Admin Login</NavDropdown.Item>
+                        <NavDropdown.Item className={navstyle.navdropdown} href="/login" ><sup><LockIcon/></sup>Admin Login</NavDropdown.Item>
+                        <NavDropdown.Item className={navstyle.navdropdown} href="/signup" ><sup><PersonPinIcon /></sup>Admin Signup</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="mailto:dsubham776@gmail.com" target='_blank'><sup><BugReportIcon /></sup>Bug Report</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="/" ><sup><ContactMailIcon /></sup> Admin Contact</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="/about/privacy_policy" ><sup><PolicyIcon /></sup>Privacy Policy</NavDropdown.Item>

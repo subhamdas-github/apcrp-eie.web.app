@@ -2,7 +2,7 @@ import React,{useState,useEffect,useRef} from 'react'
 import Footer from './Footer'
 import FrontHeading from './FrontHeading'
 import sty from './css/adminFormImg.module.css';
-import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown,Overlay,Popover, Nav,Button,Tabs,Tab,Modal,Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup,Badge, ProgressBar } from 'react-bootstrap'
+import { Container,ResponsiveEmbed,Image,Spinner, Navbar,NavDropdown, Overlay,OverlayTrigger,Popover, Nav,Button,Tabs,Tab,Modal,Card,ListGroup,Alert,Form, CardDeck,Row,Col, CardColumns,ButtonGroup,ToggleButton,ToggleButtonGroup,Badge, ProgressBar } from 'react-bootstrap'
 import Login from './Login';
 import App from './App';
 import fire from './config/fire'
@@ -57,6 +57,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 import GroupIcon from '@material-ui/icons/Group';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 // ..
 
 function Students() {
@@ -96,6 +97,11 @@ function Students() {
     const [searchTerm, setSearchTerm] = React.useState('');
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false);
+
+    const [showtip, setShowTip] = useState(false);
+    const [showtipphoto, setShowTipphoto] = useState(false);
+    const target = useRef(null);
+
 
 //   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -146,8 +152,24 @@ function Students() {
         }
     }
     const [showt, setShowt] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
+  // const [target, setTarget] = useState(null);
+  // const ref = useRef(null);
+  const renderTooltip = () => {
+    <Tooltip >
+      Simple tooltip
+    </Tooltip>
+  }
+
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Title as="h3">Popover right</Popover.Title>
+      <Popover.Content>
+        And here's some <strong>amazing</strong> content. It's very engaging.
+        right?
+      </Popover.Content>
+    </Popover>
+  );
+
     return (
         <div>
             <div className={classes.root}>
@@ -283,24 +305,18 @@ function Students() {
                 <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}} className={sty.controlpanelfont}>
                         <p></p>
                         <p></p>
-                          <div ref={ref} style={{display:'flex',fontSize:17}}><HelpIcon fontSize="small"/><span className={an.articlefeedback} onClick={(event) => {setShowt(!show); setTarget(event.target);}}>Having trouble finding your name?</span><Overlay
-        show={showt}
-        target={target}
-        placement="top"
-        container={ref.current}
-        containerPadding={20}
-      >
-        <Popover id="popover-contained">
-          <Popover.Title as="h3">If you're Having trouble to find your name...</Popover.Title>
-          <Popover.Content>
-            <strong>Tip 1:</strong> Search your name or email above.<br/>
-            <strong>Tip 2:</strong> Make sure you've searched your passout year.<br/>
-            <strong>Tip 3:</strong> Refresh the web page.<br/>
-            <strong>Tip 4:</strong> Contact with present administrator.
-          </Popover.Content>
-        </Popover>
-      </Overlay></div>
-                    
+                          <div  >
+                            <sup><HelpIcon fontSize="small"/></sup><span className={an.articlefeedback} onClick={()=>setShowTip(true)}>
+                              Having trouble finding your name?</span>
+                              </div>
+                </div>
+                <div style={{textAlign:'center',display:'flex',justifyContent:'space-between'}} className={sty.controlpanelfont}>
+                        <p></p>
+                        <p></p>
+                          <div  >
+                            <sup><HelpIcon fontSize="small"/></sup><span className={an.articlefeedback} onClick={()=>setShowTipphoto(true)}>
+                              Can't see your photo?</span>
+                              </div>
                 </div>
                 <hr/>
                     <div style={{display:'flex',justifyContent:'space-between',textAlign:'center'}}>
@@ -328,8 +344,59 @@ function Students() {
                     </div>
                 </div>
             </div>
+            <Modal 
+            show={showtip} 
+            onHide={()=>setShowTip(false)}
+            className={sty.controlpanelfont}
+            
+            >
+              <Modal.Header closeButton style={{backgroundColor:'#D1ECF1'}}>
+                <Modal.Title><sup><SentimentVeryDissatisfiedIcon fontSize="large"/></sup>If you're Having trouble to find your name...</Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{backgroundColor:'#D1ECF1'}}>
+              <strong><u>Tip 1</u>:</strong>&nbsp;&nbsp; Search your proper Name or Email above.<br/>
+            <strong><u>Tip 2</u>:</strong>&nbsp;&nbsp; Make sure you've searched your passout year.<br/>
+            <strong><u>Tip 3</u>:</strong>&nbsp;&nbsp; Refresh the web page & Check your internet connection.<br/>
+            <strong><u>Tip 4</u>:</strong>&nbsp;&nbsp; Contact with present administrator.
+              </Modal.Body>
+              <Modal.Footer style={{backgroundColor:'#D1ECF1'}}>
+                <Button variant="secondary" onClick={()=>setShowTip(false)}>
+                  Ok
+                </Button>
+                
+              </Modal.Footer>
+            </Modal>
+            <Modal 
+            show={showtipphoto} 
+            onHide={()=>setShowTipphoto(false)}
+            className={sty.controlpanelfont}
+            
+            >
+              <Modal.Header closeButton style={{backgroundColor:'#D1ECF1'}}>
+                <Modal.Title><sup><SentimentVeryDissatisfiedIcon fontSize="large"/></sup>If you're Having trouble to see your photo...</Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{backgroundColor:'#D1ECF1'}}>
+              <strong ><u>Tip 1</u>:</strong>&nbsp;&nbsp; Make sure that you have proper internet connection.<br/>
+            <strong ><u>Tip 2</u>:</strong>&nbsp;&nbsp; Make sure that you are using modern chromium based browsers.<br/>
+            <strong ><u>Tip 3</u>:</strong>&nbsp;&nbsp; Refresh the web page .<br/>
+            <strong ><u>Tip 4</u>:</strong>&nbsp;&nbsp; Close current tab and open this web app in a new tab.<br/>
+            <strong ><u>Tip 5</u>:</strong>&nbsp;&nbsp; Make sure javascript is on in your browser's site settings.<br/>
+            <strong ><u>Tip 6</u>:</strong>&nbsp;&nbsp; Check your firewall settings.<br/>
+            <strong ><u>Tip 7</u>:</strong>&nbsp;&nbsp; Clear cache in your browser and try again.<br/>
+            <strong ><u>Tip 8</u>:</strong>&nbsp;&nbsp; Make sure that you have given your photo to the present admin.<br/>
+            <strong ><u>Tip 9</u>:</strong>&nbsp;&nbsp; Go to sleep and try again tomorrow.<br/>
+              </Modal.Body>
+              <Modal.Footer style={{backgroundColor:'#D1ECF1'}}>
+                <Button variant="secondary" onClick={()=>setShowTipphoto(false)}>
+                  Ok
+                </Button>
+                
+              </Modal.Footer>
+            </Modal>
             </Paper>
             </div>
+            
+
             <Footer/>
             <Review
             show={modalShow}

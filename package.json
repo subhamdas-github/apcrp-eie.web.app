@@ -39,6 +39,7 @@
     "react-scroll-up-button": "^1.6.4",
     "react-spinners": "^0.10.6",
     "react-sticky-header": "^0.2.0",
+    "react-swipeable-views": "^0.14.0",
     "reactjs-pdf-reader": "^1.0.12",
     "recharts": "^2.0.9",
     "rsuite": "^4.10.1",
