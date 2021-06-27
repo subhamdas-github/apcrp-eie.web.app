@@ -312,6 +312,9 @@ function FrontPage({placeName}) {
     ['primary','secondary','warning','danger','info','success','dark']
 
     React.useEffect(()=>{
+      
+
+
       AOS.init({duration:1150});
         fire.firestore().collection('slideshow').onSnapshot(function(data){
             setTasksS(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));

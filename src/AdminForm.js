@@ -22,6 +22,7 @@ import BusinessCenterIcon from '@material-ui/icons/BusinessCenter';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+
 // import AdminCreateSuccessToast from './AdminCreateSuccessToast';
 
 function AdminForm(props) {
@@ -79,7 +80,13 @@ function AdminForm(props) {
     const [yearDeleteModal, setYearDeleteModal] = useState(false)
     var flag=false
     var curr_y = ''
-
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    function gettime(){
+      return new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+      }
+    function getdate(){
+      return new Date().getDate()+ " "+ months[new Date().getMonth()]+","+ new Date().getFullYear();
+      }
     const onCreat = (e)=>{
       e.preventDefault()
       if (newStudentYear==''){
@@ -87,7 +94,7 @@ function AdminForm(props) {
       }
       else{
       const db = fire.firestore();
-      
+
       db.collection('students').doc('year').collection(newStudentYear).doc(newStudentYear).set({
         name:'John Doe',
         email:'example@example.com',
@@ -100,14 +107,26 @@ function AdminForm(props) {
       db.collection('students').doc(newStudentYear).set({
         year_arr:newStudentYear
       })
-
+      fire.firestore().collection('activities').doc()
+      .set({task:fire.auth().currentUser.email+' created a new year '+newStudentYear+' in Students database in Micro Control Panel.',
+      color:'info',
+      date:getdate(),
+		  time:gettime(),
+      timestamp:new Date().valueOf()})
       setNewStudentYear('')
     }
     }
     const onDelete = () =>{
       // e.preventDefault()
+      fire.firestore().collection('activities').doc()
+      .set({task:fire.auth().currentUser.email+' deleted an existing year '+newfireYear+' in Students database in Micro Control Panel.',
+      color:'danger',
+      date:getdate(),
+		time:gettime(),
+      timestamp:new Date().valueOf()})
       const db = fire.firestore();
       db.collection('students').doc(newfireYear).delete()
+      
     }
 
     const onAdd=()=>{
@@ -175,8 +194,13 @@ function AdminForm(props) {
 
           const db = fire.firestore();
           if(tab=='student'){
-            // setnewImUrlS('https://drive.google.com/uc?export=download&id='+newimUrlS.slice(32, 65))
-            // console.log(newimUrlS)
+            
+          fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new student '+newTask+' in the year '+newfireYear+' in Students database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
           db.collection('students').doc('year').collection(newfireYear).doc(newEmail).set({name:newTask,email:newEmail,phone:newPhone,status1:newStatus1,status2:newStatus2,status3:newStatus3,url:newkhanki})
           document.getElementById('myimgS').src=document.getElementById('myimg')
           setnewTask('')
@@ -189,7 +213,13 @@ function AdminForm(props) {
           setnewKhanki('')
           }
           else if(tab=='teacher'){
-            db.collection('teachers').doc(newEmailforT).set({name:newTaskforT,email:newEmailforT,phone:newPhoneforT,status1:newStatus1forT,year:1,url:newkhanki})  
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new teacher '+newTaskforT+' in Teachers database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
+            db.collection('teachers').doc(newEmailforT).set({name:newTaskforT,email:newEmailforT,phone:newPhoneforT,status1:newStatus1forT,year:1,url:newkhanki})
             document.getElementById('myimgT').src=document.getElementById('myimg')
             setnewTaskforT('')
             setnewEmailforT('')
@@ -199,6 +229,12 @@ function AdminForm(props) {
             setnewKhanki('')
           }
           else if(tab=="slideshow"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new slideshow picture '+newEmailforSS+' in Slideshow database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('slideshow').doc(newEmailforSS).set({email:newEmailforSS,year:2,url:newkhanki})
             document.getElementById('myimgSS').src=document.getElementById('myimg')
             setnewEmailforSS('')
@@ -206,6 +242,12 @@ function AdminForm(props) {
             setnewKhanki('')
           }
           else if(tab=="gallery"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new gallery image '+newEmailforG+' in Gallery database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('gallery').doc(newEmailforG).set({email:newEmailforG,year:3,url:newkhanki})
             document.getElementById('myimgG').src=document.getElementById('myimg')
             setnewEmailforG('')
@@ -213,6 +255,12 @@ function AdminForm(props) {
             setnewKhanki('')
           }
           else if(tab=="recruiter"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new recruiter '+newEmailforR+' in Recruiter database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('recruiters').doc(newEmailforR).set({email:newEmailforR,year:4,url:newkhanki})
             document.getElementById('myimgR').src=document.getElementById('myimg')
             setnewEmailforR('')
@@ -220,6 +268,12 @@ function AdminForm(props) {
             setnewKhanki('')
           }
           else if(tab=="notice"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' published a new notice '+newEmailforN+' in Notice database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('notice').doc(newEmailforN).set({email:newEmailforN,status1:newStatus1forN,year:5,url:newkhanki})
             document.getElementById('myimgN').src=document.getElementById('myimg')
             setnewEmailforN('')
@@ -228,12 +282,24 @@ function AdminForm(props) {
             setnewKhanki('')
           }
           else if(tab=="video"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' added a new youtube video '+newEmailforV+' in Video database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('video').doc(newEmailforV).set({email:newEmailforV,year:6,url:newimUrlV})
             // document.getElementById('myimgN').src=document.getElementById('myimg')
             setnewEmailforV('')
             setnewImUrlV('')
           }
           else if(tab=="magazine"){
+            fire.firestore().collection('activities').doc()
+          .set({task:fire.auth().currentUser.email+' published a new magazine '+newEmailforM+' in Magazine database in Micro Control Panel.',
+          color:'info',
+          date:getdate(),
+		time:gettime(),
+          timestamp:new Date().valueOf()})
             db.collection('magazines').doc(newEmailforM).set({email:newEmailforM,year:8,url:newimUrlM})
             // document.getElementById('myimgN').src=document.getElementById('myimg')
             setnewEmailforM('')
@@ -255,6 +321,7 @@ function AdminForm(props) {
       
 
 	  };
+    
 
     const handleImageAsFile = (e) => {
       
@@ -331,7 +398,6 @@ function AdminForm(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       className={sty.controlpanelfont}
-      
       >
         
 <Container fluid='xl' >
@@ -381,7 +447,7 @@ function AdminForm(props) {
              
               </div>
               <form>
-                <input type='number' placeholder="New Year..." value={newStudentYear} onChange={e=> setNewStudentYear(e.target.value)} style={{width:102}}></input>
+                <input type='number' placeholder="New Year..." value={newStudentYear} onChange={e=> {setNewStudentYear(e.target.value)}} style={{width:102}}></input>
               </form>
               <div ><Button style={{width:102}} variant="primary" onClick={onCreat} >Create </Button></div>
               </Col>
@@ -443,7 +509,7 @@ function AdminForm(props) {
       <div style={{display:'flex'}}><h2><FcAddDatabase/></h2><span style={{paddingTop:7}}><Form.Control id="status1" placeholder="About 1" type="text" value={newStatus1} onChange={e=> setnewStatus1(e.target.value)}/></span></div>
       <div style={{display:'flex'}}><h2><FcAddDatabase/></h2><span style={{paddingTop:7}}><Form.Control id="status2" placeholder="Job" type="text" value={newStatus2} onChange={e=> setnewStatus2(e.target.value)}/></span></div>
       <div style={{display:'flex'}}><h2><FcAddDatabase/></h2><span style={{paddingTop:7}}><Form.Control id="status3" placeholder="University/College" type="text" value={newStatus3} onChange={e=> setnewStatus3(e.target.value)}/></span></div>
-      <br />
+      <br/>
       <div id='spinner' style={{display:'none'}}><Spinner animation="grow" variant="primary" />
       <Spinner animation="grow" variant="warning" />
       <Spinner animation="grow" variant="dark" />

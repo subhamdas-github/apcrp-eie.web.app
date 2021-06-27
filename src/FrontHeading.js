@@ -65,6 +65,7 @@ import ContactMailIcon from '@material-ui/icons/ContactMail';
 import MoreIcon from '@material-ui/icons/More';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import LockIcon from '@material-ui/icons/Lock';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 function FrontHeading() {
 
 
@@ -85,11 +86,9 @@ function FrontHeading() {
     }
     return (
         <div>
-           
             <div id='frontheading' style={{display:'block'}} className={containerStyle.grad}>
             <div className={sty.controlpanelfont} style={{padding:20}}>
             <br/><br/>
-  
                 <Paper elevation={9}  >
                 {/* <Container fluid='xl'> */}
                 {/* <Container fluid='xl' > */}
@@ -186,15 +185,13 @@ function FrontHeading() {
                     
                     <Nav.Link onClick={() => {setModalShowRecrt(true);}}><span className={navstyle.navi}><span style={{color:'#D1ECF1'}}><sup><BusinessCenterIcon fontSize="small"/></sup></span> Our Recruiters</span></Nav.Link>
                     <Nav.Link href="/feedback" ><span className={navstyle.navi}><span style={{color:'#D1ECF1'}}><sup><FeedbackIcon fontSize="small"/></sup></span> Feedback</span></Nav.Link>
-                    
-                    
+                                        
                     <NavDropdown title={more()} id="collasible-nav-dropdown">
                         <NavDropdown.Item className={navstyle.navdropdown} href="/login" ><sup><LockIcon/></sup>Admin Login</NavDropdown.Item>
-                        <NavDropdown.Item className={navstyle.navdropdown} href="/signup" ><sup><PersonPinIcon /></sup>Admin Signup</NavDropdown.Item>
+                        <NavDropdown.Item className={navstyle.navdropdown} href="/signup" ><sup><AccountCircleIcon /></sup>Admin Signup</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="mailto:dsubham776@gmail.com" target='_blank'><sup><BugReportIcon /></sup>Bug Report</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="/" ><sup><ContactMailIcon /></sup> Admin Contact</NavDropdown.Item>
                         <NavDropdown.Item className={navstyle.navdropdown} href="/about/privacy_policy" ><sup><PolicyIcon /></sup>Privacy Policy</NavDropdown.Item>
-
                     </NavDropdown>
                     </Nav>
                     

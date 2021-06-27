@@ -77,8 +77,8 @@ const Login = ()=> {
 				setbtnloading(false)
 				// fire.firestore().collection('newuser').doc('users').collection(email).doc(email).
 				// set({email:email,password:password})
-				fire.firestore().collection(email).doc(email).
-				set({email:email,password:password})
+				// fire.firestore().collection(email).doc(email).
+				// set({email:email,password:password})
 				clearInputs()
 			}).catch(err=>{
 				switch(err.code){

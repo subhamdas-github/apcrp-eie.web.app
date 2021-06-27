@@ -10,11 +10,15 @@ import {ToolkitProvider,Search,products,columns,BootstrapTable} from 'react-boot
 import {Button,Row, Container, Col, Form,InputGroup, Navbar,Nav,FormControl, Table, Modal,Alert, OverlayTrigger, NavDropdown} from 'react-bootstrap';
 // import DeleteIcon from '@material-ui/icons/Delete';
 // import IconButton from '@material-ui/core/IconButton';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Image from 'react-bootstrap/Image'
 import AdminForm from './AdminForm';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import {ToggleButtonGroup, ToggleButton} from 'react-bootstrap';
 import Batch from './batch';
+import Chip from '@material-ui/core/Chip';
 import CreateNew from './CreateNew';
+import HistoryIcon from '@material-ui/icons/History';
 import Footer from './Footer';
 import style from './css/footer.module.css'
 import AdminNavigation from './AdminNavigation';
@@ -32,7 +36,7 @@ import HashLoader from 'react-spinners/HashLoader'
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Tooltip from '@material-ui/core/Tooltip';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme,withStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
 import TimelineItem from '@material-ui/lab/TimelineItem';
 import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
@@ -85,6 +89,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
+
 import MenuList from '@material-ui/core/MenuList';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -96,6 +101,8 @@ import PersonIcon from '@material-ui/icons/Person';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import ReportIcon from '@material-ui/icons/Report';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -179,7 +186,7 @@ function Admin() {
 	const [newStatus3, setnewStatus3] = React.useState('');
     const [newYear, setnewYear] = React.useState('');
 	const [updateTask, setupdateTask] = React.useState('');
-	const [newfireYearA, setNewFireYearA] = React.useState('');
+	const [newfireYearA, setNewFireYearA] = React.useState('Select');
 	const [usr, setusr] = React.useState('');
 	const [newuser, setNewUser] = React.useState([]);
 	const [tasksyearsA, setTasksyearsA] = React.useState([]);
@@ -203,7 +210,7 @@ function Admin() {
 	const [loading, setLoading] = useState(true);
 	const [apiloading, setApiLoading] = useState(false);
 	const [imgloading, setimgloading] = useState('')
-
+  	const [color, setcolor] = useState('')
 	const [tableid, settableid] = useState('')
 	const [newimUrlS, setnewImUrlS] = React.useState('');
 
@@ -219,6 +226,7 @@ function Admin() {
 	const [showadmin, setShowadmin] = useState(false);
 	const [showlogout, setShowlogout] = useState(false);
 	const [showuserinfo, setShowuserinfo] = useState(false);
+	const [showadminReport, setShowadminReport] = useState(false);
 	const [showapproveconfirm, setShowapproveconfirm] = useState(false);
 
 
@@ -248,13 +256,56 @@ function Admin() {
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef(null);
 	const prevOpen = React.useRef(open);
+	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+	function gettime(){
+		return new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+	  }
+	  function getdate(){
+		return new Date().getDate()+ " "+ months[new Date().getMonth()]+","+ new Date().getFullYear();
+	  }
+	  const themenew = createMuiTheme({
+		palette: {
+		  secondary: {
+			main: '#E33E7F'
+		  }
+		}
+	  });
+	const [iscurrentAdminAlok, setIsCurrentAdminAlok] = useState(false)
 	useEffect(()=>{
+		window.addEventListener("beforeunload", function (e) {
+
+			if (fire.auth().currentUser.email=='alokmondal70@gmail.com'){
+				fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+			.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Owner'})
+			}
+			else{
+				fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+			.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Admin'})
+			}
+			              
+		
+		  });
+		  window.addEventListener("unload", function (e) {
+			if (fire.auth().currentUser.email=='alokmondal70@gmail.com'){
+				fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+			.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Owner'})
+			}
+			else{
+				fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+			.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Admin'})
+			}
+			                    
+		  });
+
+
+		  
 		fire.firestore().collection('user').onSnapshot(function(data){
 			setTasksadmin(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
 			if(data.size==0){
                 // setcountx(<span style={{display:'flex'}}><span style={{color:'#483D8B',fontSize:20}}><MdEventNote/> </span><span style={{paddingTop:8,paddingLeft:5}}>Notice</span></span>);document.getElementById('nonotice').style.display='block';
 				setcountx(<NotificationsIcon style={{color:'white'}}/>)
-				settextwhennouser(<Alert variant='info'><p>No one has signed up for Administrator. User record empty!</p></Alert>)
+				settextwhennouser(<Alert variant='info'><p>No one has signed up for Administrator. User record empty! 
+				You can see the notification if there is any admin request at Notification bar. </p></Alert>)
 			}
                 else{
                     // document.getElementById('nonotice').style.display='none';
@@ -265,14 +316,24 @@ function Admin() {
 			  settextwhennouser(<Alert variant='info'><p>The following User(s) want to access Admin Panel...</p></Alert>)
             }
 		})
-		fire.firestore().collection('admins').orderBy('email','desc').onSnapshot(function(data){
+		fire.firestore().collection('admins')
+		.orderBy('status','desc')
+		.onSnapshot(function(data){
 			setTasksadmins(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
-			
 		})
+		if (fire.auth().currentUser.email=='alokmondal70@gmail.com')
+		{
+			setIsCurrentAdminAlok(true)
+		fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+		.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:1,owner:'Owner'})
+		}
+		else{
+		fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+		.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:1,owner:'Admin'})
+		}
 
 		const fetchData = () =>{
 			const db = fire.firestore();
-
 			document.getElementById('home').addEventListener('click',()=>{
 				setTasksA([])
 				document.getElementById('all').style.display = 'none';
@@ -565,13 +626,21 @@ function Admin() {
 			
 			
 			
-			fire.firestore().collection('students').orderBy("year_arr","desc").onSnapshot(function(data){
+			fire.firestore().collection('students').where("year_arr","!=","").
+			orderBy("year_arr","desc").onSnapshot(function(data){
 				setTasksyearsA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
 				
 				})
+				fire.firestore().collection('activities')
+				.orderBy('timestamp','desc')
+				.onSnapshot(function(data){
+					setTasksactivities(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
+					
+					})
 			// fire.firestore().collection(fire.auth().currentUser.email).onSnapshot(function(data){
 			// 		setNewUser(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));	
 			// 	})
+			
 			
 		};
 		
@@ -611,21 +680,103 @@ function Admin() {
 	
 	function onDelete(id, year){
 		const db = fire.firestore()
-	    if(year== 1){db.collection('teachers').doc(id).delete()}
-		else if(year== 2){db.collection('slideshow').doc(id).delete()}
-		else if(year== 3){db.collection('gallery').doc(id).delete()}
-		else if(year== 4){db.collection('recruiters').doc(id).delete()}
-		else if(year== 5){db.collection('notice').doc(id).delete()}
-		else if(year== 6){db.collection('video').doc(id).delete()}
-		else if(year== 7){db.collection('feedbacks').doc(id).delete()}
-		else if(year== 8){db.collection('magazines').doc(id).delete()}
+	    if(year== 1){db.collection('teachers').doc(id).delete(); activities(id,'flagteachersDelete');}
+		else if(year== 2){db.collection('slideshow').doc(id).delete();activities(id,'flagslideDelete');}
+		else if(year== 3){db.collection('gallery').doc(id).delete();activities(id,'flaggalleryDelete');}
+		else if(year== 4){db.collection('recruiters').doc(id).delete();activities(id,'flagrecruitersDelete');}
+		else if(year== 5){db.collection('notice').doc(id).delete();activities(id,'flagnoticeDelete');}
+		else if(year== 6){db.collection('video').doc(id).delete();activities(id,'flagvideoDelete');}
+		else if(year== 7){db.collection('feedbacks').doc(id).delete();activities(id,'flagfeedbacksDelete');}
+		else if(year== 8){db.collection('magazines').doc(id).delete();activities(id,'flagmagazinesDelete');}
 		else{db.collection('students').doc('year').collection(newfireYearA).doc(id).delete()}
 	}
 
-	
+	function activities(useremail, flag){
+		if (flag=='flaguserDecline'){
+		fire.firestore().collection('activities').doc()
+		.set({task:fire.auth().currentUser.email+' Decline user '+useremail+' from admin request.',
+		color:'danger',
+		date:getdate(),
+		time:gettime(),
+	  timestamp:new Date().valueOf()})
+		}
+		else if (flag=='flaguserApprove'){
+		  fire.firestore().collection('activities').doc()
+		  .set({task:fire.auth().currentUser.email+' approve '+useremail+' as an admin. '+useremail+' is an Admin now.',
+		color:'success',
+		date:getdate(),
+		time:gettime(),
+		  timestamp:new Date().valueOf()})
+		  }
+		  else if (flag=='flagteachersDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Teachers Section.',
+		  color:'danger',
+		  date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+			else if (flag=='flagslideDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Slideshow Section.',
+		  color:'danger',
+		  date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+		else if (flag=='flaggalleryDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Gallery Section.',
+			color:'danger',
+			date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+			else if (flag=='flagrecruitersDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Recruiters Section.',
+			 color:'danger',
+			 date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+			else if (flag=='flagnoticeDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Notice Section.',
+			  color:'danger',
+			  date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+		else if (flag=='flagvideoDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Video Section.',
+		  color:'danger',
+		  date:getdate(),
+		time:gettime(),
+			timestamp:new Date().valueOf()})
+			}
+			else if (flag=='flagfeedbacksDelete'){
+			fire.firestore().collection('activities').doc()
+		.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Feedback Section.',
+			  color:'danger',
+			  date:getdate(),
+		time:gettime(),
+				timestamp:new Date().valueOf()})
+			}
+		else if (flag=='flagmagazinesDelete'){
+			fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' Delete '+useremail+' from Magazine Section.',
+			color:'danger',
+			date:getdate(),
+		time:gettime(),
+				timestamp:new Date().valueOf()})
+			}
+	}
 
 	const adminstudentopt = ()=>{
-		if(newfireYearA==''){alert('Please select a year to Go')}else{
+		if(newfireYearA=='Select'){alert('Please select a year to Go')}
+		else{
 		setApiLoading(true)
 		fire.firestore().collection('students').doc('year').collection(newfireYearA).orderBy("name","asc")
 		.onSnapshot(function(data){setCount(data.size);setTasksA(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
@@ -637,23 +788,59 @@ function Admin() {
 		setTimeout(() => {
 			setApiLoading(false)
 		}, 2000);
-		// if (imgloading=='loaded'){
-		// 	setApiLoading(false)
-		// }else{
-		// 	console.log('false')
-		// }
+		
 	}
 	}
 	var array=[]
+	const [isSignout, setIsSignout] = useState(false)
 
 	const logout = ()=>{
+		if (fire.auth().currentUser.email=='alokmondal70@gmail.com'){
+			fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+		.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Owner'})
+		}
+		else{
+			fire.firestore().collection('admins').doc(fire.auth().currentUser.email)
+		.set({email:fire.auth().currentUser.email,timestamp:new Date().valueOf(),status:0,owner:'Admin'})
+		}
+		
+		
 		fire.auth().signOut()
 		.then(function(){
-			
+			setIsSignout(true)
 		}).catch((e)=>{
 	
 		})
 	  }
+	
+	  const StyledBadge = withStyles((theme) => ({
+		badge: {
+		  backgroundColor: '#44b700',
+		  color: '#44b700',
+		  boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+		  '&::after': {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			height: '100%',
+			borderRadius: '50%',
+			animation: '$ripple 1.2s infinite ease-in-out',
+			border: '1px solid currentColor',
+			content: '""',
+		  },
+		},
+		'@keyframes ripple': {
+		  '0%': {
+			transform: 'scale(.8)',
+			opacity: 1,
+		  },
+		  '100%': {
+			transform: 'scale(2.4)',
+			opacity: 0,
+		  },
+		},
+	  }))(Badge);
 	//   const useStyles = makeStyles((theme) => ({
 	// 	paper: {
 	// 	  padding: '6px 16px',
@@ -677,6 +864,7 @@ function Admin() {
 	//   const classes = useStyles();
 	  const [dense, setDense] = React.useState(false);
 	  const [secondary, setSecondary] = React.useState(false);
+	  const [deleteduser, setdeleteduser] = useState('')
 	  function generate(element) {
 		return [0, 1, 2].map((value) =>
 		  React.cloneElement(element, {
@@ -684,6 +872,13 @@ function Admin() {
 		  }),
 		);
 	  }
+	const handleAdminDelete = ()=>{
+		deleteduser.delete().then(()=>{
+
+		}).catch((error)=>{
+
+		})
+	}
 	const handleresolution = ()=>{
 		if (window.innerWidth<800 && window.innerHeight <800){
 			// alert('Your Resolution is->'+'width: '+window.innerWidth+'height: '+window.innerHeight+' Try Laptop/Desktop')
@@ -718,6 +913,7 @@ function Admin() {
 	const [upstatus3, setupstatus3] = useState('')
 	const [upurl, setupurl] = useState('')
 	const [confirmmsg, setconfirmmsg] = useState('')
+	const [reportmsg, setreportmsg] = useState('')
 	const [curr_id, setcurr_id] = useState('')
 	const [curr_email, setcurr_email] = useState('')
 	const [curr_password, setcurr_password] = useState('')
@@ -730,13 +926,14 @@ if (confirmmsg!='CONFIRM'){
 	setOpenback(false)
 }
 else{
-	
+	activities(curr_email,'flaguserApprove');
 	fire.auth().createUserWithEmailAndPassword(curr_email, curr_password)
 	.then((userCredential) => {
 	  
 	//   console.log(userCredential.user)
-	  fire.firestore().collection('admins').doc(curr_id).set({email:curr_email,password:curr_password})
+	  fire.firestore().collection('admins').doc(curr_id).set({email:curr_email,password:curr_password,timestamp:new Date().valueOf()})
 	  fire.firestore().collection('user').doc(curr_id).delete()
+	  
 	  setShowapproveconfirm(false)
 	  setOpenback(false)
 	  setShowlogout(true)
@@ -748,6 +945,7 @@ else{
 	});
 }
 }
+
 function handledecline(curr_id){
 	fire.firestore().collection('user').doc(curr_id).delete()
 }
@@ -879,7 +1077,7 @@ return (
 							aria-haspopup="true"
 							onClick={handleToggle}>
 								<Avatar style={{width:24,height:24,backgroundColor:'#e91e63'}}></Avatar>
-							</IconButton>	
+							</IconButton>
 						</Tooltip>
 							<Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
 							{({ TransitionProps, placement }) => (
@@ -893,7 +1091,7 @@ return (
 										<MenuItem onClick={handleCloseP}><p>Signed in as<br/> <span style={{fontSize:14}}><b>{fire.auth().currentUser.email}</b></span></p></MenuItem>
 										<MenuItem onClick={handleCloseP}>Documentation</MenuItem>
 										<MenuItem ><a href="mailto:dsubham776050@gmail.com" style={{color:'white',textDecoration:'none'}}>Report a problem</a></MenuItem>
-										<MenuItem onClick={logout}>Logout</MenuItem>
+										<MenuItem >Contribute</MenuItem>
 									</MenuList>
 									</ClickAwayListener>
 								</Paper>
@@ -1030,6 +1228,7 @@ return (
 		<Row><Col></Col><Col>
 		<Form style={{display:'flex'}}>
 		<Form.Control as="select" type="text" value={newfireYearA} onChange={e=> setNewFireYearA(e.target.value)}>
+		<option>Select</option>
 		{tasksyearsA.map(spell=>(
 			<option>{spell.year_arr}</option>
 			
@@ -1037,7 +1236,13 @@ return (
 		</Form.Control>
 		<Button onClick={adminstudentopt}>Go</Button>
 		</Form>
-		</Col><Col><h4 id='count' style={{display:'none'}}>Results found <sup><Badge variant='warning' ><span >{count}</span></Badge></sup></h4></Col></Row>
+		</Col>
+		<Col>
+		<h4 id='count' style={{display:'none'}}>
+			 <Badge color="secondary" badgeContent={count} overlap="circle"><FindInPageIcon fontSize="large" style={{color:'white'}}/></Badge>
+		</h4>
+		</Col>
+		</Row>
 	</div>
 
 	<div id='teacherheading' style={{display:'none',textAlign:'center'}}>
@@ -1144,7 +1349,7 @@ return (
 			<td><img id={spell.id} src={spell.url}  width={100} /><br/>
 			<div style={{display:'flex'}}><input id='photo' type='text' placeholder='new url' style={{width:90,height:30}}  onPaste={(e)=>{settableid(spell.id);
       setnewImUrlS(e.clipboardData.getData('Text'))
-     }}/><Button size="sm" onClick={()=>onAdd(spell.id)}>Add</Button></div>
+     }}/><Button size="sm" onClick={()=>onAdd(spell.id)} style={{height:30}}>Add</Button></div>
 			</td>
 			{/* <td><Button variant="danger" onClick={()=>onDelete(spell.id, spell.year)}
 			>Delete</Button></td> */}
@@ -1635,7 +1840,38 @@ return (
       </Modal>
 
 	  <Modal 
-	//   size="sm"
+	  
+	  	show={showadminReport}
+        onHide={()=>setShowadminReport(false)}
+        // backdrop="static"
+        // keyboard={false}
+		aria-labelledby="contained-modal-title-vcenter"
+      	centered
+		  
+		>
+        <Modal.Header closeButton>
+          <Modal.Title>Report {deleteduser}?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+		<Form.Group controlId="exampleForm.ControlTextarea1">
+			<Form.Label>Description Box</Form.Label>
+			<Form.Control as="textarea" placeholder="Write a report statement" rows={5} onChange={(e)=>setreportmsg(e.target.value)}/>
+		</Form.Group>
+			
+		<div style={{textAlign:'center'}}>
+			<Button variant='warning' onClick={()=>{fire.firestore().collection('activities').doc()
+			.set({task:fire.auth().currentUser.email+' reported '+deleteduser+' saying that: '+reportmsg,
+			color:'warning',
+			date:getdate(),
+			time:gettime(),
+		timestamp:new Date().valueOf()});setreportmsg('');setShowadminReport(false)}}>Report</Button>
+		</div>
+		</Modal.Body>
+        
+      </Modal>
+
+	  <Modal 
+	
 	  	show={showlogout}
         onHide={()=>setShowlogout(false)}
         backdrop="static"
@@ -1707,7 +1943,7 @@ return (
         >
           <Tab label={<div style={{display:'flex'}}><PersonIcon/><span>Admin Requests</span></div>} {...a11yProps(0)} />
           <Tab label={<div style={{display:'flex'}}><SupervisorAccountIcon/><span>Admins</span></div>} {...a11yProps(1)} />
-		  <Tab label={<div style={{display:'flex'}}><SupervisorAccountIcon/><span>Activities</span></div>} {...a11yProps(2)} />
+		  <Tab label={<div style={{display:'flex'}}><HistoryIcon/><span>Activity Log</span></div>} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
 	  </div>
@@ -1717,9 +1953,9 @@ return (
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-						<Grid item xs={12} md={12}>
+						<Grid item xs={12} md={12} style={{height:200}}>
 						<Typography variant="h6"  >
-							<h7 className={sty.controlpanelfont} style={{fontSize:17}}>{textwhennouser}</h7>
+							<h7  style={{fontSize:17}}>{textwhennouser}</h7>
 						</Typography>
 						<div >
 							<List >
@@ -1759,7 +1995,7 @@ return (
 										</IconButton>
 										</Tooltip>
 										<Tooltip title="Decline">
-										<IconButton edge="end" aria-label="close" onClick={()=>handledecline(spell.id)}>
+										<IconButton edge="end" aria-label="close" onClick={()=>{handledecline(spell.id);activities(spell.email,'flaguserDecline');}}>
 										
 										<div style={{color:'red'}}><CloseIcon/></div>
 										</IconButton>
@@ -1776,16 +2012,133 @@ return (
 						</Grid>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-		<Grid item xs={12} md={12}>
+		<Grid item xs={12} md={12} style={{height:200}}>
+{/* <p style={{textAlign:'right'}}><FiberManualRecordIcon fontSize="small" style={{color:'#4caf50'}}/>Online&nbsp;&nbsp;<FiberManualRecordIcon fontSize="small" style={{color:'red'}}/>Offline</p> */}
+<div style={{textAlign:'center',justifyContent:'space-between',display:'flex'}}>
+	{/* <p></p> */}
+	<p style={{fontSize:16,color:'green'}}><SupervisorAccountIcon fontSize="small"/><b>Present Administrators</b></p>
+	<p>
+	<FiberManualRecordIcon fontSize="small" style={{color:'#4caf50'}}/>Online
+	&nbsp;<FiberManualRecordIcon fontSize="small" style={{color:'red'}}/>Offline
+	</p>
+</div>
+
 
 						{tasksadmins.map((spell=>(
+
 						<Accordion>
 							<AccordionSummary
 							expandIcon={<ExpandMoreIcon />}
 							aria-controls="panel1a-content"
 							id="panel1a-header"
 							>
-							<Typography style={{display:'flex'}}><Avatar style={{width:25,height:25,backgroundColor:colormap[Math.floor(Math.random() * 10)]}}>S</Avatar><span style={{paddingLeft:12}}>{spell.email}</span></Typography>
+
+
+
+
+<div>
+	{iscurrentAdminAlok?
+	<div>
+		{spell.email=='alokmondal70@gmail.com'?
+		<div>
+			<Typography style={{display:'flex'}}>
+					<div ><Avatar style={{width:35,height:35}}>{spell.email[0].toUpperCase()}</Avatar></div>
+					<div className={containerStyle.badge} style={{backgroundColor:'#4caf50'}}></div>
+					<span style={{paddingLeft:8,paddingTop:4,fontSize:18}}>{spell.email}
+					&nbsp;&nbsp;
+					<Chip
+							variant="outlined"
+							size="small"
+							label={spell.owner}
+						/>
+					</span>
+								</Typography>
+		</div>
+		:
+		<div>
+			{spell.status==1?
+				<div>
+					<Typography style={{display:'flex'}}>
+						<div ><Avatar style={{width:35,height:35}}>{spell.email[0].toUpperCase()}</Avatar></div>
+						<div className={containerStyle.badge} style={{backgroundColor:'#4caf50'}}></div>
+						<span style={{paddingLeft:8,paddingTop:4,fontSize:18}}>{spell.email}
+						&nbsp;&nbsp;
+						
+						<Chip
+							variant="outlined"
+							color="secondary"
+							size="small"
+							label="Report admin"
+							onClick={()=>{setShowadminReport(true);setdeleteduser(spell.email)}}
+						/>
+						</span>
+									</Typography>
+				</div>
+				:
+				<div>
+					<Typography style={{display:'flex'}}>
+						<div ><Avatar style={{width:35,height:35}}>{spell.email[0].toUpperCase()}</Avatar></div>
+						<div className={containerStyle.badge} style={{backgroundColor:'red'}}></div>
+						<span style={{paddingLeft:8,paddingTop:4,fontSize:18}}>{spell.email}
+						&nbsp;&nbsp;
+						
+						<Chip
+							variant="outlined"
+							color="secondary"
+							size="small"
+							label="Report admin"
+							onClick={()=>{setShowadminReport(true);setdeleteduser(spell.email)}}
+						/>
+						</span>
+									</Typography>
+				</div>
+			}
+		</div>
+		}
+	</div>
+	:
+	<div>
+		{spell.status==1?
+		<div>
+			<Typography style={{display:'flex'}}>
+				<div ><Avatar style={{width:35,height:35}}>{spell.email[0].toUpperCase()}</Avatar></div>
+				<div className={containerStyle.badge} style={{backgroundColor:'#4caf50'}}></div>
+				 <span style={{paddingLeft:8,paddingTop:4,fontSize:18}}>{spell.email}
+				 &nbsp;&nbsp;
+					<Chip
+							variant="outlined"
+							size="small"
+							label={spell.owner}
+						/>
+				 </span>
+							</Typography>
+		</div>
+		:
+		<div>
+			<Typography style={{display:'flex'}}>
+				<div ><Avatar style={{width:35,height:35}}>{spell.email[0].toUpperCase()}</Avatar></div>
+				<div className={containerStyle.badge} style={{backgroundColor:'red'}}></div>
+				 <span style={{paddingLeft:8,paddingTop:4,fontSize:18}}>{spell.email}
+				 &nbsp;&nbsp;
+					<Chip
+							variant="outlined"
+							size="small"
+							label={spell.owner}
+						/>
+				 </span>
+							</Typography>
+		</div>
+		}
+
+	</div>
+	}
+
+</div>
+
+
+
+
+
 							</AccordionSummary>
 							<AccordionDetails>
 							<Typography>
@@ -1794,16 +2147,31 @@ return (
 							</Typography>
 							</AccordionDetails>
 						</Accordion>
+
       					)))}
 						
 						</Grid>
         </TabPanel>
 
 		<TabPanel value={value} index={2} dir={theme.direction}>
-		<Grid item xs={12} md={12}>
+		<Grid item xs={12} md={12} style={{height:200}}>
 
-						<h2 style={{textAlign:'center'}}>Comming Soon...</h2>
-						
+						{/* <h2 style={{textAlign:'center'}}>Comming Soon...</h2> */}
+						{tasksactivities.map((spell=>(
+							<div>
+							<Paper elevation={3} >
+								<Alert variant={spell.color}>
+							<p >
+							<span ><b>{spell.task.substr(0,spell.task.indexOf(' '))}</b> -- </span>
+							{spell.task.substr(spell.task.indexOf(' ')+1)}
+							</p>
+							<p style={{textAlign:'right'}}>
+								--{spell.time}&nbsp;[{spell.date}]
+							</p>
+							</Alert>
+							</Paper>
+							</div>
+						)))}
 						</Grid>
         </TabPanel>
         

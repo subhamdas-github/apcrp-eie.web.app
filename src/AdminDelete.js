@@ -2,6 +2,13 @@ import React from 'react'
 import fire from './config/fire';
 import {Modal, Button} from 'react-bootstrap'
 function AdminDelete(props) {
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    function gettime(){
+		return new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+	  }
+	  function getdate(){
+		return new Date().getDate()+ " "+ months[new Date().getMonth()]+","+ new Date().getFullYear();
+	  }
     function onDelete(id, year,fireyear){
 		const db = fire.firestore()
 	    if(year== 1){db.collection('teachers').doc(id).delete()}
@@ -12,9 +19,19 @@ function AdminDelete(props) {
 		else if(year== 6){db.collection('video').doc(id).delete()}
 		else if(year== 7){db.collection('feedbacks').doc(id).delete()}
 		else if(year== 8){db.collection('magazines').doc(id).delete()}
-		else{db.collection('students').doc('year').collection(fireyear).doc(id).delete()}
+		else{db.collection('students').doc('year').collection(fireyear).doc(id).delete(); activities(id,'flagstudentsDelete',fireyear)}
         
 	}
+    function activities(useremail, flag,year){
+		if (flag=='flagstudentsDelete'){
+		fire.firestore().collection('activities').doc()
+		.set({task:fire.auth().currentUser.email+' deleted student '+useremail+' from '+year+' passout year ',
+		color:'danger',
+        date:getdate(),
+		time:gettime(),
+	  timestamp:new Date().valueOf()})
+		}
+    }
     return (
         <div>
             <Modal 

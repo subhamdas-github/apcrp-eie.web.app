@@ -354,3 +354,16 @@ background-size: 50%;
   }
   .w3animatr{position:relative;animation:animateright 0.4s}
   @keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+
+
+  .badge{
+      position: relative;
+      /* border: 2px solid green; */
+      border-radius: 50%;
+      /* background-color: green; */
+      height: 12px;
+      width: 12px;
+      margin-left: -8px;
+      margin-top: 22px;
+  }
+  

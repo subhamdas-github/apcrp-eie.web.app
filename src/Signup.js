@@ -31,6 +31,8 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 const QontoConnector = withStyles({
   alternativeLabel: {
     top: 10,
@@ -215,23 +217,37 @@ function Signup() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const [firstname, setfirstname] = useState('')
+  const [firstnameerror, setfirstnameerror] = useState('')
   const [lastname, setlastname] = useState('')
+  const [lastnameerror, setlastnameerror] = useState('')
   const [age, setage] = useState('')
+  const [ageerror, setageerror] = useState('')
+  const [sex, setsex] = useState('')
+  const [sexerror, setsexerror] = useState('')
+  const [year, setyear] = useState('')
+  const [yearerror, setyearerror] = useState('')
   const [phone, setphone] = useState('')
+  const [phoneerror, setphoneerror] = useState('')
   const [email, setemail] = useState('')
   const [emailerror, setemailerror] = useState('')
   const [password, setpassword] = useState('')
+  const [passworderror, setpassworderror] = useState('')
   const [address1, setaddress1] = useState('')
+  const [address1error, setaddress1error] = useState('')
   const [address2, setaddress2] = useState('')
   const [city, setcity] = useState('')
-  const [state, setstate] = useState('West Bengal')
+  const [cityerror, setcityerror] = useState('')
+  const [state, setstate] = useState('')
+  const [stateerror, setstateerror] = useState('')
   const [zip, setzip] = useState('')
+  const [ziperror, setziperror] = useState('')
 
   const [checked, setChecked] = React.useState(false);
   const [checkedsignup, setcheckedsignup] = React.useState(true);
   const [loading, setLoading] = useState(false)
   const [isbtnloading, setbtnloading] = useState(false)
-  const [newimUrlS, setnewImUrlS] = React.useState('');
+  const [newimUrlS, setnewImUrlS] = React.useState('')
+  const [newimUrlSerror, setnewImUrlSerror] = React.useState('')
   const [newkhanki, setnewKhanki] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [show, setShow] = useState(false);
@@ -249,39 +265,81 @@ function Signup() {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 function gettime(){
   return new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
 }
 function getdate(){
-  return new Date().getDate()+ "/"+ new Date().getMonth()+1+"/"+ new Date().getFullYear();
+  return new Date().getDate()+ " "+ months[new Date().getMonth()]+","+ new Date().getFullYear();
 }
 function checkemail(){
   var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   if (email.match(validRegex)) {
     setemailerror('')
-  } else {
+  }
+  else if (email == ''){
+    setemailerror('')
+  }
+  else {
     setemailerror('(Please enter an valid email address)')
   }
 }
-  
+function checkfirstname(){
+  if (firstname==''){setfirstnameerror('First name required')}
+  else{setfirstnameerror('')}
+}
 function checkdetails(){
-  if (firstname==''){alert('First name should not be empty !')}
-  else if(lastname==''){alert('Last name should not be empty !')}
-  else if(age==''){alert('Age should not be empty !')}
-  else if(phone==''){alert('Phone number should not be empty !')}
-  else if(email==''){alert('Email address should not be empty !')}
-  else if(password==''){alert('Password should not be empty !')}
-  else if(address1==''){alert('Address1 should not be empty !')}
-  else if(city==''){alert('City should not be empty !')}
-  else if(state==''){alert('State should not be empty !')}
-  else if(zip==''){alert('Zip should not be empty !')}
-  // else if(newkhanki==null){alert('error')}
+  if (firstname==''){if (!!document.getElementById('firstname') && document.getElementById('firstname').scrollIntoView) {
+    document.getElementById('firstname').scrollIntoView();
+}setfirstnameerror('First name required')}
+  else if(lastname==''){if (!!document.getElementById('lastname') && document.getElementById('lastname').scrollIntoView) {
+    document.getElementById('lastname').scrollIntoView();
+}setlastnameerror('Last name required')}
+  else if(age==''){if (!!document.getElementById('age') && document.getElementById('age').scrollIntoView) {
+    document.getElementById('age').scrollIntoView();
+}setageerror('Age required')}
+  else if(sex==''){if (!!document.getElementById('sex') && document.getElementById('sex').scrollIntoView) {
+    document.getElementById('sex').scrollIntoView();
+}setsexerror('Sex required')}
+  else if(sex=='Select'){if (!!document.getElementById('sex') && document.getElementById('sex').scrollIntoView) {
+    document.getElementById('sex').scrollIntoView();
+}setsexerror('Sex required')}
+  else if(year==''){if (!!document.getElementById('year') && document.getElementById('year').scrollIntoView) {
+    document.getElementById('year').scrollIntoView();
+}setyearerror('Year required')}
+  else if(year=='Select'){if (!!document.getElementById('year') && document.getElementById('year').scrollIntoView) {
+    document.getElementById('year').scrollIntoView();
+}setyearerror('Year required')}
+  else if(phone==''){if (!!document.getElementById('phone') && document.getElementById('phone').scrollIntoView) {
+    document.getElementById('phone').scrollIntoView();
+}setphoneerror('Phone number required')}
+  else if(email==''){if (!!document.getElementById('email') && document.getElementById('email').scrollIntoView) {
+    document.getElementById('email').scrollIntoView();
+}setemailerror('Email address required')}
+  else if(password==''){if (!!document.getElementById('password') && document.getElementById('password').scrollIntoView) {
+    document.getElementById('password').scrollIntoView();
+}setpassworderror('Password required')}
+  else if(address1==''){if (!!document.getElementById('address1') && document.getElementById('address1').scrollIntoView) {
+    document.getElementById('address1').scrollIntoView();
+}setaddress1error('Address1 required')}
+  else if(city==''){if (!!document.getElementById('city') && document.getElementById('city').scrollIntoView) {
+    document.getElementById('city').scrollIntoView();
+}setcityerror('City required')}
+  else if(state==''){if (!!document.getElementById('state') && document.getElementById('state').scrollIntoView) {
+    document.getElementById('state').scrollIntoView();
+}setstateerror('State required')}
+  else if(state=='Select'){if (!!document.getElementById('state') && document.getElementById('state').scrollIntoView) {
+    document.getElementById('state').scrollIntoView();
+}setstateerror('State required')}
+  else if(zip==''){if (!!document.getElementById('zip') && document.getElementById('zip').scrollIntoView) {
+    document.getElementById('zip').scrollIntoView();
+}setziperror('Zip required')}
+
   else{
     handleNext()
-    
   }
 }
+
 function checkphoto(){
   if(newkhanki==null){alert('You must have to upload your photo !')}
   else{
@@ -290,7 +348,10 @@ function checkphoto(){
 }
 const onAdd=()=>{
   if (newimUrlS==''){
-    alert('Oops! you left image url field blank')
+    setnewImUrlSerror('Oops! you left image url field blank')
+  }
+  else if(!newimUrlS.startsWith('https://drive.google.com/file/')){
+    setnewImUrlSerror('Oops! This is not a valid Google Drive link')
   }
   else
   {
@@ -320,40 +381,69 @@ function getStepContent(step) {
       return  <div style={{justifyContent:'center',display:'flex',padding:20}} className={sty.controlpanelfont}>
 <Alert variant='info'>
 <div style={{display:'flex',justifyContent:'center'}}><AccountCircleIcon fontSize="large"/><h2 style={{textAlign:'center'}}> Sign Up Form</h2><br/></div>
+        <hr/>
         <Form>
         <Form.Row>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='firstname'>
             <Form.Label>First Name <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control  placeholder="Enter first name" value={firstname} onChange={(e)=>setfirstname(e.target.value)}/>
+            <Form.Control  placeholder="Enter first name" value={firstname} onChange={(e)=>{setfirstnameerror(''); setfirstname(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{firstnameerror}</p>
             </Form.Group>
             </Col>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='lastname'>
             <Form.Label>Last Name <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control placeholder="Enter last name" value={lastname} onChange={(e)=>setlastname(e.target.value)}/>
+            <Form.Control placeholder="Enter last name" value={lastname} onChange={(e)=>{setlastnameerror(''); setlastname(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{lastnameerror}</p>
             </Form.Group>
             </Col>
         </Form.Row>
 
         <Form.Row>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='age'>
             <Form.Label>Age <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control type='number' placeholder="Enter your age" value={age} onChange={(e)=>setage(e.target.value)}/>
+            <Form.Control type='number' placeholder="Enter your age" value={age} onChange={(e)=>{setageerror(''); setage(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{ageerror}</p>
             </Form.Group>
             </Col>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='sex'>
+            <Form.Label>Sex <span style={{color:'red'}}>*</span></Form.Label>
+            <Form.Control as="select" defaultValue="Select" onChange={(e)=>{setsexerror('');setsex(e.target.value)}}>
+            <option>Select</option><option>Male</option><option>Female</option><option>Other</option>
+            </Form.Control>
+            <p style={{color:'red',fontWeight:'lighter'}}>{sexerror}</p>
+            </Form.Group>
+            </Col>
+        </Form.Row>
+
+        <Form.Row>
+            
+            <Col sm>
+            <Form.Group as={Col} id='year'>
+            <Form.Label>Year <span style={{color:'red'}}>*</span></Form.Label>
+            <Form.Control as="select" defaultValue="Select" onChange={(e)=>{setyearerror('');setyear(e.target.value)}}>
+                <option>Select</option>
+                <option>1st year</option><option>2nd year</option><option>3rd year</option>
+            </Form.Control>
+            <p style={{color:'red',fontWeight:'lighter'}}>{yearerror}</p>
+            </Form.Group>
+            </Col>
+
+            <Col sm>
+            <Form.Group as={Col} id='phone'>
             <Form.Label>Phone Number <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control type='number' placeholder="Enter your 10 dig mobile number" value={phone} onChange={(e)=>setphone(e.target.value)}/>
+            <Form.Control type='number' placeholder="Enter your 10 dig mobile number" value={phone} onChange={(e)=>{setphoneerror(''); setphone(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{phoneerror}</p>
             </Form.Group>
             </Col>
         </Form.Row>
 
         <Form.Row>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='email'>
             <Form.Label>Email Address <span style={{color:'red'}}>*</span></Form.Label>
             <Form.Control required='true' type='email' placeholder="Enter your email address" value={email}
              onChange={(e)=>{checkemail(); setemail(e.target.value)}}/>
@@ -361,21 +451,23 @@ function getStepContent(step) {
             </Form.Group>
             </Col>
             <Col sm>
-            <Form.Group as={Col} >
+            <Form.Group as={Col} id='password'>
             <Form.Label>Password <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control type='password' placeholder="Enter password" value={password} onChange={(e)=>setpassword(e.target.value)}/>
+            <Form.Control type='password' placeholder="Enter password" value={password} onChange={(e)=>{setpassworderror(''); setpassword(e.target.value)}}/>
+             <p style={{color:'red',fontWeight:'lighter'}}>{passworderror}</p>
             </Form.Group>
             </Col>
         </Form.Row>
         
         <Form.Row>
             <Col sm>
-            <Form.Group as={Col} controlId="formGridAddress1">
+            <Form.Group as={Col} id='address1'>
                 <Form.Label>Address 1 <span style={{color:'red'}}>*</span></Form.Label>
-                <Form.Control placeholder="1234 Main Street" value={address1} onChange={(e)=>setaddress1(e.target.value)}/>
+                <Form.Control placeholder="1234 Main Street" value={address1} onChange={(e)=>{setaddress1error(''); setaddress1(e.target.value)}}/>
+                <p style={{color:'red',fontWeight:'lighter'}}>{address1error}</p>
             </Form.Group>
             
-            <Form.Group as={Col} controlId="formGridAddress2">
+            <Form.Group as={Col} >
                 <Form.Label>Address 2</Form.Label>
                 <Form.Control placeholder="Apartment, studio, or floor" value={address2} onChange={(e)=>setaddress2(e.target.value)}/>
             </Form.Group>
@@ -383,16 +475,17 @@ function getStepContent(step) {
         </Form.Row>
         <Form.Row>
             <Col sm>
-            <Form.Group as={Col} controlId="formGridCity">
+            <Form.Group as={Col} id='city'>
             <Form.Label>City <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control placeholder="City name" value={city} onChange={(e)=>setcity(e.target.value)}/>
+            <Form.Control placeholder="City name" value={city} onChange={(e)=>{setcityerror(''); setcity(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{cityerror}</p>
             </Form.Group>
             </Col>
             <Col sm>
-            <Form.Group as={Col} controlId="formGridState">
+            <Form.Group as={Col} id='state'>
             <Form.Label>State <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control as="select" defaultValue="West Bengal" onChange={(e)=>setstate(e.target.value)}>
-                <option>Choose...</option>
+            <Form.Control as="select" defaultValue="Select" onChange={(e)=>{setstateerror(''); setstate(e.target.value)}}>
+                <option>Select</option>
                 <option>Andhra Pradesh</option><option>Arunachal Pradesh</option><option>Assam</option>
                 <option>Bihar</option><option>Chhattisgarh</option><option>Goa</option><option>Gujarat</option>
                 <option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option>
@@ -402,12 +495,14 @@ function getStepContent(step) {
                 <option>Telangana</option><option>Tripura</option><option>Uttar Pradesh</option><option>Uttarakhand</option>
                 <option>West Bengal</option>
             </Form.Control>
+            <p style={{color:'red',fontWeight:'lighter'}}>{stateerror}</p>
             </Form.Group>
             </Col>
             <Col sm>
-            <Form.Group as={Col} controlId="formGridZip">
+            <Form.Group as={Col} id='zip'>
             <Form.Label>Zip <span style={{color:'red'}}>*</span></Form.Label>
-            <Form.Control placeholder="Zip code" value={zip} onChange={(e)=>setzip(e.target.value)}/>
+            <Form.Control placeholder="Zip code" value={zip} onChange={(e)=>{setziperror(''); setzip(e.target.value)}}/>
+            <p style={{color:'red',fontWeight:'lighter'}}>{ziperror}</p>
             </Form.Group>
             </Col>
         </Form.Row>
@@ -417,17 +512,15 @@ function getStepContent(step) {
                     Next
                 </Button>
             </div>
-            
-
         </Form>
-        
     </Alert>
     </div>
       ;
     case 1:
       return <div style={{justifyContent:'center',display:'flex',padding:20}} className={sty.controlpanelfont}>
         <Alert variant='info'>
-        <div style={{display:'flex',justifyContent:'center'}}><AccountCircleIcon fontSize="large"/><h2 style={{textAlign:'center'}}> Upload Your Photo</h2><br/></div>
+        <div style={{display:'flex',justifyContent:'center'}}><ImageIcon fontSize="large"/><h2 style={{textAlign:'center'}}> Upload Your Photo</h2><br/></div>
+        <hr/>
         
                   <Form.Group as={Col} style={{padding:10}}>
                     
@@ -437,7 +530,7 @@ function getStepContent(step) {
                         (
                   <div className={sty.containerpicture}>
                     <img id="myimgS" src={newkhanki} className={sty.picturesignup}/>
-                    <div id='imgicon' className={sty.centered} style={{display:'block'}}><ImageIcon fontSize="large"/></div>
+                    <div id='imgicon' className={sty.centered} style={{display:'block'}}><PhotoCameraIcon fontSize="large"/></div>
                   </div>
                         ):(
                   <div className={sty.containerpicture}>
@@ -449,17 +542,20 @@ function getStepContent(step) {
                   <Col sm>
                   <div>
                     <p>-&gt;<u>Steps to upload your google drive photo</u></p>
-                  <p>1. Go to your Google Drive</p>
-                  <p>2. Right click on your photo and click get link</p>
-                  <p>3. Change privacy 'only me' to 'anyone with this link can view'</p>
-                  <p>4. copy that link and paste it in here</p>
+                  <p>1. Go to your Google Drive.</p>
+                  <p>2. Right click on your photo and click get link.</p>
+                  <p>3. Change 'restricted' to 'anyone with this link can view'.</p>
+                  <p>4. copy that link and paste it in here. <span style={{color:"red"}}>(Note: you can only paste in here)</span>.</p>
                   </div>
                   </Col>
                   </Row>
                   <div style={{textAlign:'center'}}>
                   <input type='text' placeholder='Enter image url..' value={newimUrlS} onPaste={(e)=>{
+                    setnewImUrlSerror('');
                     setnewImUrlS(e.clipboardData.getData('Text'))
-                    }}/><br/>
+                    }}/>
+                    <p style={{color:'red',fontWeight:'lighter'}}>{newimUrlSerror}</p>
+                    
                     <Button variant="contained"
                     color="secondary"
                     startIcon={<CloudUploadIcon />}
@@ -489,7 +585,8 @@ function getStepContent(step) {
     case 2:
       return <div style={{justifyContent:'center',display:'flex',padding:20}} className={sty.controlpanelfont}>
 <Alert variant='info'>
-  <br/>
+<div style={{display:'flex',justifyContent:'center'}}><AssignmentTurnedInIcon fontSize="large"/><h2 style={{textAlign:'center'}}> Agreement License</h2><br/></div>
+        <hr/>
   <div style={{display:'flex'}}>
     <div>
   <FormControlLabel
@@ -521,7 +618,7 @@ function getStepContent(step) {
             disabled={!checked} >I Understood & Sign Up</Button>
             <p></p>
           </div>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 </Alert>
 
 <Backdrop className={classes.backdrop} open={open} >

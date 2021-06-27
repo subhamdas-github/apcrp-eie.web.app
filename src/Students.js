@@ -93,7 +93,7 @@ function Students() {
     const [modalShowGallery, setModalShowGallery] = React.useState(false);
     const [modalShowRecrt, setModalShowRecrt] = React.useState(false);
     const [tasksyears, setTasksyears] = React.useState([]);
-    const [newfireYear, setNewFireYear] = React.useState('');
+    const [newfireYear, setNewFireYear] = React.useState('Select');
     const [searchTerm, setSearchTerm] = React.useState('');
     const [loading, setLoading] = useState(false)
     const [show, setShow] = useState(false);
@@ -125,14 +125,15 @@ function Students() {
     ['😀','😃','😄','😁','😊','😇','😎','😉','😋','🙂']
     useEffect(()=>{
       AOS.init();
-        fire.firestore().collection('students').orderBy('year_arr','desc'). onSnapshot(function(data){
+        fire.firestore().collection('students').where("year_arr","!=","").orderBy('year_arr','desc')
+        .onSnapshot(function(data){
             setTasksyears(data.docs.map(doc=>({ ...doc.data(), id: doc.id})));
             })
     },[])
     const studentoptselect = ()=>{
       
         
-        if (newfireYear==''){alert('Please select a year to Go')}
+        if (newfireYear=='Select'){alert('Please select a year to Go')}
         else{
 
         setLoading(true)
@@ -219,6 +220,7 @@ function Students() {
                   </div>
                   <div style={{width:400}}>
                     <Form.Control style={{paddingTop:6}} as="select" custom type="text" value={newfireYear} onChange={e=> setNewFireYear(e.target.value)} style={{textOverflow:'ellipsis',overflow:'hidden'}}>
+                    <option>Select</option>
                     {tasksyears.map(spell=>(
                         <option  className={an.studentyearnav}>{spell.year_arr}</option>
                     ))}
