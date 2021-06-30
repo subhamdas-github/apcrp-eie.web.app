@@ -272,6 +272,9 @@ function Admin() {
 	  });
 	const [iscurrentAdminAlok, setIsCurrentAdminAlok] = useState(false)
 	useEffect(()=>{
+		if( /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			setShowresolution(true)
+		}
 		window.addEventListener("beforeunload", function (e) {
 
 			if (fire.auth().currentUser.email=='alokmondal70@gmail.com'){
@@ -879,16 +882,17 @@ function Admin() {
 
 		})
 	}
-	const handleresolution = ()=>{
-		if (window.innerWidth<800 && window.innerHeight <800){
-			// alert('Your Resolution is->'+'width: '+window.innerWidth+'height: '+window.innerHeight+' Try Laptop/Desktop')
-			setShowresolution(true)
-		}
-		else{
-			// alert('width:'+window.innerWidth+'height:'+window.innerHeight)
-			setModalShow(true)
-		}
-	}
+	// const handleresolution = ()=>{
+	// 	if (window.innerWidth<800 && window.innerHeight <800){
+			
+	// 		setShowresolution(true)
+	// 	}
+	// 	else{
+
+	// 		setModalShow(true)
+	// 	}
+	// }
+
 	function signupprocess(emailaddress, userpassword){
 		fire.auth().createUserWithEmailAndPassword(emailaddress, userpassword)
 		.then((userCredential) => {
@@ -1698,7 +1702,7 @@ return (
 	</div>
 			<div className={containerStyle.createbutton}>
 			<Tooltip title='Add' >
-			<Fab color="primary" aria-label="add" onClick={handleresolution}>
+			<Fab color="primary" aria-label="add" onClick={()=>setModalShow(true)}>
 				<AddIcon />
 			</Fab>
 			</Tooltip>
@@ -1762,15 +1766,19 @@ return (
         <Modal.Header closeButton>
           <Modal.Title>📵 Unsupported!</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Please open Micro Admin Panel from your Desktop or Laptop for best experiences!
+        <Modal.Body>
+			<p>Seems like you are using mobile or tab.</p>
+			<p>Please open Administration Panel from your Desktop or Laptop for best experiences!</p>
+			<p>Thank you...</p>
 		</Modal.Body>
         <Modal.Footer>
           
-          <Button variant="primary" onClick={()=>setShowresolution(false)}>
-            Understood
+          <Button variant="danger" onClick={logout}>
+            Logout
           </Button>
         </Modal.Footer>
       </Modal>
+
 	  <Modal 
 	  size="sm"
 	  	show={showapproveconfirm}
